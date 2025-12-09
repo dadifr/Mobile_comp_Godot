@@ -1,24 +1,19 @@
-extends AnimatedSprite2D
+extends CharacterBody2D
 
-const SPEED = 130.0
-var v = Vector2( )
+# Velocità di movimento in pixel al secondo
+@export var speed = 100.0
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func _physics_process(delta):
+	# Ottieni la direzione (Vettore normalizzato)
+	# ui_left, ui_right, ecc. sono le frecce della tastiera predefinite
+	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	
+	if direction:
+		# Se premi un tasto, imposta la velocità
+		velocity = direction * speed
+	else:
+		# Se non premi nulla, fermati subito
+		velocity = Vector2.ZERO
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	
-	#movimento 3D sulla mappa di gioco
-	
-	if Input.is_action_pressed("ui_up"):
-		v.y = -1
-	elif Input.is_action_pressed("ui_down"):
-		v.y = 1
-	elif Input.is_action_pressed("ui_left"):
-		v.x = -1
-	elif Input.is_action_pressed("ui_right"):
-		v.x = 1
-	
-	self.position = self.position + v.normalized() * SPEED * delta
+	# Muovi il corpo gestendo le collisioni
+	move_and_slide()
