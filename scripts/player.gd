@@ -4,10 +4,22 @@ extends CharacterBody2D
 var game_over_screen = preload("res://scenes/GameOverScreen.tscn")
 
 @export var speed = 100.0
-@export var health = 3
 @export var knockback_force = 200.0 # Quanto forte vieni spinto via
 
 @onready var anim = $AnimatedSprite2D
+
+#--- REPARTO VITA ---
+signal health_changed(new_health)
+
+@export var max_health = 6 # 3 Cuori x 2
+var health = 6             # Vita attuale
+
+func _ready():
+	# Appena inizia il gioco, impostiamo la vita al massimo
+	health = max_health
+	# Avvisiamo l'HUD di mostrare la vita piena
+	health_changed.emit(health)
+
 
 var is_hurt = false
 
@@ -37,14 +49,16 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-# --- NUOVA FUNZIONE TAKE DAMAGE ---
+# --- FUNZIONE TAKE DAMAGE ---
 # Ora accetta "enemy_pos" per sapere da che parte scappare
 func take_damage(amount, enemy_pos = Vector2.ZERO):
-	if is_hurt:
-		return
+	if is_hurt: return
 	
 	is_hurt = true
 	health -= amount
+	
+	# --- AVVISIAMO L'HUD ---
+	health_changed.emit(health)
 	print("Vite rimanenti: ", health)
 	
 	# CALCOLO DEL RIMBALZO
