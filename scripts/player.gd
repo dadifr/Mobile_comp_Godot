@@ -98,5 +98,17 @@ func die():
 	
 	anim.play("hurt")
 	
+	# Aspettiamo che l'animazione finisca
 	await tween.finished
+	
+	# --- SALVATAGGIO DELLA TELECAMERA ---
+	# Prima di distruggere il player, stacchiamo la telecamera e la attacchiamo al "Mondo" (il genitore del player).
+	# In questo modo la camera sopravvive alla morte del giocatore.
+	if is_instance_valid(camera):
+		camera.reparent(get_parent())
+	
+	# Ora possiamo cancellare il player in pace, la camera rimarrà lì dov'è
 	queue_free()
+	
+	# Qui potrai chiamare la schermata di Game Over, es:
+	# get_tree().change_scene_to_file("res://GameOverScreen.tscn")
