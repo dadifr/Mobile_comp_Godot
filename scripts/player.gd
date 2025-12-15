@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+# Precarica la scena del menu per averla pronta all'uso
+var game_over_screen = preload("res://scenes/GameOverScreen.tscn")
+
 @export var speed = 100.0
 @export var health = 3
 @export var knockback_force = 200.0 # Quanto forte vieni spinto via
@@ -108,7 +111,15 @@ func die():
 		camera.reparent(get_parent())
 	
 	# Ora possiamo cancellare il player in pace, la camera rimarrà lì dov'è
-	queue_free()
+	if is_instance_valid(camera):
+		camera.reparent(get_parent())
 	
-	# Qui potrai chiamare la schermata di Game Over, es:
-	# get_tree().change_scene_to_file("res://GameOverScreen.tscn")
+	# --- FASE NUOVA: MOSTRA GAME OVER ---
+	# 1. Crea una copia della scena Game Over
+	var screen_instance = game_over_screen.instantiate()
+	
+	# 2. Aggiungila al "Mondo" (o alla radice del gioco)
+	get_tree().root.add_child(screen_instance)
+	
+	# 3. Ora puoi cancellare il player
+	queue_free()
