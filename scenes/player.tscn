@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cjkp6iup5bgc3"]
+[gd_scene load_steps=26 format=3 uid="uid://cjkp6iup5bgc3"]
 
 [ext_resource type="Script" uid="uid://duh7e6f4tpugl" path="res://scripts/player.gd" id="1_v6fml"]
 [ext_resource type="Texture2D" uid="uid://flgyr6efghe2" path="res://assets/sprites/frames pg e utility/character/knight_m_idle_anim_f0.png" id="2_3li8b"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bn2grnhv4m62l" path="res://assets/sprites/frames pg e utility/character/knight_m_run_anim_f1.png" id="8_o4126"]
 [ext_resource type="Texture2D" uid="uid://cx5ie5t2est86" path="res://assets/sprites/frames pg e utility/character/knight_m_run_anim_f2.png" id="9_lkdrv"]
 [ext_resource type="Texture2D" uid="uid://dl0huqnul2otf" path="res://assets/sprites/frames pg e utility/character/knight_m_run_anim_f3.png" id="10_p7iby"]
+[ext_resource type="PackedScene" uid="uid://dvc3r0o6syryv" path="res://scenes/spada.tscn" id="11_d3wef"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o4126"]
 atlas = ExtResource("2_6eyey")
@@ -127,7 +128,7 @@ metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_o4126")
-animation = &"dead"
+animation = &"idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, 6)
@@ -137,3 +138,10 @@ position_smoothing_enabled = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 6)
 shape = SubResource("CircleShape2D_mdl7e")
+
+[node name="Hand" type="Marker2D" parent="."]
+position = Vector2(10, 7)
+metadata/_edit_group_ = true
+
+[node name="Spada" parent="Hand" instance=ExtResource("11_d3wef")]
+scale = Vector2(0.8, 0.8)

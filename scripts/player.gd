@@ -1,76 +1,92 @@
 extends CharacterBody2D
 
-# Precarica la scena del menu per averla pronta all'uso
+@export var speed = 100.0
+@export var max_health = 6 # 3 Cuori
+@export var knockback_force = 200.0
+
+# Precaricamento scena Game Over
 var game_over_screen = preload("res://scenes/GameOverScreen.tscn")
 
-@export var speed = 100.0
-@export var knockback_force = 200.0 # Quanto forte vieni spinto via
-
+# Riferimenti ai nodi
 @onready var anim = $AnimatedSprite2D
+@onready var hand = $Hand # Il nodo che tiene l'arma
 
-#--- REPARTO VITA ---
-signal health_changed(new_health)
-
-@export var max_health = 6 # 3 Cuori x 2
-var health = 6             # Vita attuale
-
-func _ready():
-	# Appena inizia il gioco, impostiamo la vita al massimo
-	health = max_health
-	# Avvisiamo l'HUD di mostrare la vita piena
-	health_changed.emit(health)
-
-
+# Variabili di stato
+var health = 6
 var is_hurt = false
 
+# Segnali
+signal health_changed(new_health)
+
+func _ready():
+	health = max_health
+	health_changed.emit(health)
+
 func _physics_process(delta):
-	# --- GESTIONE DEL RIMBALZO ---
+	# --- 1. GESTIONE DANNO E KNOCKBACK ---
 	if is_hurt:
-		# Invece di fermarci, ci muoviamo scivolando (attrito)
-		# move_toward riduce la velocità verso 0 un po' alla volta
+		# Se sei colpito, scivoli all'indietro e NON puoi muoverti o attaccare
 		velocity = velocity.move_toward(Vector2.ZERO, 500 * delta)
 		move_and_slide()
-		return
+		return # Interrompiamo qui la funzione
 
-	# --- MOVIMENTO NORMALE ---
+	# --- 2. MOVIMENTO STANDARD ---
 	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	
 	if direction:
 		velocity = direction * speed
 		anim.play("run")
-		
-		if direction.x < 0:
-			anim.flip_h = true
-		elif direction.x > 0:
-			anim.flip_h = false
 	else:
 		velocity = Vector2.ZERO
 		anim.play("idle")
 
+	# --- 3. DIREZIONE DELLO SPRITE E DELL'ARMA ---
+	if direction.x < 0:
+		anim.flip_h = true   # Player guarda a sinistra
+		hand.scale.x = -1    # L'arma si specchia
+		
+		# NUOVO: Se la mano è a destra (positiva), portala a sinistra (negativa)
+		# abs() assicura che prendiamo il numero positivo, e il "-" davanti lo rende negativo
+		hand.position.x = -abs(hand.position.x) 
+		
+	elif direction.x > 0:
+		anim.flip_h = false  # Player guarda a destra
+		hand.scale.x = 1     # L'arma torna normale
+		
+		# NUOVO: Riportiamo la mano a destra (positiva)
+		hand.position.x = abs(hand.position.x)
+
+	# --- 4. INPUT ATTACCO ---
+	if Input.is_action_just_pressed("attack"):
+		attempt_attack()
+
+	# --- 5. APPLICA IL MOVIMENTO ---
 	move_and_slide()
 
-# --- FUNZIONE TAKE DAMAGE ---
-# Ora accetta "enemy_pos" per sapere da che parte scappare
+# Funzione per attaccare con l'arma equipaggiata
+func attempt_attack():
+	# Controlliamo se la mano ha un figlio (l'arma)
+	if hand.get_child_count() > 0:
+		var weapon = hand.get_child(0)
+		if weapon.has_method("attack"):
+			weapon.attack()
+	else:
+		print("Sono disarmato!")
+
+# Funzione per ricevere danno
 func take_damage(amount, enemy_pos = Vector2.ZERO):
 	if is_hurt: return
 	
 	is_hurt = true
 	health -= amount
-	
-	# --- AVVISIAMO L'HUD ---
 	health_changed.emit(health)
-	print("Vite rimanenti: ", health)
+	print("Ahia! Vita: ", health)
 	
-	# CALCOLO DEL RIMBALZO
+	# Calcolo Knockback
 	if enemy_pos != Vector2.ZERO:
-		# Calcola la direzione opposta al nemico: (MiaPosizione - PosizioneNemico)
-		var knockback_direction = (global_position - enemy_pos).normalized()
-		# Applica la spinta istantanea
-		velocity = knockback_direction * knockback_force
-	else:
-		# Se non sappiamo chi ci ha colpito (es. trappola), fermati e basta
-		velocity = Vector2.ZERO
-
+		var knockback_dir = (global_position - enemy_pos).normalized()
+		velocity = knockback_dir * knockback_force
+	
 	anim.play("hurt")
 	
 	if health <= 0:
@@ -82,58 +98,28 @@ func take_damage(amount, enemy_pos = Vector2.ZERO):
 
 func die():
 	print("GAME OVER")
-	
 	set_physics_process(false)
 	is_hurt = true
 	$CollisionShape2D.set_deferred("disabled", true)
 	
-	# --- MODIFICA TELECAMERA ---
 	var camera = $Camera2D
-	
-	# 1. Salviamo dove si trova ESATTAMENTE ora nel mondo
-	var old_global_pos = camera.global_position
-	
-	# 2. Sganciamo la telecamera
+	var old_pos = camera.global_position
 	camera.top_level = true
-	
-	# 3. Le riassegniamo forzatamente la posizione salvata
-	# (Così non salta a 0,0)
-	camera.global_position = old_global_pos
-	
-	# IMPORTANTE: Disattiviamo lo smoothing se era attivo,
-	# altrimenti cercherà di "scivolare" verso la posizione causando scatti.
+	camera.global_position = old_pos
 	camera.position_smoothing_enabled = false
 	
-	# --- IL RESTO DEL TWEEN RIMANE UGUALE ---
 	var tween = create_tween()
-	
-	# Saltino
 	tween.tween_property(self, "position:y", position.y - 40, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	
-	# Caduta (aumentiamo un po' la distanza per essere sicuri esca dallo schermo)
 	tween.tween_property(self, "position:y", position.y + 1000, 1.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	
 	anim.play("hurt")
 	
-	# Aspettiamo che l'animazione finisca
 	await tween.finished
 	
-	# --- SALVATAGGIO DELLA TELECAMERA ---
-	# Prima di distruggere il player, stacchiamo la telecamera e la attacchiamo al "Mondo" (il genitore del player).
-	# In questo modo la camera sopravvive alla morte del giocatore.
 	if is_instance_valid(camera):
 		camera.reparent(get_parent())
-	
-	# Ora possiamo cancellare il player in pace, la camera rimarrà lì dov'è
-	if is_instance_valid(camera):
-		camera.reparent(get_parent())
-	
-	# --- FASE NUOVA: MOSTRA GAME OVER ---
-	# 1. Crea una copia della scena Game Over
+		
 	var screen_instance = game_over_screen.instantiate()
-	
-	# 2. Aggiungila al "Mondo" (o alla radice del gioco)
 	get_tree().root.add_child(screen_instance)
 	
-	# 3. Ora puoi cancellare il player
 	queue_free()
