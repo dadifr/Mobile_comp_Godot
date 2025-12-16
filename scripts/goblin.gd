@@ -53,8 +53,8 @@ func _physics_process(delta):
 
 	# 3. CERCA IL GIOCATORE
 	if player == null:
-		player = get_parent().get_node_or_null("Player")
-	
+		player = get_tree().get_first_node_in_group("player")
+
 	if player != null:
 		var distance = global_position.distance_to(player.global_position)
 		
@@ -108,7 +108,7 @@ func _physics_process(delta):
 		var collider = collision.get_collider()
 		
 		# Se tocca il player E NON sta già attaccando
-		if collider.name == "Player" and not is_attacking:
+		if collider.is_in_group("player") and not is_attacking:
 			if collider.has_method("take_damage"):
 				attack_player(collider)
 

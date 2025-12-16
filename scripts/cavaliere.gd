@@ -96,7 +96,7 @@ func take_damage(amount, enemy_pos = Vector2.ZERO):
 	is_hurt = true
 	health -= amount
 	health_changed.emit(health)
-	print("Ahia! Vita: ", health)
+	print("Vita: ", health)
 	
 	# Calcolo Knockback
 	if enemy_pos != Vector2.ZERO:

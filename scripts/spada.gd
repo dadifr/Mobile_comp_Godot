@@ -21,6 +21,6 @@ func attack():
 
 func _on_body_entered(body):
 	if body.has_method("take_damage"):
-		if body.name != "Player":
+		if not body.is_in_group("player"):
 			# ORA PASSIAMO 2 COSE: IL DANNO E LA NOSTRA POSIZIONE
 			body.take_damage(damage, global_position)
