@@ -8,6 +8,7 @@ extends CanvasLayer
 # Prendo la lista dei cuori
 @onready var hearts = $MarginContainer/StatsContainer/HBoxContainer.get_children()
 
+
 # Riferimenti alle Label
 @onready var coin_label = $MarginContainer/StatsContainer/CoinRow/CoinLabel
 @onready var bomb_label = $MarginContainer/StatsContainer/BombRow/BombLabel
@@ -46,3 +47,16 @@ func update_life(amount):
 			else:
 				# Se non hai sprite vuoti, nascondiamo il cuore
 				hearts[i].visible = false
+
+
+func init_max_hearts(max_hp):
+	# Calcoliamo quanti cuori servono (es. 4 vita = 2 cuori)
+	var hearts_needed = max_hp / 2
+	
+	# Usiamo direttamente la variabile 'hearts'
+	# 'hearts.size()' ci dice quanti cuori totali ci sono nella scena (es. 3)
+	for i in range(hearts.size()):
+		if i < hearts_needed:
+			hearts[i].show() # Mostra il cuore se serve
+		else:
+			hearts[i].hide() # Nascondi il cuore se è di troppo

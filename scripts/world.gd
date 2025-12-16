@@ -34,8 +34,15 @@ func _ready():
 	# 4. Aggiungi finalmente il player al mondo
 	add_child(player_instance)
 	
-	# 5. Aggiornamento Iniziale Forzato
-	# Diciamo all'HUD di aggiornarsi subito con i valori iniziali del player
+	# --- AGGIORNAMENTO INIZIALE FORZATO ---
+	print("Aggiorno HUD iniziale...")
+	
+	# 1. NUOVO: Impostiamo il numero di cuori VISIBILI in base alla vita massima
+	hud.init_max_hearts(player_instance.max_health)
+	
+	# 2. Riempiamo i cuori in base alla vita attuale
 	hud.update_life(player_instance.health)
+	
+	# 3. Aggiorniamo il resto
 	hud.update_coins(player_instance.coins)
 	hud.update_bombs(player_instance.bombs)
