@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://gtwmvgnk2yr8"]
+[gd_scene load_steps=7 format=3 uid="uid://gtwmvgnk2yr8"]
 
 [ext_resource type="Script" uid="uid://cot8w4emyh3b" path="res://scripts/hud.gd" id="1_7hsmw"]
 [ext_resource type="Texture2D" uid="uid://dsybg5kuwroqx" path="res://assets/sprites/frames pg e utility/HUD/ui_heart_full.png" id="2_nysna"]
 [ext_resource type="Texture2D" uid="uid://mp21ou5fw4mu" path="res://assets/sprites/frames pg e utility/HUD/ui_heart_half.png" id="3_f6qnu"]
 [ext_resource type="Texture2D" uid="uid://bds3ogyri0f4j" path="res://assets/sprites/frames pg e utility/HUD/ui_heart_empty.png" id="4_k4w17"]
+[ext_resource type="Texture2D" uid="uid://dsukoll36sc7p" path="res://assets/sprites/frames pg e utility/utility/coin_anim_f0.png" id="5_f6qnu"]
+[ext_resource type="Texture2D" uid="uid://bdyydwnu4jn5u" path="res://assets/sprites/frames pg e utility/utility/bomb_f0.png" id="6_k4w17"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_7hsmw")
@@ -11,30 +13,62 @@ full_heart_texture = ExtResource("2_nysna")
 half_heart_texture = ExtResource("3_f6qnu")
 empty_heart_texture = ExtResource("4_k4w17")
 
-[node name="HealthContainer" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
+[node name="MarginContainer" type="MarginContainer" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HealthContainer"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(2, 2)
+[node name="StatsContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/StatsContainer"]
+layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Heart1" type="TextureRect" parent="HealthContainer/HBoxContainer"]
+[node name="Heart1" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("2_nysna")
 stretch_mode = 5
 
-[node name="Heart2" type="TextureRect" parent="HealthContainer/HBoxContainer"]
+[node name="Heart2" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("2_nysna")
 stretch_mode = 5
 
-[node name="Heart3" type="TextureRect" parent="HealthContainer/HBoxContainer"]
+[node name="Heart3" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("2_nysna")
 stretch_mode = 5
+
+[node name="CoinRow" type="HBoxContainer" parent="MarginContainer/StatsContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/StatsContainer/CoinRow"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("5_f6qnu")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CoinLabel" type="Label" parent="MarginContainer/StatsContainer/CoinRow"]
+layout_mode = 2
+text = "x 0"
+
+[node name="BombRow" type="HBoxContainer" parent="MarginContainer/StatsContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/StatsContainer/BombRow"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("6_k4w17")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BombLabel" type="Label" parent="MarginContainer/StatsContainer/BombRow"]
+layout_mode = 2
+text = "x 0"

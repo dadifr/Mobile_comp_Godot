@@ -8,6 +8,7 @@ extends CharacterBody2D
 @export var damage = 1
 @export var knockback_force = 250.0
 @export var attack_cooldown_time = 1.5 # Tempo in cui sta fermo dopo l'attacco
+@export var coin_scene: PackedScene
 
 # --- VARIABILI INTERNE ---
 var current_health = 3
@@ -174,6 +175,22 @@ func take_damage(amount, source_pos = Vector2.ZERO):
 		die()
 
 func die():
+	print("Scheletro eliminato!")
 	set_physics_process(false)
 	$CollisionShape2D.set_deferred("disabled", true)
+	
+	# --- SISTEMA DI LOOT ---
+	# Controlliamo se abbiamo assegnato una scena alla variabile (per evitare crash)
+	if coin_scene != null:
+		# 1. Creiamo una copia della moneta
+		var drop = coin_scene.instantiate()
+		
+		# 2. La posizioniamo dove è morto il mob
+		drop.global_position = global_position
+		
+		# 3. La aggiungiamo al mondo
+		# "get_parent()" prende il nodo World/Main
+		get_parent().call_deferred("add_child", drop)
+	
+	# Elimina il mob
 	queue_free()

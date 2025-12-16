@@ -1,12 +1,26 @@
 extends CanvasLayer
 
-
+#riferimenti alle vite
 @export var full_heart_texture: Texture2D 
 @export var half_heart_texture: Texture2D 
 @export var empty_heart_texture: Texture2D 
 
-# Prendo la lista dei cuori (assumendo siano figli diretti dell'HBoxContainer)
-@onready var hearts = $HealthContainer/HBoxContainer.get_children()
+# Prendo la lista dei cuori
+@onready var hearts = $MarginContainer/StatsContainer/HBoxContainer.get_children()
+
+# Riferimenti alle Label
+@onready var coin_label = $StatsContainer/CoinRow/CoinLabel
+@onready var bomb_label = $StatsContainer/BombRow/BombLabel
+
+# Funzione per aggiornare le monete
+func update_coins(amount):
+	coin_label.text = "x " + str(amount)
+
+
+# Funzione per aggiornare le bombe
+func update_bombs(amount):
+	bomb_label.text = "x " + str(amount)
+
 
 func update_life(amount):
 	# amount è la vita attuale (es. 6, 5, 4...)

@@ -1,0 +1,60 @@
+[gd_scene load_steps=12 format=3 uid="uid://dub3x4144frvp"]
+
+[ext_resource type="Script" uid="uid://d1na73p463ya1" path="res://scripts/coin.gd" id="1_1ikuy"]
+[ext_resource type="Texture2D" uid="uid://dsukoll36sc7p" path="res://assets/sprites/frames pg e utility/utility/coin_anim_f0.png" id="1_d14el"]
+[ext_resource type="Texture2D" uid="uid://dfwntwxq06o11" path="res://assets/sprites/frames pg e utility/utility/coin_anim_f1.png" id="2_1ikuy"]
+[ext_resource type="Texture2D" uid="uid://d083dc778afn4" path="res://assets/sprites/frames pg e utility/utility/coin_anim_f2.png" id="3_wnlwo"]
+[ext_resource type="Texture2D" uid="uid://bd8nhaqydpesq" path="res://assets/sprites/frames pg e utility/utility/coin_anim_f3.png" id="4_jig8b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xmuha"]
+atlas = ExtResource("1_d14el")
+region = Rect2(0, 0, 6, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kfxoj"]
+atlas = ExtResource("2_1ikuy")
+region = Rect2(0, 0, 6, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsmju"]
+atlas = ExtResource("3_wnlwo")
+region = Rect2(0, 0, 6, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0mny"]
+atlas = ExtResource("4_jig8b")
+region = Rect2(0, 0, 6, 7)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7cc30"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xmuha")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kfxoj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jsmju")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s0mny")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rojmm"]
+radius = 1.5
+
+[node name="Coin" type="Area2D"]
+script = ExtResource("1_1ikuy")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.7, 1.7)
+sprite_frames = SubResource("SpriteFrames_7cc30")
+autoplay = "default"
+frame_progress = 0.9347252
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(4, 4)
+shape = SubResource("CircleShape2D_rojmm")

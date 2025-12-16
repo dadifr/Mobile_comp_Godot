@@ -11,6 +11,14 @@ var game_over_screen = preload("res://scenes/GameOverScreen.tscn")
 @onready var anim = $AnimatedSprite2D
 @onready var hand = $Hand # Il nodo che tiene l'arma
 
+#Riferimenti all'HUD
+@export var coins = 0
+@export var bombs = 0
+
+# Definiamo dei segnali per avvisare l'HUD quando cambiano
+signal coins_changed(new_amount)
+signal bombs_changed(new_amount)
+
 # Variabili di stato
 var health = 6
 var is_hurt = false
@@ -59,6 +67,14 @@ func _physics_process(delta):
 	# --- 4. INPUT ATTACCO ---
 	if Input.is_action_just_pressed("attack"):
 		attempt_attack()
+
+	# --- DEBUG / CHEAT ---
+	# Usa "is_key_pressed" per tasti rapidi senza doverli configurare nell'Input Map
+	if Input.is_key_pressed(KEY_M):
+		add_coin(1) # Aggiunge 1 moneta
+		
+	if Input.is_key_pressed(KEY_B):
+		add_bomb(1) # Aggiunge 1 bomba
 
 	# --- 5. APPLICA IL MOVIMENTO ---
 	move_and_slide()
@@ -123,3 +139,13 @@ func die():
 	get_tree().root.add_child(screen_instance)
 	
 	queue_free()
+
+func add_coin(amount):
+	coins += amount
+	coins_changed.emit(coins) # Avvisa l'HUD
+	print("Monete: ", coins)
+
+func add_bomb(amount):
+	bombs += amount
+	bombs_changed.emit(bombs) # Avvisa l'HUD
+	print("Bombe: ", bombs)
