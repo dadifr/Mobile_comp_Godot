@@ -90,7 +90,7 @@ func _physics_process(delta):
 
 	# 4. GESTIONE ANIMAZIONI
 	if velocity.length() > 0:
-		anim.play("walk")
+		anim.play("run")
 		if not is_investigating:
 			if velocity.x < 0:
 				anim.flip_h = true

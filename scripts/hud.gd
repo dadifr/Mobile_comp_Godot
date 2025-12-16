@@ -9,8 +9,8 @@ extends CanvasLayer
 @onready var hearts = $MarginContainer/StatsContainer/HBoxContainer.get_children()
 
 # Riferimenti alle Label
-@onready var coin_label = $StatsContainer/CoinRow/CoinLabel
-@onready var bomb_label = $StatsContainer/BombRow/BombLabel
+@onready var coin_label = $MarginContainer/StatsContainer/CoinRow/CoinLabel
+@onready var bomb_label = $MarginContainer/StatsContainer/BombRow/BombLabel
 
 # Funzione per aggiornare le monete
 func update_coins(amount):
