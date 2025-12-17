@@ -45,6 +45,18 @@ layout_mode = 2
 texture = ExtResource("2_nysna")
 stretch_mode = 5
 
+[node name="Heart4" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("2_nysna")
+stretch_mode = 5
+
+[node name="Heart5" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("2_nysna")
+stretch_mode = 5
+
 [node name="CoinRow" type="HBoxContainer" parent="MarginContainer/StatsContainer"]
 layout_mode = 2
 

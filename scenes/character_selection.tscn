@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4p2ag0n4ui3x"]
+[gd_scene load_steps=8 format=3 uid="uid://b4p2ag0n4ui3x"]
 
 [ext_resource type="Script" uid="uid://m5ev2frp3o1n" path="res://scripts/character_selection.gd" id="1_7xed0"]
 [ext_resource type="PackedScene" uid="uid://cjkp6iup5bgc3" path="res://scenes/cavaliere.tscn" id="2_wh1ae"]
 [ext_resource type="PackedScene" uid="uid://cdh1w2mxhohds" path="res://scenes/elfo.tscn" id="3_cqj7k"]
+[ext_resource type="PackedScene" uid="uid://bmpeipw8r4nj7" path="res://scenes/nano.tscn" id="4_cqj7k"]
 [ext_resource type="Texture2D" uid="uid://flgyr6efghe2" path="res://assets/sprites/frames pg e utility/character/knight_m_idle_anim_f0.png" id="4_iixut"]
 [ext_resource type="Texture2D" uid="uid://ded544xo5cem3" path="res://assets/sprites/frames pg e utility/character/elf_m_idle_anim_f0.png" id="5_dv8bk"]
+[ext_resource type="Texture2D" uid="uid://l4mvjx0sr5t5" path="res://assets/sprites/frames pg e utility/character/dwarf_m_idle_anim_f0.png" id="7_iixut"]
 
 [node name="CharacterSelection" type="Control"]
 layout_mode = 3
@@ -14,6 +16,7 @@ offset_bottom = 40.0
 script = ExtResource("1_7xed0")
 knight_scene = ExtResource("2_wh1ae")
 elf_scene = ExtResource("3_cqj7k")
+dwarf_scene = ExtResource("4_cqj7k")
 
 [node name="ImCavaliere" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(16, 16)
@@ -37,6 +40,17 @@ texture = ExtResource("5_dv8bk")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="ImNano" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 0
+offset_left = 280.0
+offset_top = 123.0
+offset_right = 329.0
+offset_bottom = 186.0
+texture = ExtResource("7_iixut")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 155.0
@@ -51,3 +65,7 @@ text = "Cavaliere"
 [node name="BtnElfo" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 text = "Elfo"
+
+[node name="BtnNano" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Nano"
