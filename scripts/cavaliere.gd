@@ -3,6 +3,9 @@ extends CharacterBody2D
 @export var speed = 100.0
 @export var max_health = 6 # 3 Cuori
 @export var knockback_force = 200.0
+@export var push_force = 5000.0
+@export var bomb_scene: PackedScene
+
 
 # Precaricamento scena Game Over
 var game_over_screen = preload("res://scenes/GameOverScreen.tscn")
@@ -22,6 +25,9 @@ signal bombs_changed(new_amount)
 # Variabili di stato
 var health = 6
 var is_hurt = false
+
+# Variabili direzione
+var last_direction = Vector2.RIGHT
 
 # Segnali
 signal health_changed(new_health)
@@ -47,6 +53,13 @@ func _physics_process(delta):
 	else:
 		velocity = Vector2.ZERO
 		anim.play("idle")
+	
+	# --- NUOVO: AGGIORNA DOVE GUARDI ---
+	# Se ci stiamo muovendo (il vettore non è zero), aggiorniamo la direzione
+	if direction != Vector2.ZERO:
+		last_direction = direction
+		
+		last_direction = direction.normalized()
 
 	# --- 3. DIREZIONE DELLO SPRITE E DELL'ARMA ---
 	if direction.x < 0:
@@ -76,8 +89,29 @@ func _physics_process(delta):
 	if Input.is_key_pressed(KEY_B):
 		add_bomb(1) # Aggiunge 1 bomba
 
-	# --- 5. APPLICA IL MOVIMENTO ---
+	# --- 5. PLACMENT BOMBE ---
+	# Tasto "E" per piazzare la bomba
+	if Input.is_action_just_pressed("place_bomb"):
+		place_bomb()
+	# --- 6. APPLICA IL MOVIMENTO ---
 	move_and_slide()
+	
+	# --- 7. LOGICA SPINTA OGGETTI ---
+	# Controlliamo tutte le collisioni avvenute in questo frame
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		
+		if collider is RigidBody2D:
+			# 1. Direzione dell'urto (dal player verso la bomba)
+			# Usiamo "-collision.get_normal()" che è precisissimo
+			var push_dir = -collision.get_normal()
+			var push_speed = speed * 1.5 
+			
+			# Applichiamo la velocità direttamente
+			collider.linear_velocity = push_dir * push_speed
+
+
 
 # Funzione per attaccare con l'arma equipaggiata
 func attempt_attack():
@@ -149,3 +183,20 @@ func add_bomb(amount):
 	bombs += amount
 	bombs_changed.emit(bombs) # Avvisa l'HUD
 	print("Bombe: ", bombs)
+
+func place_bomb():
+	if bombs > 0:
+		bombs -= 1
+		bombs_changed.emit(bombs)
+		
+		if bomb_scene:
+			var bomb = bomb_scene.instantiate()
+			
+			# --- CALCOLO POSIZIONE ---
+			# Distanza in pixel
+			var distance = 40 
+			
+			# La posizione è: DOVE SONO IO + (DIREZIONE * DISTANZA)
+			bomb.global_position = global_position + (last_direction * distance)
+			
+			get_parent().add_child(bomb)

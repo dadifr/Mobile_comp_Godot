@@ -1,7 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://bmpeipw8r4nj7"]
+[gd_scene load_steps=26 format=3 uid="uid://bmpeipw8r4nj7"]
 
 [ext_resource type="Script" uid="uid://duh7e6f4tpugl" path="res://scripts/cavaliere.gd" id="1_vsplu"]
 [ext_resource type="Texture2D" uid="uid://cla5kisxpp4ny" path="res://assets/sprites/frames pg e utility/character/dwarf_m_hit_anim_f0.png" id="2_tlf1f"]
+[ext_resource type="PackedScene" uid="uid://cdcedd8m54axk" path="res://scenes/bomb.tscn" id="2_vsplu"]
 [ext_resource type="Texture2D" uid="uid://dq1fj6uo50j6a" path="res://assets/sprites/frames pg e utility/character/dwarf_m_idle_anim_f2.png" id="3_vsplu"]
 [ext_resource type="Texture2D" uid="uid://l4mvjx0sr5t5" path="res://assets/sprites/frames pg e utility/character/dwarf_m_idle_anim_f0.png" id="4_qoe5u"]
 [ext_resource type="Texture2D" uid="uid://dfnouxbof7lsw" path="res://assets/sprites/frames pg e utility/character/dwarf_m_idle_anim_f1.png" id="5_gxaqu"]
@@ -125,6 +126,7 @@ radius = 7.0
 script = ExtResource("1_vsplu")
 speed = 60.0
 max_health = 10
+bomb_scene = ExtResource("2_vsplu")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

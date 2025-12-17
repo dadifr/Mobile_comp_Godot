@@ -175,7 +175,7 @@ func take_damage(amount, source_pos = Vector2.ZERO):
 		die()
 
 func die():
-	print("Scheletro eliminato!")
+	print("Goblin eliminato!")
 	set_physics_process(false)
 	$CollisionShape2D.set_deferred("disabled", true)
 	
