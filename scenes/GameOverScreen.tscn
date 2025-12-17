@@ -41,13 +41,23 @@ offset_bottom = 182.0
 theme_override_fonts/font = ExtResource("2_1tm0t")
 text = "RIPROVA"
 
+[node name="Menu" type="Button" parent="."]
+offset_left = 254.0
+offset_top = 204.0
+offset_right = 370.0
+offset_bottom = 228.0
+theme_override_fonts/font = ExtResource("2_1tm0t")
+text = "MENU'"
+
 [node name="Esci" type="Button" parent="."]
-offset_left = 279.0
-offset_top = 217.0
-offset_right = 347.0
-offset_bottom = 241.0
+offset_left = 277.0
+offset_top = 255.0
+offset_right = 345.0
+offset_bottom = 279.0
 theme_override_fonts/font = ExtResource("2_1tm0t")
 text = "ESCI"
 
 [connection signal="pressed" from="Riprova" to="." method="_on_riprova_pressed"]
+[connection signal="pressed" from="Menu" to="." method="_on_riprova_pressed"]
+[connection signal="pressed" from="Menu" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="Esci" to="." method="_on_esci_pressed"]
