@@ -117,7 +117,7 @@ height = 22.0
 
 [node name="zombie" type="CharacterBody2D"]
 script = ExtResource("1_1vlb3")
-speed = 30.0
+speed = 20.0
 patrol_speed = 20.0
 max_health = 6
 metadata/_edit_group_ = true
