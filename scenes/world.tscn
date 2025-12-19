@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://c7qn6reikqpwx"]
+[gd_scene load_steps=14 format=4 uid="uid://c7qn6reikqpwx"]
 
 [ext_resource type="Script" uid="uid://bogrtnwqahvmw" path="res://scripts/world.gd" id="1_4mrxx"]
 [ext_resource type="Texture2D" uid="uid://c61msblyysns7" path="res://assets/sprites/atlas_floor-16x16.png" id="1_4wyf3"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cyq48r8dxvud" path="res://scenes/goblin.tscn" id="6_qfnet"]
 [ext_resource type="PackedScene" uid="uid://gtwmvgnk2yr8" path="res://scenes/HUD.tscn" id="8_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://dub3x4144frvp" path="res://scenes/coin.tscn" id="8_w7kh3"]
+[ext_resource type="PackedScene" uid="uid://dfgjlp1lau0g8" path="res://scenes/zombie.tscn" id="9_7r4gi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4wyf3"]
 texture = ExtResource("1_4wyf3")
@@ -450,10 +451,13 @@ tile_set = SubResource("TileSet_qfnet")
 position = Vector2(368, 402)
 
 [node name="goblin" parent="." instance=ExtResource("6_qfnet")]
-position = Vector2(623, 76)
+position = Vector2(624, 78)
 coin_scene = ExtResource("8_w7kh3")
 
 [node name="SpawnPoint" type="Marker2D" parent="."]
 position = Vector2(347, 206)
 
 [node name="HUD" parent="." instance=ExtResource("8_7r4gi")]
+
+[node name="zombie" parent="." instance=ExtResource("9_7r4gi")]
+position = Vector2(474, 257)
