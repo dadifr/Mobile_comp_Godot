@@ -123,6 +123,7 @@ animations = [{
 radius = 7.0
 
 [node name="nano" type="CharacterBody2D" groups=["player"]]
+motion_mode = 1
 script = ExtResource("1_vsplu")
 speed = 60.0
 max_health = 10

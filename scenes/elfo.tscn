@@ -123,6 +123,7 @@ animations = [{
 radius = 6.0
 
 [node name="elfo" type="CharacterBody2D" groups=["player"]]
+motion_mode = 1
 script = ExtResource("1_pbe11")
 speed = 120.0
 max_health = 4
