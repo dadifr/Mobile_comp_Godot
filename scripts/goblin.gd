@@ -9,7 +9,7 @@ extends CharacterBody2D
 @export var knockback_force = 250.0
 @export var attack_cooldown_time = 1.5 # Tempo in cui sta fermo dopo l'attacco
 @export var coin_scene: PackedScene
-@export var potion_scene: PackedScene # <--- La nuova pozione
+@export var potionH_scene: PackedScene # <--- La nuova pozione
 
 # Probabilità (0.15 = 15%, 0.5 = 50%)
 @export var potion_chance: float = 0.10 
@@ -189,8 +189,8 @@ func die():
 	
 	# CONTROLLO 1: Pozione (È la più rara, controlliamo per prima)
 	# Esempio: Se random_roll è 0.10 (che è < 0.15), vinci la pozione.
-	if potion_scene and random_roll < potion_chance:
-		spawn_loot(potion_scene)
+	if potionH_scene and random_roll < potion_chance:
+		spawn_loot(potionH_scene)
 		
 	# CONTROLLO 2: Moneta
 	# Usiamo "elif": quindi se hai già vinto la pozione, NON entri qui.

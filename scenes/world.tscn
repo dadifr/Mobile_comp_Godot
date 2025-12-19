@@ -453,11 +453,12 @@ position = Vector2(368, 402)
 
 [node name="goblin" parent="." instance=ExtResource("6_qfnet")]
 position = Vector2(624, 78)
+potionH_scene = ExtResource("9_w7kh3")
 
 [node name="zombie" parent="." instance=ExtResource("9_7r4gi")]
 position = Vector2(474, 257)
 coin_scene = ExtResource("8_w7kh3")
-potion_scene = ExtResource("9_w7kh3")
+potionH_scene = ExtResource("9_w7kh3")
 
 [node name="SpawnPoint" type="Marker2D" parent="."]
 position = Vector2(347, 206)
