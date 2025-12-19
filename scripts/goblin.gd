@@ -9,6 +9,11 @@ extends CharacterBody2D
 @export var knockback_force = 250.0
 @export var attack_cooldown_time = 1.5 # Tempo in cui sta fermo dopo l'attacco
 @export var coin_scene: PackedScene
+@export var potion_scene: PackedScene # <--- La nuova pozione
+
+# Probabilità (0.15 = 15%, 0.5 = 50%)
+@export var potion_chance: float = 0.10 
+@export var coin_chance: float = 0.60
 
 # --- VARIABILI INTERNE ---
 var current_health = 3
@@ -179,18 +184,27 @@ func die():
 	set_physics_process(false)
 	$CollisionShape2D.set_deferred("disabled", true)
 	
-	# --- SISTEMA DI LOOT ---
-	# Controlliamo se abbiamo assegnato una scena alla variabile (per evitare crash)
-	if coin_scene != null:
-		# 1. Creiamo una copia della moneta
-		var drop = coin_scene.instantiate()
-		
-		# 2. La posizioniamo dove è morto il mob
-		drop.global_position = global_position
-		
-		# 3. La aggiungiamo al mondo
-		# "get_parent()" prende il nodo World/Main
-		get_parent().call_deferred("add_child", drop)
+	# --- SISTEMA DI LOOT LOGICO ---
+	var random_roll = randf() # Genera un numero da 0.0 a 1.0
 	
-	# Elimina il mob
+	# CONTROLLO 1: Pozione (È la più rara, controlliamo per prima)
+	# Esempio: Se random_roll è 0.10 (che è < 0.15), vinci la pozione.
+	if potion_scene and random_roll < potion_chance:
+		spawn_loot(potion_scene)
+		
+	# CONTROLLO 2: Moneta
+	# Usiamo "elif": quindi se hai già vinto la pozione, NON entri qui.
+	# Sommiamo le chance: da 0.15 a 0.65 (0.15 + 0.5) vince la moneta.
+	elif coin_scene and random_roll < (potion_chance + coin_chance):
+		spawn_loot(coin_scene)
+	
+	# Se il numero è molto alto (es. 0.8), non entra in nessuno dei due if
+	# e il mostro non droppa nulla (sfortuna!).
+	
 	queue_free()
+
+func spawn_loot(scene_to_spawn):
+	if scene_to_spawn != null:
+		var drop = scene_to_spawn.instantiate()
+		drop.global_position = global_position
+		get_parent().call_deferred("add_child", drop)

@@ -146,6 +146,19 @@ func take_damage(amount, enemy_pos = Vector2.ZERO):
 		is_hurt = false
 		anim.play("idle")
 
+func heal(amount):
+	# Aumentiamo la vita
+	health += amount
+	
+	# Non superiamo mai la vita massima!
+	if health > max_health:
+		health = max_health
+	
+	# Aggiorniamo l'HUD
+	health_changed.emit(health)
+	
+	print("Curato! Vita attuale: ", health)
+
 func die():
 	print("GAME OVER")
 	set_physics_process(false)

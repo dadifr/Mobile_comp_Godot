@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://r6lksf7a5u0v"]
+
+[ext_resource type="Script" uid="uid://uqso5b22nv4n" path="res://scripts/potion_h.gd" id="1_4x2f5"]
+[ext_resource type="Texture2D" uid="uid://dyv6lp6j0fc5k" path="res://assets/sprites/frames pg e utility/utility/flask_red.png" id="2_r568e"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5q220"]
+radius = 4.0
+height = 12.0
+
+[node name="PotionH" type="Area2D"]
+script = ExtResource("1_4x2f5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_r568e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_5q220")
