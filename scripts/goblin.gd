@@ -117,6 +117,27 @@ func _physics_process(delta):
 			if collider.has_method("take_damage"):
 				attack_player(collider)
 
+	# --- INIZIO CODICE SPINTA BOMBA ---
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		
+		# Se il nemico sbatte contro un oggetto rigido (Bomba)
+		if collider is RigidBody2D:
+			# 1. Calcoliamo la direzione della spinta
+			# Usiamo "-normal" che è la direzione opposta all'urto
+			var push_dir = -collision.get_normal()
+			
+			# 2. Velocità di spinta
+			# Facciamo che il nemico spinge un po' più piano del giocatore
+			# (o uguale, dipende da quanto è forte lo scheletro)
+			var push_speed = 100.0 
+			
+			# 3. Sovrascriviamo la velocità della bomba
+			# Usiamo la stessa tecnica "Anti-Railgun" per evitare che voli via
+			collider.linear_velocity = push_dir * push_speed
+	# --- FINE CODICE SPINTA ---
+
 # --- FUNZIONE ATTACCO AGGIORNATA ---
 func attack_player(target):
 	# 1. Blocchiamo l'AI
