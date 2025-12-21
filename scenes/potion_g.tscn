@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://jmf43nm046k8"]
+
+[ext_resource type="Texture2D" uid="uid://d5tiwl8ay46a" path="res://assets/sprites/frames pg e utility/utility/flask_yellow.png" id="1_admod"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xmoy3"]
+radius = 3.0
+height = 12.0
+
+[node name="potionG" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_admod")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_xmoy3")
