@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://cdcedd8m54axk"]
+[gd_scene load_steps=17 format=3 uid="uid://cdcedd8m54axk"]
 
 [ext_resource type="Script" uid="uid://bhk1urj3di4wn" path="res://scripts/bomb.gd" id="1_84slv"]
+[ext_resource type="Texture2D" uid="uid://b65f10jgfk0y8" path="res://assets/sprites/frames pg e utility/utility/explosion.png" id="2_1hf1o"]
 [ext_resource type="Texture2D" uid="uid://bdyydwnu4jn5u" path="res://assets/sprites/frames pg e utility/utility/bomb_f0.png" id="2_nxi8k"]
 [ext_resource type="Texture2D" uid="uid://ctk877fm3jh26" path="res://assets/sprites/frames pg e utility/utility/bomb_f1.png" id="3_1hf1o"]
 [ext_resource type="Texture2D" uid="uid://crhqa7uyilmfp" path="res://assets/sprites/frames pg e utility/utility/bomb_f2.png" id="4_56fam"]
@@ -8,6 +9,22 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_84slv"]
 friction = 0.0
 bounce = 0.5
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_56fam"]
+atlas = ExtResource("2_1hf1o")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3nocn"]
+atlas = ExtResource("2_1hf1o")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_poanl"]
+atlas = ExtResource("2_1hf1o")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8gab1"]
+atlas = ExtResource("2_1hf1o")
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8lqhf"]
 atlas = ExtResource("2_nxi8k")
@@ -25,6 +42,23 @@ region = Rect2(0, 0, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_56fam")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3nocn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_poanl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8gab1")
+}],
+"loop": false,
+"name": &"explosion",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_8lqhf")
 }, {
 "duration": 1.0,
@@ -34,7 +68,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_m3s2y")
 }],
 "loop": true,
-"name": &"explosion",
+"name": &"timerDeto",
 "speed": 1.0
 }]
 
@@ -54,7 +88,7 @@ script = ExtResource("1_84slv")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3nocn")
 animation = &"explosion"
-autoplay = "explosion"
+autoplay = "timerDeto"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 1)

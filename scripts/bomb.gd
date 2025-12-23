@@ -12,7 +12,7 @@ func _on_timer_timeout():
 func explode():
 	# 1. VISUAL
 	$AnimatedSprite2D.play("explosion")
-	$AnimatedSprite2D.scale = Vector2(2, 2) # Diventa grande (effetto boom economico)
+	$AnimatedSprite2D.scale = Vector2(4, 4) # Diventa grande (effetto boom economico)
 	
 	# 2. LOGICA: Attiva l'area di danno
 	# Dobbiamo aspettare un micro-secondo che la fisica si aggiorni
