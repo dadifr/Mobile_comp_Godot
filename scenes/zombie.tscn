@@ -115,7 +115,7 @@ size = Vector2(8, 13)
 radius = 6.0
 height = 22.0
 
-[node name="zombie" type="CharacterBody2D"]
+[node name="zombie" type="CharacterBody2D" groups=["enemies"]]
 script = ExtResource("1_1vlb3")
 speed = 20.0
 patrol_speed = 20.0

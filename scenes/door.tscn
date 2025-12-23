@@ -1,17 +1,45 @@
-[gd_scene load_steps=3 format=3 uid="uid://dnwmtdjt26mxb"]
+[gd_scene load_steps=7 format=3 uid="uid://dnwmtdjt26mxb"]
 
 [ext_resource type="Texture2D" uid="uid://df303wa0fqfj5" path="res://assets/sprites/atlas_walls_high-16x32.png" id="1_hpvv5"]
+[ext_resource type="Script" uid="uid://bn6buj8kisa1x" path="res://scripts/door.gd" id="1_uvdjg"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uvdjg"]
-size = Vector2(32, 20.5)
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpvv5"]
+atlas = ExtResource("1_hpvv5")
+region = Rect2(256, 96, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uvdjg"]
+atlas = ExtResource("1_hpvv5")
+region = Rect2(320, 96, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_83dcw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hpvv5")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uvdjg")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_la1wf"]
+size = Vector2(26, 23)
 
 [node name="Door" type="StaticBody2D"]
+script = ExtResource("1_uvdjg")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_hpvv5")
-region_enabled = true
-region_rect = Rect2(271.21405, 96.561874, 33.13623, 31.344666)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_83dcw")
+animation = &"closed"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4.25)
-shape = SubResource("RectangleShape2D_uvdjg")
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_la1wf")

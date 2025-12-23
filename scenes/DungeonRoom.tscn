@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcuiblel7ihlf"]
+
+[ext_resource type="Script" uid="uid://c4llx4aasd5ng" path="res://scripts/dungeon_room.gd" id="1_ovmbm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3538w"]
+size = Vector2(640, 360)
+
+[node name="DungeonRoom" type="Node2D"]
+script = ExtResource("1_ovmbm")
+
+[node name="Detector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+position = Vector2(320, 180)
+shape = SubResource("RectangleShape2D_3538w")
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Doors" type="Node2D" parent="."]

@@ -1,10 +1,9 @@
-[gd_scene load_steps=27 format=3 uid="uid://cyq48r8dxvud"]
+[gd_scene load_steps=26 format=3 uid="uid://cyq48r8dxvud"]
 
 [ext_resource type="Texture2D" uid="uid://bmym40yxttpy6" path="res://assets/sprites/frames pg e utility/mob/goblin_idle_anim_f0.png" id="1_u21pb"]
 [ext_resource type="Script" uid="uid://cdvosxkwylsgu" path="res://scripts/goblin.gd" id="1_vho8j"]
 [ext_resource type="PackedScene" uid="uid://dub3x4144frvp" path="res://scenes/coin.tscn" id="2_osho7"]
 [ext_resource type="Texture2D" uid="uid://dibcbjm2e2lpc" path="res://assets/sprites/frames pg e utility/mob/goblin_idle_anim_f1.png" id="2_vho8j"]
-[ext_resource type="PackedScene" uid="uid://r6lksf7a5u0v" path="res://scenes/potion_h.tscn" id="3_exsy4"]
 [ext_resource type="Texture2D" uid="uid://c4e84vaj5bxl0" path="res://assets/sprites/frames pg e utility/mob/goblin_idle_anim_f2.png" id="3_g2t3q"]
 [ext_resource type="Texture2D" uid="uid://t8vbt5nx315e" path="res://assets/sprites/frames pg e utility/mob/goblin_idle_anim_f3.png" id="4_osho7"]
 [ext_resource type="Texture2D" uid="uid://cxl1bk6gb73k4" path="res://assets/sprites/frames pg e utility/mob/goblin_run_anim_f0.png" id="5_exsy4"]
@@ -120,10 +119,9 @@ radius = 5.0990195
 [sub_resource type="CircleShape2D" id="CircleShape2D_os5nw"]
 radius = 7.0
 
-[node name="goblin" type="CharacterBody2D"]
+[node name="goblin" type="CharacterBody2D" groups=["enemies"]]
 script = ExtResource("1_vho8j")
 coin_scene = ExtResource("2_osho7")
-potion_scene = ExtResource("3_exsy4")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
