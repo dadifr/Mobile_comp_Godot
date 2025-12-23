@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2f6kkkahowj8"]
+
+[ext_resource type="Script" uid="uid://00h6wmjsyi04" path="res://scripts/BombPickup.gd" id="1_vw860"]
+[ext_resource type="Texture2D" uid="uid://bdyydwnu4jn5u" path="res://assets/sprites/frames pg e utility/utility/bomb_f0.png" id="2_vw860"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_25yia"]
+radius = 6.0
+
+[node name="BombPickup" type="Area2D"]
+script = ExtResource("1_vw860")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_vw860")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 1)
+shape = SubResource("CircleShape2D_25yia")
