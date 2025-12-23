@@ -32,19 +32,19 @@ region = Rect2(0, 0, 16, 16)
 atlas = ExtResource("6_p4ldp")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xe5kn"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_0vvo0"]
 atlas = ExtResource("7_lhfsh")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_i54i8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7k6mn"]
 atlas = ExtResource("8_6prgb")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dq1c6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4d16r"]
 atlas = ExtResource("9_sb85j")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_88d8a"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4ldp"]
 atlas = ExtResource("10_n5ubg")
 region = Rect2(0, 0, 16, 16)
 
@@ -62,22 +62,27 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lawcg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xe5kn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_i54i8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dq1c6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_88d8a")
 }],
 "loop": true,
-"name": &"default",
-"speed": 5.0
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0vvo0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7k6mn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4d16r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4ldp")
+}],
+"loop": true,
+"name": &"run",
+"speed": 7.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_22ud0"]
@@ -97,8 +102,9 @@ shape = SubResource("RectangleShape2D_lxbh7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rui5k")
-frame = 7
-frame_progress = 0.9881746
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.84402925
 
 [node name="Hitbox" type="Area2D" parent="."]
 
