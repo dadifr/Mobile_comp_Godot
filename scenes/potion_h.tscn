@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dyv6lp6j0fc5k" path="res://assets/sprites/frames pg e utility/utility/flask_red.png" id="2_r568e"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5q220"]
-radius = 4.0
+radius = 5.0
 height = 12.0
 
 [node name="PotionH" type="Area2D"]

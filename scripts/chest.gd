@@ -2,13 +2,15 @@ extends StaticBody2D
 
 # --- VARIABILI SCENE ---
 @export var coin_scene: PackedScene
-@export var potion_scene: PackedScene
+@export var potion_h_scene: PackedScene
 @export var bomb_scene: PackedScene 
+@export var big_potion_h_scene: PackedScene
 
 # --- PROBABILITÀ ---
 @export var mimic_chance: float = 0.1 # 10% di probabilità che sia una trappola
-@export var potion_chance: float = 0.4
+@export var potion_h_chance: float = 0.4
 @export var coin_chance: float = 0.8
+@export var big_potion_h_chance: float = 0.2
 
 # Quantità
 @export var min_coins: int = 2
@@ -36,22 +38,30 @@ func calculate_loot():
 		trigger_mimic()
 		return # <--- IMPORTANTE: Esce dalla funzione. Niente loot per te!
 
-	# --- 2. LOGICA STANDARD (LOOT) ---
+	# --- INIZIO LOOT ---
 	var has_loot = false
 	
-	# Controllo Pozione
-	if potion_scene and randf() <= potion_chance:
-		spawn_item(potion_scene)
+	# 2. CONTROLLO POZIONE GRANDE (Il premio migliore!)
+	if big_potion_h_scene and randf() <= big_potion_h_chance:
+		spawn_item(big_potion_h_scene)
+		has_loot = true
+		print("Wow! Pozione Grande trovata!")
+
+	# 3. CONTROLLO POZIONE PICCOLA
+	# Nota: Usando "if" separati, è possibile trovare ENTRAMBE (che fortuna!)
+	# Se vuoi che siano esclusive, usa "elif" qui, ma così è più divertente.
+	if potion_h_scene and randf() <= potion_h_chance:
+		spawn_item(potion_h_scene)
 		has_loot = true
 		
-	# Controllo Monete
+	# 4. CONTROLLO MONETE
 	if coin_scene and randf() <= coin_chance:
 		var amount = randi_range(min_coins, max_coins)
 		for i in range(amount):
 			spawn_item(coin_scene)
 		has_loot = true
 	
-	# Feedback Visivo (Aperta o Vuota)
+	# FEEDBACK ANIMAZIONE
 	if has_loot:
 		$AnimatedSprite2D.play("open")
 	else:

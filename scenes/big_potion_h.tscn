@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://hvs8mrmh7sob"]
+
+[ext_resource type="PackedScene" uid="uid://r6lksf7a5u0v" path="res://scenes/potion_h.tscn" id="1_ib8vw"]
+[ext_resource type="Texture2D" uid="uid://bphak388rseq7" path="res://assets/sprites/frames pg e utility/utility/flask_big_red.png" id="2_ujps3"]
+
+[node name="BigPotionH" instance=ExtResource("1_ib8vw")]
+heal_amount = 4
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_ujps3")
