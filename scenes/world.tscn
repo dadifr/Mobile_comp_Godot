@@ -489,7 +489,7 @@ motion_mode = 1
 potionH_scene = ExtResource("9_w7kh3")
 
 [node name="zombie2" parent="DungeonRoom/Enemies" index="3" instance=ExtResource("9_7r4gi")]
-position = Vector2(474, 257)
+position = Vector2(566, 295)
 motion_mode = 1
 coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("9_w7kh3")
@@ -499,20 +499,56 @@ position = Vector2(369, 400)
 
 [node name="ShopItem" parent="." instance=ExtResource("15_xo05s")]
 position = Vector2(200, 344)
-item_to_sell = ExtResource("9_w7kh3")
-price = 3
+is_random_shop = true
 item_texture = ExtResource("16_dss4m")
+bomb_scene = ExtResource("18_pm21f")
+bomb_texture = ExtResource("19_2lf6f")
+bomb_chance = 0.4
+potion_scene = ExtResource("9_w7kh3")
+potion_texture = ExtResource("16_dss4m")
+potion_price_range = Vector2i(3, 7)
+big_potion_scene = ExtResource("9_o8fc1")
+big_potion_texture = ExtResource("17_7t5mc")
+big_potion_price_range = Vector2i(5, 15)
+big_potion_chance = 0.3
 
 [node name="ShopItem2" parent="." instance=ExtResource("15_xo05s")]
-position = Vector2(248, 344)
-item_to_sell = ExtResource("9_o8fc1")
-price = 8
-item_texture = ExtResource("17_7t5mc")
+position = Vector2(232, 344)
+is_random_shop = true
+item_texture = ExtResource("16_dss4m")
+bomb_scene = ExtResource("18_pm21f")
+bomb_texture = ExtResource("19_2lf6f")
+potion_scene = ExtResource("9_w7kh3")
+potion_texture = ExtResource("16_dss4m")
+potion_price_range = Vector2i(3, 7)
+big_potion_scene = ExtResource("9_o8fc1")
+big_potion_texture = ExtResource("17_7t5mc")
+big_potion_price_range = Vector2i(5, 15)
 
 [node name="ShopItem3" parent="." instance=ExtResource("15_xo05s")]
+position = Vector2(264, 344)
+is_random_shop = true
+item_texture = ExtResource("16_dss4m")
+bomb_scene = ExtResource("18_pm21f")
+bomb_texture = ExtResource("19_2lf6f")
+potion_scene = ExtResource("9_w7kh3")
+potion_texture = ExtResource("16_dss4m")
+potion_price_range = Vector2i(3, 7)
+big_potion_scene = ExtResource("9_o8fc1")
+big_potion_texture = ExtResource("17_7t5mc")
+big_potion_price_range = Vector2i(5, 15)
+
+[node name="ShopItem4" parent="." instance=ExtResource("15_xo05s")]
 position = Vector2(296, 344)
-item_to_sell = ExtResource("18_pm21f")
-price = 5
-item_texture = ExtResource("19_2lf6f")
+is_random_shop = true
+item_texture = ExtResource("16_dss4m")
+bomb_scene = ExtResource("18_pm21f")
+bomb_texture = ExtResource("19_2lf6f")
+potion_scene = ExtResource("9_w7kh3")
+potion_texture = ExtResource("16_dss4m")
+potion_price_range = Vector2i(3, 7)
+big_potion_scene = ExtResource("9_o8fc1")
+big_potion_texture = ExtResource("17_7t5mc")
+big_potion_price_range = Vector2i(5, 15)
 
 [editable path="DungeonRoom"]
