@@ -5,6 +5,9 @@ extends Area2D
 @export var damage = 1
 var direction = Vector2.ZERO
 
+func _ready():
+	body_entered.connect(_on_body_entered)
+
 func _physics_process(delta):
 	position += direction * speed * delta
 

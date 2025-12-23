@@ -1,6 +1,6 @@
-[gd_scene load_steps=24 format=3 uid="uid://c5fsiv7w311e8"]
+[gd_scene load_steps=24 format=3 uid="uid://dtha5aeas62a6"]
 
-[ext_resource type="Script" uid="uid://cuvemgv8cvueh" path="res://scripts/scheletro.gd" id="1_2tx81"]
+[ext_resource type="Script" path="res://scripts/scheletro.gd" id="1_2tx81"]
 [ext_resource type="PackedScene" uid="uid://dub3x4144frvp" path="res://scenes/coin.tscn" id="2_0vvo0"]
 [ext_resource type="PackedScene" uid="uid://b35xdrb6dmdaa" path="res://scenes/Freccia.tscn" id="2_jcvsh"]
 [ext_resource type="Texture2D" uid="uid://dn7prxnviit8v" path="res://assets/sprites/frames pg e utility/mob/skelet_idle_anim_f0.png" id="3_0vvo0"]
@@ -100,7 +100,7 @@ sprite_frames = SubResource("SpriteFrames_rui5k")
 frame = 7
 frame_progress = 0.9881746
 
-[node name="hitbox\\" type="Area2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox\\"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CapsuleShape2D_22ud0")
