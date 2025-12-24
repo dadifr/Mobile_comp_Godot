@@ -163,10 +163,10 @@ func explode():
 	
 	# 3. Controlla chi è nell'area dell'esplosione
 	# Attiviamo l'area per un istante
-	$ExplosionArea/CollisionShape2D.disabled = false
+	$ExplosionArea/CollisionShape2D.set_deferred("disabled", false)
 	
-	# Aspettiamo un frame per permettere a Godot di calcolare le collisioni
-	await get_tree().process_frame
+	await get_tree().physics_frame
+	await get_tree().physics_frame
 	
 	var targets = $ExplosionArea.get_overlapping_bodies()
 	for target in targets:

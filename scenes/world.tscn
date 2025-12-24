@@ -499,8 +499,12 @@ potionH_scene = ExtResource("9_w7kh3")
 [node name="scheletro" parent="DungeonRoom/Enemies" index="4" groups=["enemies"] instance=ExtResource("14_2lf6f")]
 position = Vector2(156, 282)
 
-[node name="Creeper" parent="DungeonRoom/Enemies" index="5" instance=ExtResource("15_7iits")]
+[node name="Creeper" parent="DungeonRoom/Enemies" index="5" groups=["enemies"] instance=ExtResource("15_7iits")]
 position = Vector2(338, 322)
+coin_scene = ExtResource("8_w7kh3")
+potionH_scene = ExtResource("9_o8fc1")
+potion_chance = 0.7
+coin_chance = 0.3
 
 [node name="Door" parent="DungeonRoom/Doors" index="0" instance=ExtResource("5_71j4m")]
 position = Vector2(369, 400)
