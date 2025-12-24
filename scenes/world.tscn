@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://c7qn6reikqpwx"]
+[gd_scene load_steps=26 format=4 uid="uid://c7qn6reikqpwx"]
 
 [ext_resource type="Script" uid="uid://bogrtnwqahvmw" path="res://scripts/world.gd" id="1_4mrxx"]
 [ext_resource type="Texture2D" uid="uid://c61msblyysns7" path="res://assets/sprites/atlas_floor-16x16.png" id="1_4wyf3"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dcuiblel7ihlf" path="res://scenes/DungeonRoom.tscn" id="12_jhx03"]
 [ext_resource type="PackedScene" uid="uid://cdcedd8m54axk" path="res://scenes/bomb.tscn" id="12_q5onr"]
 [ext_resource type="PackedScene" uid="uid://dtha5aeas62a6" path="res://scenes/scheletro.tscn" id="14_2lf6f"]
+[ext_resource type="PackedScene" uid="uid://dakjm2y4ejv47" path="res://scenes/creeper.tscn" id="15_7iits"]
 [ext_resource type="PackedScene" uid="uid://djqh3veqpu1u" path="res://scenes/ShopItem.tscn" id="15_xo05s"]
 [ext_resource type="Texture2D" uid="uid://dyv6lp6j0fc5k" path="res://assets/sprites/frames pg e utility/utility/flask_red.png" id="16_dss4m"]
 [ext_resource type="Texture2D" uid="uid://bphak388rseq7" path="res://assets/sprites/frames pg e utility/utility/flask_big_red.png" id="17_7t5mc"]
@@ -497,6 +498,9 @@ potionH_scene = ExtResource("9_w7kh3")
 
 [node name="scheletro" parent="DungeonRoom/Enemies" index="4" groups=["enemies"] instance=ExtResource("14_2lf6f")]
 position = Vector2(156, 282)
+
+[node name="Creeper" parent="DungeonRoom/Enemies" index="5" instance=ExtResource("15_7iits")]
+position = Vector2(338, 322)
 
 [node name="Door" parent="DungeonRoom/Doors" index="0" instance=ExtResource("5_71j4m")]
 position = Vector2(369, 400)
