@@ -475,8 +475,12 @@ position = Vector2(347, 206)
 [node name="Chest" parent="." instance=ExtResource("11_e3hyu")]
 position = Vector2(68, 294)
 potion_h_scene = ExtResource("9_w7kh3")
-bomb_scene = ExtResource("12_q5onr")
 big_potion_h_scene = ExtResource("9_o8fc1")
+shield_small_scene = ExtResource("22_xgqkh")
+shield_big_scene = ExtResource("24_ts3gi")
+damage_potion_scene = ExtResource("26_ts3gi")
+big_damage_potion_scene = ExtResource("28_37qwj")
+bomb_scene = ExtResource("12_q5onr")
 mimic_chance = 0.15
 big_potion_h_chance = 0.15
 max_coins = 10
