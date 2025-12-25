@@ -243,7 +243,8 @@ func shoot_projectile():
 	if projectile_scene:
 		var proj = projectile_scene.instantiate()
 		# 2. Posizionalo (puoi aggiungere un Marker2D nel mob per il punto esatto)
-		proj.global_position = global_position
+		proj.global_position = global_position 
+		proj.shooter = self
 		# 3. Calcola la direzione verso il player
 		var shoot_dir = (player.global_position - global_position).normalized()
 		proj.direction = shoot_dir
