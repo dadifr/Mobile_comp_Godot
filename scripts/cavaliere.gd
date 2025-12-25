@@ -39,11 +39,21 @@ var last_direction = Vector2.RIGHT
 var can_take_damage = true 
 var knockback_vector = Vector2.ZERO 
 
+# Variabili per il timer delle pozioni
+var current_damage_bonus = 0
+var boost_timer : Timer
+signal boost_updated(time_left)
+
 func _ready():
 	health = max_health
 	health_changed.emit(health)
 	# Emettiamo anche l'armatura iniziale (0)
 	armor_changed.emit(armor)
+	# Creiamo il Timer via codice
+	boost_timer = Timer.new()
+	boost_timer.one_shot = true
+	boost_timer.timeout.connect(_on_boost_ended)
+	add_child(boost_timer)
 
 func _physics_process(delta):
 	# --- 1. GESTIONE INPUT ---
@@ -102,6 +112,29 @@ func _physics_process(delta):
 		if collider is RigidBody2D:
 			var push_dir = -collision.get_normal()
 			collider.linear_velocity = push_dir * speed * 1.5
+
+	# --- AGGIUNTA PER HUD ---
+	# Se il timer è attivo, aggiorniamo l'HUD
+	if not boost_timer.is_stopped():
+		boost_updated.emit(boost_timer.time_left)
+	elif current_damage_bonus > 0:
+		# Caso limite: se il timer finisce, puliamo l'HUD
+		boost_updated.emit(0)
+
+# --- NUOVE FUNZIONI PER LA POZIONE ---
+
+# 1. Chiamata dalla Pozione
+func activate_damage_boost(amount, duration):
+	current_damage_bonus = amount
+	boost_timer.wait_time = duration
+	boost_timer.start()
+	print("POWER UP! Danni +", amount)
+
+# 2. Quando il tempo scade
+func _on_boost_ended():
+	current_damage_bonus = 0
+	boost_updated.emit(0)
+	print("Effetto pozione finito.")
 
 # Funzione per attaccare
 func attempt_attack():

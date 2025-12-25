@@ -20,36 +20,30 @@ func attack():
 	anim.play("swing")
 
 func _on_body_entered(body):
-	# --- SICUREZZA 1: Validità dell'istanza ---
-	# Se il nemico è stato ucciso da un'altra cosa 1 millisecondo fa,
-	# questa riga impedisce al gioco di crashare.
 	if not is_instance_valid(body):
 		return
 
-	# --- SICUREZZA 2: Protezione Proprietario ---
-	# Dobbiamo evitare che la spada colpisca chi la tiene in mano!
-	# Struttura ipotizzata: Player -> Hand -> Sword (Tu sei qui)
-	# Quindi il proprietario è il "nonno" (get_parent().get_parent())
+	# Troviamo il Player (il "nonno" dell'arma)
 	var owner_node = get_parent().get_parent()
+	
 	if body == owner_node:
-		return # Ignora la collisione con noi stessi
+		return 
 
-	# --- LOGICA DANNO ---
 	if body.has_method("take_damage"):
-		# Qui manteniamo la tua logica: questa spada non ferisce i Player
-		# (Utile se aggiungi co-op o NPC alleati, o semplicemente come sicurezza extra)
 		if not body.is_in_group("player"):
 			
-			# Applichiamo il danno e passiamo la posizione per il Knockback
-			body.take_damage(damage, global_position)
+			# --- CALCOLO DEL DANNO TOTALE ---
+			var total_damage = damage 
 			
-			# Opzionale: Aggiungi un suono di impatto "Carne"
-			# AudioPlayer.play("hit_flesh")
+			# Controlliamo se il "proprietario" (Player) ha la variabile del bonus
+			if "current_damage_bonus" in owner_node:
+				total_damage += owner_node.current_damage_bonus
+			
+			# Applichiamo il danno calcolato
+			body.take_damage(total_damage, global_position)
+			
+			# Debug per vedere se funziona
+			print("Colpito! Danno Base: ", damage, " + Bonus: ", (total_damage - damage))
 
-	# --- SICUREZZA 3: Gestione Muri/Oggetti solidi ---
-	# Se colpiamo un muro, non deve succedere nulla (o fai un suono "Clang")
 	elif body is TileMap or body is StaticBody2D or body is TileMapLayer:
 		print("Clang! Colpito un muro.")
-		# Opzionale: Aggiungi un suono metallico e scintille
-		# AudioPlayer.play("hit_wall")
-		# spawn_sparks(global_position)

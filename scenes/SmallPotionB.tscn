@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://civoxj0m4pffw"]
+
+[ext_resource type="Texture2D" uid="uid://bsij0qajd10ki" path="res://assets/sprites/frames pg e utility/utility/flask_blue.png" id="1_5hopt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rvu88"]
+radius = 4.0
+height = 12.0
+
+[node name="SmallPotionB" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_5hopt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_rvu88")

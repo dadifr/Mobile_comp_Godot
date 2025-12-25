@@ -100,3 +100,6 @@ stretch_mode = 5
 [node name="BombLabel" type="Label" parent="MarginContainer/StatsContainer/BombRow"]
 layout_mode = 2
 text = "x 0"
+
+[node name="BoostLabel" type="Label" parent="MarginContainer/StatsContainer"]
+layout_mode = 2
