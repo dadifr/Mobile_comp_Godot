@@ -81,6 +81,14 @@ func trigger_mimic():
 		spawn_item(bomb_scene)
 
 func spawn_item(scene_to_spawn):
+	# --- REGOLA DIFENSIVA N.1: VALIDAZIONE ---
+	# Controlliamo se la scena esiste prima di toccarla.
+	if scene_to_spawn == null:
+		# Invece di crashare, stampiamo un errore rosso nella console e ci fermiamo.
+		printerr("ERRORE: Stai provando a spawnare un oggetto vuoto! Controlla l'Inspector della Cassa/Nemico.")
+		return # "return" ferma la funzione qui. Il gioco continua!
+
+	# Se siamo arrivati qui, siamo sicuri che la scena esiste.
 	var item = scene_to_spawn.instantiate()
 	
 	# Sparpagliamento casuale
@@ -93,4 +101,12 @@ func spawn_item(scene_to_spawn):
 		var random_force = Vector2(randf_range(-0.5, 0.5), 1).normalized() * 30
 		item.apply_impulse(random_force)
 	
+
+	# --- REGOLA DIFENSIVA N.3: GENITORE ---
+	# Controlliamo se la cassa/nemico è ancora attaccata al mondo.
+	if get_parent() == null:
+		printerr("ERRORE: La cassa non ha un genitore, non so dove mettere il loot!")
+		item.queue_free() # Distruggiamo l'oggetto orfano per non lasciare spazzatura in memoria
+		return
+
 	get_parent().call_deferred("add_child", item)
