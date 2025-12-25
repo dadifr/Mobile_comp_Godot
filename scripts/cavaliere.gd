@@ -1,55 +1,62 @@
 extends CharacterBody2D
 
-@export var speed = 100.0
-@export var max_health = 6 # 3 Cuori
+@export var speed: float = 100.0
+@export var max_health: int = 6 # 3 Cuori
 @export var bomb_scene: PackedScene
 
 # --- CONFIGURAZIONE COMBATTIMENTO ---
-@export var knockback_force = 250.0 
-@export var invincibility_time = 1.0 
-@export var push_force = 5000.0
+@export var knockback_force: float = 250.0
+@export var invincibility_time: float = 1.0
+@export var push_force: float = 5000.0
 
 # Precaricamento scena Game Over
 var game_over_screen = preload("res://scenes/GameOverScreen.tscn")
 
 # Riferimenti ai nodi
 @onready var anim = $AnimatedSprite2D
-@onready var hand = $Hand 
+@onready var hand = $Hand
 
 # Riferimenti all'HUD
-@export var coins = 0
-@export var bombs = 0
+@export var coins: int = 0
+@export var bombs: int = 0
 
 # ### NUOVO ### Variabile Armatura (Scudi)
-# 1 punto = Mezzo Scudo, 2 punti = Scudo Intero
 var armor = 0
 
 # Definiamo dei segnali per avvisare l'HUD
 signal coins_changed(new_amount)
 signal bombs_changed(new_amount)
 signal health_changed(new_health)
-signal armor_changed(new_armor) # ### NUOVO SEGNALE ###
+signal armor_changed(new_armor)
+signal boost_updated(time_left) # Segnale Timer Pozione
 
 # Variabili di stato
 var health = 6
-var is_hurt = false 
+var is_hurt = false
 var last_direction = Vector2.RIGHT
 
 # Variabili per la sicurezza del danno
-var can_take_damage = true 
-var knockback_vector = Vector2.ZERO 
+var can_take_damage = true
+var knockback_vector = Vector2.ZERO
 
 # Variabili per il timer delle pozioni
 var current_damage_bonus = 0
 var boost_timer : Timer
-signal boost_updated(time_left)
+# NUOVO: Variabile per gestire l'animazione lampeggiante blu
+var boost_tween: Tween
 
 func _ready():
+	# 1. SICUREZZA GRUPPI: Ci assicuriamo via codice che siamo nel gruppo "player"
+	if not is_in_group("player"):
+		add_to_group("player")
+		print("Player aggiunto al gruppo 'player' via codice.")
+
+	# 2. SETUP STATISTICHE
 	health = max_health
 	health_changed.emit(health)
-	# Emettiamo anche l'armatura iniziale (0)
 	armor_changed.emit(armor)
-	# Creiamo il Timer via codice
+	
+	# 3. CREAZIONE TIMER POZIONE
 	boost_timer = Timer.new()
 	boost_timer.one_shot = true
 	boost_timer.timeout.connect(_on_boost_ended)
@@ -71,7 +78,7 @@ func _physics_process(delta):
 		knockback_vector = knockback_vector.move_toward(Vector2.ZERO, 500 * delta)
 
 	# --- 3. ANIMAZIONI ---
-	if not is_hurt: 
+	if not is_hurt:
 		if direction:
 			anim.play("run")
 		else:
@@ -102,10 +109,15 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("place_bomb") and not is_hurt:
 		place_bomb()
 
-	# --- 8. MOVIMENTO FISICO ---
+	# --- 8. AGGIORNAMENTO HUD TIMER (POZIONE) ---
+	# Aggiorniamo l'HUD ogni frame se il timer corre
+	if is_instance_valid(boost_timer) and not boost_timer.is_stopped():
+		boost_updated.emit(boost_timer.time_left)
+
+	# --- 9. MOVIMENTO FISICO ---
 	move_and_slide()
 	
-	# --- 9. SPINTA RIGIDBODIES ---
+	# --- 10. SPINTA RIGIDBODIES ---
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
@@ -113,28 +125,50 @@ func _physics_process(delta):
 			var push_dir = -collision.get_normal()
 			collider.linear_velocity = push_dir * speed * 1.5
 
-	# --- AGGIUNTA PER HUD ---
-	# Se il timer è attivo, aggiorniamo l'HUD
-	if not boost_timer.is_stopped():
-		boost_updated.emit(boost_timer.time_left)
-	elif current_damage_bonus > 0:
-		# Caso limite: se il timer finisce, puliamo l'HUD
-		boost_updated.emit(0)
-
-# --- NUOVE FUNZIONI PER LA POZIONE ---
+# --- NUOVE FUNZIONI PER LA POZIONE (AGGIORNATE CON EFFETTO BLU) ---
 
 # 1. Chiamata dalla Pozione
 func activate_damage_boost(amount, duration):
 	current_damage_bonus = amount
-	boost_timer.wait_time = duration
-	boost_timer.start()
-	print("POWER UP! Danni +", amount)
+	
+	# Avvio Timer
+	if boost_timer:
+		boost_timer.wait_time = duration
+		boost_timer.start()
+	else:
+		print("ERRORE: Boost Timer non esiste!")
+		
+	print("POWER UP BLU! Danni +", amount)
+	
+	# --- EFFETTO VISIVO (Lampeggio Blu) ---
+	# Se c'era già un'animazione attiva, la fermiamo per riavviarla pulita
+	if boost_tween:
+		boost_tween.kill()
+	
+	# Creiamo un nuovo Tween che si ripete all'infinito
+	boost_tween = create_tween().set_loops()
+	
+	# Passo 1: Diventa Blu Luminoso (in 0.3 secondi)
+	# Nota: Usiamo valori > 1 per fare un effetto "Glow" se l'ambiente lo permette, 
+	# oppure semplicemente una tinta bluastra mantenendo visibile lo sprite.
+	boost_tween.tween_property(anim, "modulate", Color(0.4, 0.4, 1.5), 0.3) 
+	
+	# Passo 2: Torna Normale (in 0.3 secondi)
+	boost_tween.tween_property(anim, "modulate", Color.WHITE, 0.3)
 
 # 2. Quando il tempo scade
 func _on_boost_ended():
 	current_damage_bonus = 0
 	boost_updated.emit(0)
 	print("Effetto pozione finito.")
+	
+	# --- STOP EFFETTO VISIVO ---
+	if boost_tween:
+		boost_tween.kill() # Ferma il lampeggio
+	
+	# Assicuriamoci che il personaggio torni del colore normale dolcemente
+	var reset_tween = create_tween()
+	reset_tween.tween_property(anim, "modulate", Color.WHITE, 0.2)
 
 # Funzione per attaccare
 func attempt_attack():
@@ -143,31 +177,26 @@ func attempt_attack():
 		if weapon.has_method("attack"):
 			weapon.attack()
 
-# ### AGGIORNATO: TAKE DAMAGE CON ARMATURA ###
+# ### TAKE DAMAGE ###
 func take_damage(amount, enemy_pos = Vector2.ZERO):
 	if not can_take_damage:
 		return
 	
 	# 1. LOGICA ARMATURA
-	# Calcoliamo quanto danno va alla vita rossa
 	var damage_to_health = amount
 	
 	if armor > 0:
 		if armor >= amount:
-			# L'armatura assorbe tutto il colpo
 			armor -= amount
 			damage_to_health = 0
 		else:
-			# L'armatura si rompe, il resto passa alla vita
 			damage_to_health = amount - armor
 			armor = 0
 		
-		# Aggiorniamo l'HUD degli scudi
 		armor_changed.emit(armor)
 		print("Armatura parzialmente rotta! Rimasta: ", armor)
 
 	# 2. LOGICA VITA ROSSA
-	# Se è rimasto del danno da fare (perché l'armatura è finita o non c'era)
 	if damage_to_health > 0:
 		health -= damage_to_health
 		health_changed.emit(health)
@@ -175,17 +204,15 @@ func take_damage(amount, enemy_pos = Vector2.ZERO):
 		
 		if health <= 0:
 			die()
-			return # Stop, sei morto
+			return
 
-	# 3. EFFETTI FISICI (Knockback e Invincibilità)
-	# Questi avvengono SEMPRE se vieni colpito, anche se l'armatura ha parato tutto
+	# 3. EFFETTI FISICI
 	start_invincibility()
 	
 	if enemy_pos != Vector2.ZERO:
 		var knockback_dir = (global_position - enemy_pos).normalized()
 		knockback_vector = knockback_dir * knockback_force
 	
-	# Animazione danno
 	is_hurt = true
 	anim.play("hurt")
 	
@@ -196,13 +223,15 @@ func take_damage(amount, enemy_pos = Vector2.ZERO):
 # Gestione Invincibilità
 func start_invincibility():
 	can_take_damage = false
-	modulate.a = 0.5 
+	# Nota: self.modulate agisce "sopra" anim.modulate.
+	# Quindi se sei Blu (anim) + Invincibile (self), diventi Blu Trasparente. Perfetto!
+	modulate.a = 0.5
 	var timer = get_tree().create_timer(invincibility_time)
 	timer.timeout.connect(_on_invincibility_end)
 
 func _on_invincibility_end():
 	can_take_damage = true
-	modulate.a = 1.0 
+	modulate.a = 1.0
 
 # Cura Vita Rossa
 func heal(amount):
@@ -212,10 +241,9 @@ func heal(amount):
 	health_changed.emit(health)
 	print("Curato! Vita: ", health)
 
-# ### NUOVO: Aggiungi Armatura (Pozioni) ###
+# Aggiungi Armatura (Pozioni)
 func add_armor(amount):
 	armor += amount
-	# Non metto limiti massimi, ma se vuoi puoi mettere: if armor > 6: armor = 6
 	armor_changed.emit(armor)
 	print("Scudo Aggiunto! Totale Armatura: ", armor)
 

@@ -6,8 +6,8 @@ extends Area2D
 # --- VARIABILI FISSE ---
 @export_group("Manual Settings")
 @export var item_to_sell: PackedScene 
-@export var price: int = 10           
-@export var item_texture: Texture2D   
+@export var price: int = 10            
+@export var item_texture: Texture2D    
 
 # --- CONFIGURAZIONE CASUALE ---
 @export_group("Random Pool Settings")
@@ -16,112 +16,117 @@ extends Area2D
 @export var bomb_scene: PackedScene
 @export var bomb_texture: Texture2D
 @export var bomb_price_range: Vector2i = Vector2i(5, 10)
-@export_range(0.0, 1.0) var bomb_chance: float = 0.25
+@export_range(0.0, 1.0) var bomb_chance: float = 0.15
 
-# 2. VITA PICCOLA (Rossa)
+# 2. VITA PICCOLA
 @export var potion_scene: PackedScene
 @export var potion_texture: Texture2D
 @export var potion_price_range: Vector2i = Vector2i(10, 20)
-@export_range(0.0, 1.0) var potion_chance: float = 0.20
+@export_range(0.0, 1.0) var potion_chance: float = 0.15
 
-# 3. VITA GRANDE (Rossa Grande)
+# 3. VITA GRANDE
 @export var big_potion_scene: PackedScene
 @export var big_potion_texture: Texture2D
 @export var big_potion_price_range: Vector2i = Vector2i(25, 40)
 @export_range(0.0, 1.0) var big_potion_chance: float = 0.10
 
-# 4. SCUDO PICCOLO (Gialla/Blu)
+# 4. SCUDO PICCOLO
 @export var shield_small_scene: PackedScene
 @export var shield_small_texture: Texture2D
 @export var shield_small_price_range: Vector2i = Vector2i(15, 25)
-@export_range(0.0, 1.0) var shield_small_chance: float = 0.25
+@export_range(0.0, 1.0) var shield_small_chance: float = 0.15
 
-# 5. SCUDO GRANDE (Gialla/Blu Grande)
+# 5. SCUDO GRANDE
 @export var shield_big_scene: PackedScene
 @export var shield_big_texture: Texture2D
 @export var shield_big_price_range: Vector2i = Vector2i(30, 50)
-@export_range(0.0, 1.0) var shield_big_chance: float = 0.20
+@export_range(0.0, 1.0) var shield_big_chance: float = 0.15
+
+# 6. POZIONE DANNO (PICCOLA)
+@export var damage_potion_scene: PackedScene
+@export var damage_potion_texture: Texture2D
+@export var damage_potion_price_range: Vector2i = Vector2i(40, 60)
+@export_range(0.0, 1.0) var damage_potion_chance: float = 0.20
+
+# 7. POZIONE DANNO GRANDE (NUOVA!)
+@export var big_damage_potion_scene: PackedScene
+@export var big_damage_potion_texture: Texture2D
+@export var big_damage_potion_price_range: Vector2i = Vector2i(80, 120) # Molto costosa!
+@export_range(0.0, 1.0) var big_damage_potion_chance: float = 0.10 # Molto rara
 
 # Variabili interne
 var player_in_range = null
 
 func _ready():
-	print("--- INIZIO DEBUG NEGOZIO ---")
-	
 	if is_random_shop:
-		print("Modalità Random ATTIVA. Calcolo oggetto...")
 		randomize_shop_item()
-	else:
-		print("Modalità Random DISATTIVA. Uso oggetto manuale.")
 	
 	# --- AGGIORNAMENTO VISIVO ---
 	if item_texture:
 		$Sprite2D.texture = item_texture
-		print("Texture aggiornata con successo.")
-	else:
-		print("ERRORE: Nessuna texture trovata per l'oggetto scelto!")
+		$Sprite2D.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	
 	if has_node("Label"):
 		$Label.text = str(price) + "$"
 	
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
-	
-	print("Prezzo finale: ", price)
-	print("Oggetto da spawnare: ", item_to_sell)
-	print("--- FINE DEBUG NEGOZIO ---")
 
 
 func randomize_shop_item():
 	var roll = randf()
 	var current_threshold = 0.0
 	
-	print("Numero Random (Roll): ", roll)
-	
 	# 1. Bombe
 	current_threshold += bomb_chance
 	if roll < current_threshold:
-		print("Scelto: BOMBE")
 		setup_item(bomb_scene, bomb_texture, bomb_price_range)
 		return
 
 	# 2. Vita Piccola
 	current_threshold += potion_chance
 	if roll < current_threshold:
-		print("Scelto: POZIONE VITA PICCOLA")
 		setup_item(potion_scene, potion_texture, potion_price_range)
 		return
 
 	# 3. Vita Grande
 	current_threshold += big_potion_chance
 	if roll < current_threshold:
-		print("Scelto: POZIONE VITA GRANDE")
 		setup_item(big_potion_scene, big_potion_texture, big_potion_price_range)
 		return
 
 	# 4. Scudo Piccolo
 	current_threshold += shield_small_chance
 	if roll < current_threshold:
-		print("Scelto: POZIONE SCUDO PICCOLA")
 		setup_item(shield_small_scene, shield_small_texture, shield_small_price_range)
 		return
 
 	# 5. Scudo Grande
-	print("Scelto: POZIONE SCUDO GRANDE (Fallback)")
-	setup_item(shield_big_scene, shield_big_texture, shield_big_price_range)
+	current_threshold += shield_big_chance
+	if roll < current_threshold:
+		setup_item(shield_big_scene, shield_big_texture, shield_big_price_range)
+		return
+
+	# 6. Pozione Danno Piccola
+	current_threshold += damage_potion_chance
+	if roll < current_threshold:
+		setup_item(damage_potion_scene, damage_potion_texture, damage_potion_price_range)
+		return
+
+	# 7. Pozione Danno Grande (NUOVA)
+	current_threshold += big_damage_potion_chance
+	if roll < current_threshold:
+		setup_item(big_damage_potion_scene, big_damage_potion_texture, big_damage_potion_price_range)
+		return
+
+	# FALLBACK
+	setup_item(bomb_scene, bomb_texture, bomb_price_range)
 
 
 func setup_item(scene, texture, price_range):
 	item_to_sell = scene
 	item_texture = texture
 	price = randi_range(price_range.x, price_range.y)
-	
-	# CONTROLLO DI SICUREZZA
-	if item_to_sell == null:
-		print("ATTENZIONE: La scena (tscn) per questo oggetto NON è stata assegnata nell'Inspector!")
-	if item_texture == null:
-		print("ATTENZIONE: L'immagine (texture) per questo oggetto NON è stata assegnata nell'Inspector!")
-
 
 func _process(delta):
 	if player_in_range and Input.is_action_just_pressed("interact"):
@@ -134,26 +139,25 @@ func try_to_buy():
 		buy_fail()
 
 func buy_success():
-	print("Tento l'acquisto...")
-	if item_to_sell == null:
-		print("ERRORE CRITICO: Non posso venderti nulla perché 'item_to_sell' è vuoto!")
-		return
+	if item_to_sell == null: return
 
 	player_in_range.coins -= price
+	
+	# Aggiorna monete (usa i segnali o metodi del player)
 	if player_in_range.has_signal("coins_changed"):
 		player_in_range.coins_changed.emit(player_in_range.coins)
+	elif player_in_range.has_method("update_coins"):
+		player_in_range.update_coins(player_in_range.coins)
 	
 	var item = item_to_sell.instantiate()
 	item.global_position = global_position
 	get_parent().call_deferred("add_child", item)
 	
-	print("Oggetto spawnato. Chiudo il negozio.")
 	queue_free()
 
 func buy_fail():
-	print("Soldi insufficienti!")
 	if has_node("Label"):
-		var original_color = $Label.modulate
+		var original_color = Color.WHITE
 		$Label.modulate = Color.RED
 		var tween = create_tween()
 		tween.tween_property($Label, "modulate", original_color, 0.5)

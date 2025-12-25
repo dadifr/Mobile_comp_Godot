@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bouvog8stkskj"]
+
+[ext_resource type="Script" uid="uid://cavwum54vkt6r" path="res://scripts/SmallPotionB.gd" id="1_l7hy4"]
+[ext_resource type="Texture2D" uid="uid://btfqu5t2tem8f" path="res://assets/sprites/frames pg e utility/utility/flask_big_blue.png" id="2_l7hy4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rvu88"]
+radius = 5.0
+height = 12.0
+
+[node name="BigPotionB" type="Area2D"]
+script = ExtResource("1_l7hy4")
+bonus_amount = 4
+duration = 120.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_l7hy4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_rvu88")
