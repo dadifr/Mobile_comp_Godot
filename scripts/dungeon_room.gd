@@ -38,12 +38,25 @@ func _process(delta):
 # Funzione personalizzata per contare solo i nemici
 func count_enemies():
 	var count = 0
+	
 	# Esploriamo tutti i figli del nodo Enemies
 	for child in $Enemies.get_children():
-		# Se il figlio fa parte del gruppo "enemies", lo contiamo.
-		# Se è una pozione o una moneta, lo ignoriamo.
+		
+		# --- SICUREZZA 1: Esiste ancora in memoria? ---
+		if not is_instance_valid(child):
+			continue # Salta al prossimo, questo è corrotto
+			
+		# --- SICUREZZA 2: Sta morendo? ---
+		# "is_queued_for_deletion()" restituisce VERO se hai chiamato queue_free()
+		# ma il nodo non è ancora sparito del tutto.
+		if child.is_queued_for_deletion():
+			continue # Ignoralo, è come se fosse già morto
+		
+		# --- CONTROLLO REALE ---
+		# Se è vivo, vegeto e fa parte del gruppo nemici:
 		if child.is_in_group("enemies"):
 			count += 1
+			
 	return count
 
 func win_battle():
