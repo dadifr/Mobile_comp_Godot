@@ -107,5 +107,4 @@ text = "x 0"
 
 [node name="BoostLabel" type="Label" parent="MarginContainer/StatsContainer"]
 layout_mode = 2
-text = "test 123"
 label_settings = SubResource("LabelSettings_8cuoo")
