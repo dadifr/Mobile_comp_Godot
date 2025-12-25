@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://c7qn6reikqpwx"]
+[gd_scene load_steps=30 format=4 uid="uid://c7qn6reikqpwx"]
 
 [ext_resource type="Script" uid="uid://bogrtnwqahvmw" path="res://scripts/world.gd" id="1_4mrxx"]
 [ext_resource type="Texture2D" uid="uid://c61msblyysns7" path="res://assets/sprites/atlas_floor-16x16.png" id="1_4wyf3"]
@@ -21,6 +21,10 @@
 [ext_resource type="Texture2D" uid="uid://bphak388rseq7" path="res://assets/sprites/frames pg e utility/utility/flask_big_red.png" id="17_7t5mc"]
 [ext_resource type="PackedScene" uid="uid://b2f6kkkahowj8" path="res://scenes/BombPickup.tscn" id="18_pm21f"]
 [ext_resource type="Texture2D" uid="uid://bdyydwnu4jn5u" path="res://assets/sprites/frames pg e utility/utility/bomb_f0.png" id="19_2lf6f"]
+[ext_resource type="PackedScene" uid="uid://jmf43nm046k8" path="res://scenes/potion_g.tscn" id="22_xgqkh"]
+[ext_resource type="Texture2D" uid="uid://d5tiwl8ay46a" path="res://assets/sprites/frames pg e utility/utility/flask_yellow.png" id="23_munwf"]
+[ext_resource type="PackedScene" uid="uid://ckx5ef3aa2io3" path="res://scenes/BigShieldPotion.tscn" id="24_ts3gi"]
+[ext_resource type="Texture2D" uid="uid://h6rymqa35saf" path="res://assets/sprites/frames pg e utility/utility/flask_big_yellow.png" id="25_0nbtd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4wyf3"]
 texture = ExtResource("1_4wyf3")
@@ -515,14 +519,20 @@ is_random_shop = true
 item_texture = ExtResource("16_dss4m")
 bomb_scene = ExtResource("18_pm21f")
 bomb_texture = ExtResource("19_2lf6f")
-bomb_chance = 0.4
+bomb_chance = 0.2
 potion_scene = ExtResource("9_w7kh3")
 potion_texture = ExtResource("16_dss4m")
 potion_price_range = Vector2i(3, 7)
 big_potion_scene = ExtResource("9_o8fc1")
 big_potion_texture = ExtResource("17_7t5mc")
 big_potion_price_range = Vector2i(5, 15)
-big_potion_chance = 0.3
+big_potion_chance = 0.2
+shield_small_scene = ExtResource("22_xgqkh")
+shield_small_texture = ExtResource("23_munwf")
+shield_small_chance = 0.2
+shield_big_scene = ExtResource("24_ts3gi")
+shield_big_texture = ExtResource("25_0nbtd")
+shield_big_price_range = Vector2i(20, 30)
 
 [node name="ShopItem2" parent="." instance=ExtResource("15_xo05s")]
 position = Vector2(232, 344)
@@ -530,12 +540,20 @@ is_random_shop = true
 item_texture = ExtResource("16_dss4m")
 bomb_scene = ExtResource("18_pm21f")
 bomb_texture = ExtResource("19_2lf6f")
+bomb_chance = 0.2
 potion_scene = ExtResource("9_w7kh3")
 potion_texture = ExtResource("16_dss4m")
 potion_price_range = Vector2i(3, 7)
 big_potion_scene = ExtResource("9_o8fc1")
 big_potion_texture = ExtResource("17_7t5mc")
 big_potion_price_range = Vector2i(5, 15)
+big_potion_chance = 0.2
+shield_small_scene = ExtResource("22_xgqkh")
+shield_small_texture = ExtResource("23_munwf")
+shield_small_chance = 0.2
+shield_big_scene = ExtResource("24_ts3gi")
+shield_big_texture = ExtResource("25_0nbtd")
+shield_big_price_range = Vector2i(20, 30)
 
 [node name="ShopItem3" parent="." instance=ExtResource("15_xo05s")]
 position = Vector2(264, 344)
@@ -543,12 +561,20 @@ is_random_shop = true
 item_texture = ExtResource("16_dss4m")
 bomb_scene = ExtResource("18_pm21f")
 bomb_texture = ExtResource("19_2lf6f")
+bomb_chance = 0.2
 potion_scene = ExtResource("9_w7kh3")
 potion_texture = ExtResource("16_dss4m")
 potion_price_range = Vector2i(3, 7)
 big_potion_scene = ExtResource("9_o8fc1")
 big_potion_texture = ExtResource("17_7t5mc")
 big_potion_price_range = Vector2i(5, 15)
+big_potion_chance = 0.2
+shield_small_scene = ExtResource("22_xgqkh")
+shield_small_texture = ExtResource("23_munwf")
+shield_small_chance = 0.2
+shield_big_scene = ExtResource("24_ts3gi")
+shield_big_texture = ExtResource("25_0nbtd")
+shield_big_price_range = Vector2i(20, 30)
 
 [node name="ShopItem4" parent="." instance=ExtResource("15_xo05s")]
 position = Vector2(296, 344)
@@ -556,11 +582,19 @@ is_random_shop = true
 item_texture = ExtResource("16_dss4m")
 bomb_scene = ExtResource("18_pm21f")
 bomb_texture = ExtResource("19_2lf6f")
+bomb_chance = 0.2
 potion_scene = ExtResource("9_w7kh3")
 potion_texture = ExtResource("16_dss4m")
 potion_price_range = Vector2i(3, 7)
 big_potion_scene = ExtResource("9_o8fc1")
 big_potion_texture = ExtResource("17_7t5mc")
 big_potion_price_range = Vector2i(5, 15)
+big_potion_chance = 0.2
+shield_small_scene = ExtResource("22_xgqkh")
+shield_small_texture = ExtResource("23_munwf")
+shield_small_chance = 0.2
+shield_big_scene = ExtResource("24_ts3gi")
+shield_big_texture = ExtResource("25_0nbtd")
+shield_big_price_range = Vector2i(20, 30)
 
 [editable path="DungeonRoom"]

@@ -126,7 +126,6 @@ radius = 6.0
 motion_mode = 1
 script = ExtResource("1_81uaw")
 speed = 110.0
-max_health = 5
 bomb_scene = ExtResource("2_wo0on")
 knockback_force = 200.0
 metadata/_edit_group_ = true

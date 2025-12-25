@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckx5ef3aa2io3"]
+
+[ext_resource type="Script" uid="uid://jm3lfearplna" path="res://scripts/ShieldPotion.gd" id="1_0dxft"]
+[ext_resource type="Texture2D" uid="uid://h6rymqa35saf" path="res://assets/sprites/frames pg e utility/utility/flask_big_yellow.png" id="2_vspr8"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_07h5o"]
+radius = 5.0
+height = 12.0
+
+[node name="BigShieldPotion" type="Area2D"]
+script = ExtResource("1_0dxft")
+potion_value = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_vspr8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_07h5o")

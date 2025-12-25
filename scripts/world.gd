@@ -1,48 +1,53 @@
 extends Node2D
 
-@onready var hud = $HUD # Assicurati che il nodo nella scena si chiami "HUD"
+# Assicurati che il nome del nodo nella scena sia corretto!
+# Se il nodo CanvasLayer si chiama "CanvasLayer", scrivi $CanvasLayer
+# Se lo hai rinominato "HUD", scrivi $HUD
+@onready var hud = $HUD
 
 func _ready():
 	var player_instance = null
-	
-	# 1. Decidiamo chi spawnare
+	# --- 1. DECIDIAMO CHI SPAWNARE ---
 	if GameManager.selected_character_scene != null:
 		player_instance = GameManager.selected_character_scene.instantiate()
 	else:
-		# Fallback per i test se avvii direttamente World
+		# Fallback per i test se avvii direttamente World senza passare dal menu
 		print("Nessun personaggio scelto, carico Knight di default.")
+		# Assicurati che il percorso del cavaliere sia giusto
 		player_instance = load("res://scenes/cavaliere.tscn").instantiate()
 	
-	# 2. Posizionamento
-	player_instance.global_position = $SpawnPoint.global_position
+	# --- 2. POSIZIONAMENTO ---
+	if has_node("SpawnPoint"):
+		player_instance.global_position = $SpawnPoint.global_position
+	else:
+		print("ATTENZIONE: Manca il nodo SpawnPoint nel Mondo! Metto il player a (0,0)")
+		player_instance.global_position = Vector2.ZERO
 	
-	# --- 3. RICOLLEGAMENTO DEI SEGNALI (LA PARTE FONDAMENTALE) ---
-	# Qui colleghiamo i "fili" via codice tra il NUOVO player e il VECCHIO HUD
+	# --- 3. RICOLLEGAMENTO DEI SEGNALI ---
+	# Colleghiamo i segnali del player APPENA CREATO alle funzioni dell'HUD
 	
-	# Segnale VITA -> Funzione update_hearts (o come l'hai chiamata tu nell'HUD)
-	# Nota: Controlla in HUD.gd come si chiama la funzione per i cuori. 
-	# Se si chiama "_on_player_health_changed", scrivi quella.
-	# Se si chiama "update_hearts", scrivi quella.
-	player_instance.health_changed.connect(hud.update_life) 
-	
-	# Segnale MONETE -> Funzione update_coins
+	# Vita, Monete, Bombe (Già esistenti)
+	player_instance.health_changed.connect(hud.update_life)
 	player_instance.coins_changed.connect(hud.update_coins)
-	
-	# Segnale BOMBE -> Funzione update_bombs
 	player_instance.bombs_changed.connect(hud.update_bombs)
 	
-	# 4. Aggiungi finalmente il player al mondo
+	# ### NUOVO ### Collegamento Armatura
+	player_instance.armor_changed.connect(hud.update_armor)
+	
+	# --- 4. AGGIUNGIAMO IL PLAYER AL MONDO ---
+	# Nota: È meglio collegare i segnali PRIMA di add_child, per sicurezza.
 	add_child(player_instance)
 	
-	# --- AGGIORNAMENTO INIZIALE FORZATO ---
-	print("Aggiorno HUD iniziale...")
+	# --- 5. AGGIORNAMENTO HUD INIZIALE ---
+	print("Inizializzo l'HUD...")
 	
-	# 1. NUOVO: Impostiamo il numero di cuori VISIBILI in base alla vita massima
+	# Impostiamo quanti cuori massimi disegnare
 	hud.init_max_hearts(player_instance.max_health)
 	
-	# 2. Riempiamo i cuori in base alla vita attuale
+	# Riempiamo i valori attuali
 	hud.update_life(player_instance.health)
-	
-	# 3. Aggiorniamo il resto
 	hud.update_coins(player_instance.coins)
 	hud.update_bombs(player_instance.bombs)
+	
+	# ### NUOVO ### Aggiorniamo gli scudi iniziali (che saranno 0, ma pulisce la barra)
+	hud.update_armor(player_instance.armor)
