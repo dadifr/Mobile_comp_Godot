@@ -1,20 +1,20 @@
 [gd_scene load_steps=12 format=3 uid="uid://gtwmvgnk2yr8"]
 
 [ext_resource type="Script" uid="uid://cot8w4emyh3b" path="res://scripts/hud.gd" id="1_7hsmw"]
-[ext_resource type="Texture2D" uid="uid://dkblsw01ly7ul" path="res://assets/sprites/frames pg e utility/HUD/shield.webp" id="2_k4w17"]
 [ext_resource type="Texture2D" uid="uid://dsybg5kuwroqx" path="res://assets/sprites/frames pg e utility/HUD/ui_heart_full.png" id="2_nysna"]
+[ext_resource type="Texture2D" uid="uid://xlqle5q1rmws" path="res://assets/sprites/frames pg e utility/HUD/scudo.png" id="2_twldb"]
 [ext_resource type="Texture2D" uid="uid://mp21ou5fw4mu" path="res://assets/sprites/frames pg e utility/HUD/ui_heart_half.png" id="3_f6qnu"]
 [ext_resource type="Texture2D" uid="uid://bds3ogyri0f4j" path="res://assets/sprites/frames pg e utility/HUD/ui_heart_empty.png" id="4_k4w17"]
 [ext_resource type="Texture2D" uid="uid://dsukoll36sc7p" path="res://assets/sprites/frames pg e utility/utility/coin_anim_f0.png" id="5_f6qnu"]
 [ext_resource type="Texture2D" uid="uid://bdyydwnu4jn5u" path="res://assets/sprites/frames pg e utility/utility/bomb_f0.png" id="6_k4w17"]
 [ext_resource type="FontFile" uid="uid://dkt7bc255iugs" path="res://assets/fonts/PixelOperator8.ttf" id="8_twldb"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_twldb"]
-atlas = ExtResource("2_k4w17")
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cuoo"]
+atlas = ExtResource("2_twldb")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8cuoo"]
-atlas = ExtResource("2_k4w17")
+[sub_resource type="AtlasTexture" id="AtlasTexture_cf6ij"]
+atlas = ExtResource("2_twldb")
 region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_8cuoo"]
@@ -22,8 +22,8 @@ font = ExtResource("8_twldb")
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_7hsmw")
-shield_full = SubResource("AtlasTexture_twldb")
-shield_half = SubResource("AtlasTexture_8cuoo")
+shield_full = SubResource("AtlasTexture_8cuoo")
+shield_half = SubResource("AtlasTexture_cf6ij")
 full_heart_texture = ExtResource("2_nysna")
 half_heart_texture = ExtResource("3_f6qnu")
 empty_heart_texture = ExtResource("4_k4w17")

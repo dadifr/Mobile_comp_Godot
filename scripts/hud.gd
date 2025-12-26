@@ -36,7 +36,7 @@ func _ready():
 			player.boost_updated.connect(_on_boost_updated)
 	
 	# 3. SETUP DISTANZA SCUDI
-	shield_bar.add_theme_constant_override("separation", -5)
+	shield_bar.add_theme_constant_override("separation", 0)
 
 # --- FUNZIONI BOOST POZIONE ---
 func _on_boost_updated(time_left):
@@ -76,7 +76,7 @@ func add_icon(texture):
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	
 	# Dimensione aumentata (Scudi grandi)
-	icon.custom_minimum_size = Vector2(48, 48)
+	icon.custom_minimum_size = Vector2(32, 32)
 	
 	# Allineamento Verticale
 	icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
