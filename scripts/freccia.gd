@@ -27,18 +27,23 @@ func _on_body_entered(body):
 	# Se il corpo che ho colpito è lo stesso che mi ha sparato, IGNORALO.
 	if body == shooter:
 		return
-	
-	# CASO 1: Colpisce il Player
-	if body.is_in_group("player"):
-		# SICUREZZA 2 (Metodo): Verifica se la funzione esiste prima di chiamarla
-		if body.has_method("take_damage"):
-			body.take_damage(damage, global_position)
-		else:
-			# Debug utile per noi sviluppatori
-			printerr("ATTENZIONE: Il nodo ", body.name, " è nel gruppo 'player' ma non ha 'take_damage'!")
+	#se la freccia può colpire qualsiasi cosa tranne chi la lancia
+	if body.has_method("take_damage"):
+		body.take_damage(damage)
+		queue_free() # Distruggi la freccia
 		
-		queue_free() # La freccia si distrugge dopo aver colpito
+	# CASO 1: Colpisce il Player
+	#if body.is_in_group("player"):
+		## SICUREZZA 2 (Metodo): Verifica se la funzione esiste prima di chiamarla
+		#if body.has_method("take_damage"):
+			#body.take_damage(damage, global_position)
+		#else:
+			## Debug utile per noi sviluppatori
+			#printerr("ATTENZIONE: Il nodo ", body.name, " è nel gruppo 'player' ma non ha 'take_damage'!")
+		#
+		#queue_free() # La freccia si distrugge dopo aver colpito
 
+	
 	# CASO 2: Colpisce un Muro o Ostacolo
 	# Invece di chiedere "Sei un Muro? O sei un TileMap?", usiamo una logica più ampia.
 	# Se il corpo NON è un'Area2D (quindi è un corpo fisico solido), ci schiantiamo.
