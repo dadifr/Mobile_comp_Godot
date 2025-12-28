@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bn2grnhv4m62l" path="res://assets/sprites/frames pg e utility/character/knight_m_run_anim_f1.png" id="8_o4126"]
 [ext_resource type="Texture2D" uid="uid://cx5ie5t2est86" path="res://assets/sprites/frames pg e utility/character/knight_m_run_anim_f2.png" id="9_lkdrv"]
 [ext_resource type="Texture2D" uid="uid://dl0huqnul2otf" path="res://assets/sprites/frames pg e utility/character/knight_m_run_anim_f3.png" id="10_p7iby"]
-[ext_resource type="PackedScene" uid="uid://dvc3r0o6syryv" path="res://scenes/spada.tscn" id="11_d3wef"]
+[ext_resource type="PackedScene" uid="uid://dvc3r0o6syryv" path="res://scenes/armi/spada.tscn" id="11_d3wef"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o4126"]
 atlas = ExtResource("2_6eyey")
