@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bmpeipw8r4nj7"]
+[gd_scene load_steps=27 format=3 uid="uid://bmpeipw8r4nj7"]
 
 [ext_resource type="Script" uid="uid://duh7e6f4tpugl" path="res://scripts/cavaliere.gd" id="1_vsplu"]
 [ext_resource type="Texture2D" uid="uid://cla5kisxpp4ny" path="res://assets/sprites/frames pg e utility/character/dwarf_m_hit_anim_f0.png" id="2_tlf1f"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dbdbpdr62vcwp" path="res://assets/sprites/frames pg e utility/character/dwarf_m_run_anim_f1.png" id="8_8v82s"]
 [ext_resource type="Texture2D" uid="uid://dncy2rp0hwn07" path="res://assets/sprites/frames pg e utility/character/dwarf_m_run_anim_f2.png" id="9_m8okl"]
 [ext_resource type="Texture2D" uid="uid://cb4w7gbcsfsg5" path="res://assets/sprites/frames pg e utility/character/dwarf_m_run_anim_f3.png" id="10_tc087"]
+[ext_resource type="PackedScene" uid="uid://cdvkgub272qvd" path="res://scenes/armi/ascia.tscn" id="12_qoe5u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_drixs"]
 atlas = ExtResource("2_tlf1f")
@@ -129,6 +130,7 @@ speed = 60.0
 max_health = 10
 bomb_scene = ExtResource("2_vsplu")
 knockback_force = 200.0
+invincibility_time = 0.5
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -147,3 +149,6 @@ shape = SubResource("CircleShape2D_mdl7e")
 [node name="Hand" type="Marker2D" parent="."]
 position = Vector2(10, 7)
 metadata/_edit_group_ = true
+
+[node name="Spada" parent="Hand" instance=ExtResource("12_qoe5u")]
+damage = 3

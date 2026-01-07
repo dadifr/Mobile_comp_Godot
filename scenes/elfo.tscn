@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cdh1w2mxhohds"]
+[gd_scene load_steps=27 format=3 uid="uid://cdh1w2mxhohds"]
 
 [ext_resource type="Script" uid="uid://duh7e6f4tpugl" path="res://scripts/cavaliere.gd" id="1_pbe11"]
 [ext_resource type="Texture2D" uid="uid://bbsvcepdo4g42" path="res://assets/sprites/frames pg e utility/character/elf_m_hit_anim_f0.png" id="2_2di6k"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bx0tmsbvv2umj" path="res://assets/sprites/frames pg e utility/character/elf_m_run_anim_f1.png" id="8_ghjue"]
 [ext_resource type="Texture2D" uid="uid://b4i02dc113obn" path="res://assets/sprites/frames pg e utility/character/elf_m_run_anim_f2.png" id="9_fh58t"]
 [ext_resource type="Texture2D" uid="uid://7h0f3rw308b7" path="res://assets/sprites/frames pg e utility/character/elf_m_run_anim_f3.png" id="10_umjxv"]
+[ext_resource type="PackedScene" uid="uid://m10cmgoenyid" path="res://scenes/armi/arco.tscn" id="12_1rok4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qaa1k"]
 atlas = ExtResource("2_2di6k")
@@ -147,3 +148,5 @@ shape = SubResource("CircleShape2D_mdl7e")
 [node name="Hand" type="Marker2D" parent="."]
 position = Vector2(10, 7)
 metadata/_edit_group_ = true
+
+[node name="Arco" parent="Hand" instance=ExtResource("12_1rok4")]
