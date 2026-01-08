@@ -3,9 +3,8 @@
 [ext_resource type="Script" uid="uid://dp7gtkrk3usdd" path="res://scripts/spada.gd" id="1_8sqev"]
 [ext_resource type="Texture2D" uid="uid://ck0ju2cnr8kvr" path="res://assets/sprites/frames pg e utility/armi/weapon_double_axe.png" id="2_8sqev"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_82ylu"]
-radius = 5.587505
-height = 23.75496
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8sqev"]
+size = Vector2(15.524158, 9.210972)
 
 [sub_resource type="Animation" id="Animation_ffikv"]
 length = 0.001
@@ -80,8 +79,9 @@ scale = Vector2(1.0013225, 0.9853115)
 texture = ExtResource("2_8sqev")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -16)
-shape = SubResource("CapsuleShape2D_82ylu")
+position = Vector2(-0.053257465, -18.19781)
+scale = Vector2(1.0000005, 1.0000005)
+shape = SubResource("RectangleShape2D_8sqev")
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
