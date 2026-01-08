@@ -562,9 +562,11 @@ big_damage_potion_price_range = Vector2i(30, 32)
 big_damage_potion_chance = 0.09
 speed_potion_scene = ExtResource("30_rup4s")
 speed_potion_texture = ExtResource("31_4kbfs")
+speed_potion_price_range = Vector2i(12, 16)
 speed_potion_chance = 0.09
 big_speed_potion_scene = ExtResource("32_f17e3")
 big_speed_potion_texture = ExtResource("33_x2olw")
+big_speed_potion_price_range = Vector2i(20, 23)
 big_speed_potion_chance = 0.09
 
 [node name="ShopItem2" parent="." instance=ExtResource("15_xo05s")]
@@ -601,9 +603,11 @@ big_damage_potion_price_range = Vector2i(30, 32)
 big_damage_potion_chance = 0.09
 speed_potion_scene = ExtResource("30_rup4s")
 speed_potion_texture = ExtResource("31_4kbfs")
+speed_potion_price_range = Vector2i(12, 16)
 speed_potion_chance = 0.09
 big_speed_potion_scene = ExtResource("32_f17e3")
 big_speed_potion_texture = ExtResource("33_x2olw")
+big_speed_potion_price_range = Vector2i(20, 23)
 big_speed_potion_chance = 0.09
 
 [node name="ShopItem3" parent="." instance=ExtResource("15_xo05s")]
@@ -640,9 +644,11 @@ big_damage_potion_price_range = Vector2i(30, 32)
 big_damage_potion_chance = 0.09
 speed_potion_scene = ExtResource("30_rup4s")
 speed_potion_texture = ExtResource("31_4kbfs")
+speed_potion_price_range = Vector2i(12, 16)
 speed_potion_chance = 0.09
 big_speed_potion_scene = ExtResource("32_f17e3")
 big_speed_potion_texture = ExtResource("33_x2olw")
+big_speed_potion_price_range = Vector2i(20, 23)
 big_speed_potion_chance = 0.09
 
 [node name="ShopItem4" parent="." instance=ExtResource("15_xo05s")]
@@ -679,9 +685,11 @@ big_damage_potion_price_range = Vector2i(30, 32)
 big_damage_potion_chance = 0.09
 speed_potion_scene = ExtResource("30_rup4s")
 speed_potion_texture = ExtResource("31_4kbfs")
+speed_potion_price_range = Vector2i(12, 16)
 speed_potion_chance = 0.09
 big_speed_potion_scene = ExtResource("32_f17e3")
 big_speed_potion_texture = ExtResource("33_x2olw")
+big_speed_potion_price_range = Vector2i(20, 23)
 big_speed_potion_chance = 0.09
 
 [editable path="DungeonRoom"]
