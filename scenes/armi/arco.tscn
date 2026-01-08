@@ -1,12 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://m10cmgoenyid"]
+[gd_scene load_steps=6 format=3 uid="uid://m10cmgoenyid"]
 
 [ext_resource type="Texture2D" uid="uid://oa1x88jge0in" path="res://assets/sprites/frames pg e utility/armi/weapon_bow.png" id="1_0t3fs"]
 [ext_resource type="Script" uid="uid://cv8dktyilhq0m" path="res://scripts/arco.gd" id="1_d44ok"]
 [ext_resource type="PackedScene" uid="uid://b35xdrb6dmdaa" path="res://scenes/armi/Freccia.tscn" id="2_macl5"]
+[ext_resource type="Texture2D" uid="uid://bdj5nfa45hs4o" path="res://assets/sprites/frames pg e utility/armi/weapon_bow_2.png" id="3_b2akw"]
+[ext_resource type="Texture2D" uid="uid://dtfr1b0801tln" path="res://assets/sprites/frames pg e utility/armi/weapon_arrow.png" id="5_rgb4s"]
 
 [node name="Arco" type="Node2D"]
 script = ExtResource("1_d44ok")
 arrow_scene = ExtResource("2_macl5")
+texture_pulled = ExtResource("3_b2akw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_0t3fs")
+
+[node name="FrecciaVisiva" type="Sprite2D" parent="."]
+rotation = 1.5707964
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("5_rgb4s")
