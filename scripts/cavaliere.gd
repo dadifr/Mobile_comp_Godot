@@ -103,14 +103,30 @@ func _physics_process(delta):
 	if direction != Vector2.ZERO:
 		last_direction = direction.normalized()
 		
+		# A. GESTIONE SPRITE PERSONAGGIO (L'elfo si gira destra/sinistra)
 		if direction.x < 0:
 			anim.flip_h = true
-			hand.scale.x = -1
-			hand.position.x = -abs(hand.position.x)
 		elif direction.x > 0:
 			anim.flip_h = false
-			hand.scale.x = 1
-			hand.position.x = abs(hand.position.x)
+
+		# B. GESTIONE MANO (L'arco ruota a 360°)
+		# 1. Posiziona la mano nella direzione in cui guardi (a 8 pixel di distanza)
+		hand.position = last_direction * 8
+		
+		# 2. Ruota la mano
+		hand.rotation = last_direction.angle()
+		
+		# 3. RESETTA E CORREGGE LA SCALA
+		# Importante: Resettiamo sempre scale.x a 1 per cancellare il vecchio ribaltamento
+		hand.scale.x = 0.7 
+		
+		# Correzione estetica:
+		# Se guardiamo a sinistra, l'arco ruotato sarebbe a testa in giù.
+		# Lo specchiamo in verticale (Y) per raddrizzarlo, SENZA rovinare la direzione.
+		if direction.x < 0:
+			hand.scale.y = -0.7
+		else:
+			hand.scale.y = 0.7
 
 	# --- 5. AZIONI ---
 	if Input.is_action_just_pressed("attack") and not is_hurt:
