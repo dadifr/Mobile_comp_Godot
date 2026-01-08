@@ -18,41 +18,49 @@ extends Area2D
 @export var bomb_price_range: Vector2i = Vector2i(5, 10)
 @export_range(0.0, 1.0) var bomb_chance: float = 0.15
 
-# 2. VITA PICCOLA
+# 2. VITA (Rossa)
 @export var potion_scene: PackedScene
 @export var potion_texture: Texture2D
 @export var potion_price_range: Vector2i = Vector2i(10, 20)
 @export_range(0.0, 1.0) var potion_chance: float = 0.15
 
-# 3. VITA GRANDE
 @export var big_potion_scene: PackedScene
 @export var big_potion_texture: Texture2D
 @export var big_potion_price_range: Vector2i = Vector2i(25, 40)
-@export_range(0.0, 1.0) var big_potion_chance: float = 0.10
+@export_range(0.0, 1.0) var big_potion_chance: float = 0.08
 
-# 4. SCUDO PICCOLO
+# 3. SCUDI (Blu)
 @export var shield_small_scene: PackedScene
 @export var shield_small_texture: Texture2D
 @export var shield_small_price_range: Vector2i = Vector2i(15, 25)
 @export_range(0.0, 1.0) var shield_small_chance: float = 0.15
 
-# 5. SCUDO GRANDE
 @export var shield_big_scene: PackedScene
 @export var shield_big_texture: Texture2D
 @export var shield_big_price_range: Vector2i = Vector2i(30, 50)
-@export_range(0.0, 1.0) var shield_big_chance: float = 0.15
+@export_range(0.0, 1.0) var shield_big_chance: float = 0.08
 
-# 6. POZIONE DANNO (PICCOLA)
+# 4. DANNO (Blu Scuro/Viola)
 @export var damage_potion_scene: PackedScene
 @export var damage_potion_texture: Texture2D
 @export var damage_potion_price_range: Vector2i = Vector2i(40, 60)
-@export_range(0.0, 1.0) var damage_potion_chance: float = 0.20
+@export_range(0.0, 1.0) var damage_potion_chance: float = 0.15
 
-# 7. POZIONE DANNO GRANDE (NUOVA!)
 @export var big_damage_potion_scene: PackedScene
 @export var big_damage_potion_texture: Texture2D
-@export var big_damage_potion_price_range: Vector2i = Vector2i(80, 120) # Molto costosa!
-@export_range(0.0, 1.0) var big_damage_potion_chance: float = 0.10 # Molto rara
+@export var big_damage_potion_price_range: Vector2i = Vector2i(80, 120)
+@export_range(0.0, 1.0) var big_damage_potion_chance: float = 0.05
+
+# 5. VELOCITÀ (Verde - NUOVO)
+@export var speed_potion_scene: PackedScene
+@export var speed_potion_texture: Texture2D
+@export var speed_potion_price_range: Vector2i = Vector2i(30, 50)
+@export_range(0.0, 1.0) var speed_potion_chance: float = 0.15
+
+@export var big_speed_potion_scene: PackedScene
+@export var big_speed_potion_texture: Texture2D
+@export var big_speed_potion_price_range: Vector2i = Vector2i(60, 90)
+@export_range(0.0, 1.0) var big_speed_potion_chance: float = 0.05
 
 # Variabili interne
 var player_in_range = null
@@ -61,7 +69,6 @@ func _ready():
 	if is_random_shop:
 		randomize_shop_item()
 	
-	# --- AGGIORNAMENTO VISIVO ---
 	if item_texture:
 		$Sprite2D.texture = item_texture
 		$Sprite2D.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -77,49 +84,37 @@ func randomize_shop_item():
 	var roll = randf()
 	var current_threshold = 0.0
 	
-	# 1. Bombe
+	# Ordine di controllo (Accumuliamo le probabilità)
+	
+	# Bombe
 	current_threshold += bomb_chance
-	if roll < current_threshold:
-		setup_item(bomb_scene, bomb_texture, bomb_price_range)
-		return
+	if roll < current_threshold: setup_item(bomb_scene, bomb_texture, bomb_price_range); return
 
-	# 2. Vita Piccola
+	# Vita
 	current_threshold += potion_chance
-	if roll < current_threshold:
-		setup_item(potion_scene, potion_texture, potion_price_range)
-		return
-
-	# 3. Vita Grande
+	if roll < current_threshold: setup_item(potion_scene, potion_texture, potion_price_range); return
 	current_threshold += big_potion_chance
-	if roll < current_threshold:
-		setup_item(big_potion_scene, big_potion_texture, big_potion_price_range)
-		return
+	if roll < current_threshold: setup_item(big_potion_scene, big_potion_texture, big_potion_price_range); return
 
-	# 4. Scudo Piccolo
+	# Scudi
 	current_threshold += shield_small_chance
-	if roll < current_threshold:
-		setup_item(shield_small_scene, shield_small_texture, shield_small_price_range)
-		return
-
-	# 5. Scudo Grande
+	if roll < current_threshold: setup_item(shield_small_scene, shield_small_texture, shield_small_price_range); return
 	current_threshold += shield_big_chance
-	if roll < current_threshold:
-		setup_item(shield_big_scene, shield_big_texture, shield_big_price_range)
-		return
+	if roll < current_threshold: setup_item(shield_big_scene, shield_big_texture, shield_big_price_range); return
 
-	# 6. Pozione Danno Piccola
+	# Danno
 	current_threshold += damage_potion_chance
-	if roll < current_threshold:
-		setup_item(damage_potion_scene, damage_potion_texture, damage_potion_price_range)
-		return
-
-	# 7. Pozione Danno Grande (NUOVA)
+	if roll < current_threshold: setup_item(damage_potion_scene, damage_potion_texture, damage_potion_price_range); return
 	current_threshold += big_damage_potion_chance
-	if roll < current_threshold:
-		setup_item(big_damage_potion_scene, big_damage_potion_texture, big_damage_potion_price_range)
-		return
+	if roll < current_threshold: setup_item(big_damage_potion_scene, big_damage_potion_texture, big_damage_potion_price_range); return
 
-	# FALLBACK
+	# Velocità
+	current_threshold += speed_potion_chance
+	if roll < current_threshold: setup_item(speed_potion_scene, speed_potion_texture, speed_potion_price_range); return
+	current_threshold += big_speed_potion_chance
+	if roll < current_threshold: setup_item(big_speed_potion_scene, big_speed_potion_texture, big_speed_potion_price_range); return
+
+	# FALLBACK (Se qualcosa va storto, vendiamo bombe)
 	setup_item(bomb_scene, bomb_texture, bomb_price_range)
 
 
@@ -143,7 +138,6 @@ func buy_success():
 
 	player_in_range.coins -= price
 	
-	# Aggiorna monete (usa i segnali o metodi del player)
 	if player_in_range.has_signal("coins_changed"):
 		player_in_range.coins_changed.emit(player_in_range.coins)
 	elif player_in_range.has_method("update_coins"):

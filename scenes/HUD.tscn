@@ -108,3 +108,7 @@ text = "x 0"
 [node name="BoostLabel" type="Label" parent="MarginContainer/StatsContainer"]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_8cuoo")
+
+[node name="SpeedLabel" type="Label" parent="MarginContainer/StatsContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_8cuoo")

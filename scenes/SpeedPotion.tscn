@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://j4uwblaaw71g"]
+
+[ext_resource type="Texture2D" uid="uid://b8sn5ax3v15ep" path="res://assets/sprites/frames pg e utility/utility/flask_green.png" id="1_cennh"]
+[ext_resource type="Script" uid="uid://bfjwl610fmir0" path="res://scripts/SpeedPotion.gd" id="1_t4tfy"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t4tfy"]
+radius = 4.0
+height = 12.0
+
+[node name="SpeedPotion" type="Area2D"]
+script = ExtResource("1_t4tfy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_cennh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_t4tfy")

@@ -6,38 +6,44 @@ extends StaticBody2D
 @export var potion_h_scene: PackedScene        # Cuore Piccolo
 @export var big_potion_h_scene: PackedScene    # Cuore Grande
 
-@export_group("Shield Items (Scudi)")
-@export var shield_small_scene: PackedScene    # Mezzo Scudo (Piccolo)
-@export var shield_big_scene: PackedScene      # Scudo Intero (Grande)
+@export_group("Shield Items (Scudi - Giallo)")
+@export var shield_small_scene: PackedScene    # Mezzo Scudo
+@export var shield_big_scene: PackedScene      # Scudo Intero
 
-@export_group("Damage Boost Items (Forza)")
+@export_group("Damage Boost (Forza - Blu)")
 @export var damage_potion_scene: PackedScene     # Boost Piccolo
 @export var big_damage_potion_scene: PackedScene # Boost Grande
 
-@export_group("Currency & Traps")
+@export_group("Speed Boost (Velocità - Verde)")
+@export var speed_potion_scene: PackedScene      # Velocità Piccola
+@export var big_speed_potion_scene: PackedScene  # Velocità Grande
+
+@export_group("Monete & Trappole")
 @export var coin_scene: PackedScene
 @export var bomb_scene: PackedScene 
 
-# --- 2. PROBABILITÀ DROP (0.1 = 10%, 0.5 = 50%) ---
+# --- 2. PROBABILITÀ DROP (0.1 = 10%, 1.0 = 100%) ---
 @export_group("Drop Chances")
 @export var mimic_chance: float = 0.1            # 10% Trappola
 
-# Probabilità Cuori
-@export var potion_h_chance: float = 0.3         # 30%
-@export var big_potion_h_chance: float = 0.1     # 10%
+# Probabilità Vita
+@export var potion_h_chance: float = 0.3         
+@export var big_potion_h_chance: float = 0.1     
 
-# Probabilità Scudi (Nuove)
-@export var shield_small_chance: float = 0.25    # 25% Mezzo Scudo
-@export var shield_big_chance: float = 0.10      # 10% Scudo Intero
+# Probabilità Scudi
+@export var shield_small_chance: float = 0.25    
+@export var shield_big_chance: float = 0.10      
 
 # Probabilità Danno
-@export var damage_potion_chance: float = 0.2    # 20%
-@export var big_damage_potion_chance: float = 0.05 # 5% (Molto Raro)
+@export var damage_potion_chance: float = 0.2    
+@export var big_damage_potion_chance: float = 0.05 
+
+# Probabilità Velocità
+@export var speed_potion_chance: float = 0.2     
+@export var big_speed_potion_chance: float = 0.08 
 
 # Probabilità Monete
-@export var coin_chance: float = 0.8             # 80%
-
-# Quantità Monete
+@export var coin_chance: float = 0.8             
 @export var min_coins: int = 2
 @export var max_coins: int = 6
 
@@ -65,38 +71,36 @@ func calculate_loot():
 	# --- INIZIO LOOT ---
 	var has_loot = false
 	
-	# --- CATEGORIA 1: VITA (Cuori) ---
+	# --- CATEGORIA 1: VITA ---
 	if big_potion_h_scene and randf() <= big_potion_h_chance:
-		spawn_item(big_potion_h_scene)
-		has_loot = true
+		spawn_item(big_potion_h_scene); has_loot = true
 
 	if potion_h_scene and randf() <= potion_h_chance:
-		spawn_item(potion_h_scene)
-		has_loot = true
+		spawn_item(potion_h_scene); has_loot = true
 
-	# --- CATEGORIA 2: SCUDI (NUOVO!) ---
-	# Scudo Grande
+	# --- CATEGORIA 2: SCUDI ---
 	if shield_big_scene and randf() <= shield_big_chance:
-		spawn_item(shield_big_scene)
-		has_loot = true
-		print("Loot: Scudo Grande!")
+		spawn_item(shield_big_scene); has_loot = true
 	
-	# Scudo Piccolo
 	if shield_small_scene and randf() <= shield_small_chance:
-		spawn_item(shield_small_scene)
-		has_loot = true
-		print("Loot: Scudo Piccolo!")
+		spawn_item(shield_small_scene); has_loot = true
 
-	# --- CATEGORIA 3: DANNO (Boost) ---
+	# --- CATEGORIA 3: DANNO (Blu) ---
 	if big_damage_potion_scene and randf() <= big_damage_potion_chance:
-		spawn_item(big_damage_potion_scene)
-		has_loot = true
+		spawn_item(big_damage_potion_scene); has_loot = true
 	
 	if damage_potion_scene and randf() <= damage_potion_chance:
-		spawn_item(damage_potion_scene)
-		has_loot = true
+		spawn_item(damage_potion_scene); has_loot = true
 
-	# --- CATEGORIA 4: MONETE ---
+	# --- CATEGORIA 4: VELOCITÀ (Verde - NUOVO) ---
+	if big_speed_potion_scene and randf() <= big_speed_potion_chance:
+		spawn_item(big_speed_potion_scene); has_loot = true
+		print("Loot: Super Velocità!")
+	
+	if speed_potion_scene and randf() <= speed_potion_chance:
+		spawn_item(speed_potion_scene); has_loot = true
+
+	# --- CATEGORIA 5: MONETE ---
 	if coin_scene and randf() <= coin_chance:
 		var amount = randi_range(min_coins, max_coins)
 		for i in range(amount):
@@ -121,11 +125,7 @@ func trigger_mimic():
 		spawn_item(bomb_scene)
 
 func spawn_item(scene_to_spawn):
-	# VALIDAZIONE
-	if scene_to_spawn == null:
-		# Non stampiamo errore per gli scudi se non li hai assegnati, 
-		# così puoi lasciare i campi vuoti se vuoi casse senza scudi.
-		return
+	if scene_to_spawn == null: return
 
 	var item = scene_to_spawn.instantiate()
 	
@@ -139,8 +139,5 @@ func spawn_item(scene_to_spawn):
 		var random_force = Vector2(randf_range(-0.5, 0.5), 1).normalized() * 30
 		item.apply_impulse(random_force)
 	
-	if get_parent() == null:
-		item.queue_free()
-		return
-
-	get_parent().call_deferred("add_child", item)
+	if get_parent():
+		get_parent().call_deferred("add_child", item)

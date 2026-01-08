@@ -31,10 +31,12 @@ func _ready():
 	# Armatura (Scudi)
 	player_instance.armor_changed.connect(hud.update_armor)
 	
-	# ### NUOVO ### Collegamento Timer Pozione
-	# Questo mancava! Senza questo, il timer nell'HUD non parte.
+	# Collegamento Timer Pozione
 	if player_instance.has_signal("boost_updated"):
 		player_instance.boost_updated.connect(hud._on_boost_updated)
+	
+	if player_instance.has_signal("speed_updated"):
+		player_instance.speed_updated.connect(hud._on_speed_updated)
 	
 	# --- 4. AGGIUNGIAMO IL PLAYER AL MONDO ---
 	add_child(player_instance)
