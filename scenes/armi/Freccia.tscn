@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b35xdrb6dmdaa"]
 
-[ext_resource type="Script" uid="uid://b0ib0od1keyei" path="res://scripts/freccia.gd" id="1_xf8dy"]
+[ext_resource type="Script" uid="uid://b0ib0od1keyei" path="res://scripts/armi/freccia.gd" id="1_xf8dy"]
 [ext_resource type="Texture2D" uid="uid://dtfr1b0801tln" path="res://assets/sprites/frames pg e utility/armi/weapon_arrow.png" id="2_a4dbt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjt7m"]

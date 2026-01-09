@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://duc60vna0lhl8"]
+
+[ext_resource type="Script" uid="uid://b8eb5he1mn8is" path="res://scripts/armi/bastone magico.gd" id="1_soldd"]
+[ext_resource type="PackedScene" uid="uid://bk3licnvoy0sd" path="res://scenes/armi/fire ball.tscn" id="2_j04g0"]
+[ext_resource type="Texture2D" uid="uid://cp052mqrt53i5" path="res://assets/sprites/frames pg e utility/armi/weapon_red_magic_staff.png" id="2_nrma4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1kpwy"]
+radius = 4.0
+height = 24.0
+
+[node name="bastone magico" type="Area2D"]
+rotation = 0.2617994
+script = ExtResource("1_soldd")
+projectile_scene = ExtResource("2_j04g0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+texture = ExtResource("2_nrma4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+shape = SubResource("CapsuleShape2D_1kpwy")
+disabled = true
+
+[node name="Punta" type="Marker2D" parent="."]
+position = Vector2(0.10153583, -22.803284)

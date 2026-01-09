@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dvc3r0o6syryv"]
 
-[ext_resource type="Script" uid="uid://dp7gtkrk3usdd" path="res://scripts/spada.gd" id="1_slg1y"]
+[ext_resource type="Script" uid="uid://dp7gtkrk3usdd" path="res://scripts/armi/spada.gd" id="1_slg1y"]
 [ext_resource type="Texture2D" uid="uid://d6lh8rki7u1i" path="res://assets/sprites/frames pg e utility/armi/weapon_anime_sword.png" id="2_ffikv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_82ylu"]

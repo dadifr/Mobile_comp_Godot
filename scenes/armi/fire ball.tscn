@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3 uid="uid://bk3licnvoy0sd"]
+
+[ext_resource type="Texture2D" uid="uid://b65f10jgfk0y8" path="res://assets/sprites/frames pg e utility/utility/explosion.png" id="1_rd71d"]
+[ext_resource type="Script" uid="uid://dovva42npnkat" path="res://scripts/armi/fire_ball.gd" id="1_y662s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y662s"]
+radius = 4.000001
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1k2g7"]
+atlas = ExtResource("1_rd71d")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1d5ct"]
+atlas = ExtResource("1_rd71d")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yj5mh"]
+atlas = ExtResource("1_rd71d")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1owg"]
+atlas = ExtResource("1_rd71d")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67uwf"]
+atlas = ExtResource("1_rd71d")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ff2ok"]
+atlas = ExtResource("1_rd71d")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ad5y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1k2g7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1d5ct")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yj5mh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1owg")
+}],
+"loop": false,
+"name": &"creazione",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_67uwf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ff2ok")
+}],
+"loop": true,
+"name": &"movimento",
+"speed": 5.0
+}]
+
+[node name="FireBall" type="Area2D"]
+script = ExtResource("1_y662s")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.9234553e-07, 4.257474e-07)
+rotation = 1.5707964
+scale = Vector2(0.9999996, 0.9999996)
+shape = SubResource("CircleShape2D_y662s")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2.9234553e-07, 4.257474e-07)
+rotation = 1.5707964
+scale = Vector2(0.9999996, 0.9999996)
+sprite_frames = SubResource("SpriteFrames_3ad5y")
+animation = &"creazione"

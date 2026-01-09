@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://b4p2ag0n4ui3x"]
 
 [ext_resource type="Script" uid="uid://m5ev2frp3o1n" path="res://scripts/character_selection.gd" id="1_7xed0"]
-[ext_resource type="PackedScene" uid="uid://cjkp6iup5bgc3" path="res://scenes/cavaliere.tscn" id="2_wh1ae"]
-[ext_resource type="PackedScene" uid="uid://cdh1w2mxhohds" path="res://scenes/elfo.tscn" id="3_cqj7k"]
-[ext_resource type="PackedScene" uid="uid://bmpeipw8r4nj7" path="res://scenes/nano.tscn" id="4_cqj7k"]
+[ext_resource type="PackedScene" uid="uid://cjkp6iup5bgc3" path="res://scenes/pg/cavaliere.tscn" id="2_wh1ae"]
+[ext_resource type="PackedScene" uid="uid://cdh1w2mxhohds" path="res://scenes/pg/elfo.tscn" id="3_cqj7k"]
+[ext_resource type="PackedScene" uid="uid://bmpeipw8r4nj7" path="res://scenes/pg/nano.tscn" id="4_cqj7k"]
 [ext_resource type="Texture2D" uid="uid://flgyr6efghe2" path="res://assets/sprites/frames pg e utility/character/knight_m_idle_anim_f0.png" id="4_iixut"]
 [ext_resource type="Texture2D" uid="uid://ded544xo5cem3" path="res://assets/sprites/frames pg e utility/character/elf_m_idle_anim_f0.png" id="5_dv8bk"]
-[ext_resource type="PackedScene" uid="uid://bjaiw72yylptu" path="res://scenes/lizard.tscn" id="5_v724p"]
+[ext_resource type="PackedScene" uid="uid://bjaiw72yylptu" path="res://scenes/pg/lizard.tscn" id="5_v724p"]
 [ext_resource type="Texture2D" uid="uid://l4mvjx0sr5t5" path="res://assets/sprites/frames pg e utility/character/dwarf_m_idle_anim_f0.png" id="7_iixut"]
 [ext_resource type="Texture2D" uid="uid://bvsgl2fwpb4yf" path="res://assets/sprites/frames pg e utility/character/lizard_m_idle_anim_f0.png" id="8_iixut"]
 

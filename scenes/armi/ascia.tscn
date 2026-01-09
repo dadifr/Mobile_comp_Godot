@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cdvkgub272qvd"]
 
-[ext_resource type="Script" uid="uid://dp7gtkrk3usdd" path="res://scripts/spada.gd" id="1_8sqev"]
+[ext_resource type="Script" uid="uid://dp7gtkrk3usdd" path="res://scripts/armi/spada.gd" id="1_8sqev"]
 [ext_resource type="Texture2D" uid="uid://ck0ju2cnr8kvr" path="res://assets/sprites/frames pg e utility/armi/weapon_double_axe.png" id="2_8sqev"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8sqev"]
