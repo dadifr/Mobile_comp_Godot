@@ -2,74 +2,95 @@ extends Node2D
 
 @export var arrow_scene: PackedScene 
 @export var fire_rate: float = 0.5
-@export var texture_pulled: Texture2D # L'immagine dell'arco teso
+@export var texture_pulled: Texture2D
 
 @onready var sprite_arco = $Sprite2D
-@onready var freccia_visiva = $FrecciaVisiva # Il nuovo nodo che hai appena creato
+@onready var freccia_visiva = $FrecciaVisiva 
 
 var can_shoot = true
 var is_charging = false
 var texture_normal = null
 
 func _ready():
-	# Ci salviamo l'aspetto normale dell'arco
 	if sprite_arco:
 		texture_normal = sprite_arco.texture
-	
-	# Assicuriamoci che la freccia finta sia nascosta all'inizio
 	if freccia_visiva:
 		freccia_visiva.visible = false
+		
+	# --- FIX STRETCHING: Top Level ---
+	# Rendiamo l'arco indipendente dalle trasformazioni del padre.
+	# In questo modo NON eredita lo "scale.x = -1" della mano che causava lo stretch.
+	set_as_top_level(true)
 
 func _process(_delta):
-	# Se stiamo caricando...
+	# --- 1. TROVA IL PLAYER ---
+	var player = get_tree().get_first_node_in_group("player")
+	
+	if player:
+		# --- 2. INSEGUI LA MANO (Necessario perché siamo Top Level) ---
+		# Cerchiamo il nodo "Hand" dentro il player per sapere dove posizionarci.
+		var hand_node = player.get_node_or_null("Hand")
+		if hand_node:
+			# Copiamo la posizione globale della mano
+			global_position = hand_node.global_position
+			
+		# --- 3. GESTIONE ROTAZIONE VISIVA ---
+		if "last_direction" in player and player.last_direction != Vector2.ZERO:
+			var dir = player.last_direction
+			# Ora possiamo usare l'angolo reale e pulito della direzione.
+			# Non serve più il trucco "abs(dir.x)" perché non siamo più influenzati dallo scale negativo.
+			rotation = dir.angle()
+
+	# --- 4. GESTIONE CARICAMENTO ---
 	if is_charging:
-		# ...e rilasciamo il tasto
 		if Input.is_action_just_released("attack"):
 			shoot()
 			reset_bow()
 
-# Questa viene chiamata dall'Elfo quando PREMI il tasto
 func attack():
-	if not can_shoot:
-		return
-	
+	if not can_shoot: return
 	is_charging = true
 	
-	# 1. Cambia l'arco in "Teso"
 	if sprite_arco and texture_pulled:
 		sprite_arco.texture = texture_pulled
-	
-	# 2. MOSTRA la freccia ferma sulla corda
 	if freccia_visiva:
 		freccia_visiva.visible = true
 
-# Funzione per resettare la grafica (usata dopo lo sparo o se veniamo interrotti)
 func reset_bow():
 	is_charging = false
-	
-	# Rimetti l'arco normale
 	if sprite_arco: 
 		sprite_arco.texture = texture_normal
-	
-	# NASCONDI la freccia visiva
 	if freccia_visiva:
 		freccia_visiva.visible = false
 
 func shoot():
 	if not arrow_scene: return
 	
-	# Qui creiamo la freccia VERA che vola via
-	var direction = Vector2.RIGHT
-	if owner and "last_direction" in owner:
-		if owner.last_direction != Vector2.ZERO:
-			direction = owner.last_direction
+	var player = get_tree().get_first_node_in_group("player")
 	
+	var direction = Vector2.RIGHT
+	var damage_bonus = 0
+	
+	if player:
+		if "last_direction" in player and player.last_direction != Vector2.ZERO:
+			direction = player.last_direction
+		if "current_damage_bonus" in player:
+			damage_bonus = player.current_damage_bonus
+	
+	# Creazione freccia
 	var arrow = arrow_scene.instantiate()
-	arrow.global_position = global_position
+	# La posizione di spawn è la nostra posizione globale attuale
+	arrow.global_position = global_position 
 	arrow.direction = direction
 	arrow.rotation = direction.angle()
-	if owner:
-		arrow.shooter = owner
+	
+	if player:
+		arrow.shooter = player
+	
+	# Iniezione danno
+	if damage_bonus > 0:
+		arrow.damage += damage_bonus
+	
 	get_tree().root.add_child(arrow)
 	
 	# Cooldown

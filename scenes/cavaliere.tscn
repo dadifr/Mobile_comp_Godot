@@ -126,13 +126,9 @@ radius = 6.0
 [node name="cavaliere" type="CharacterBody2D" groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_v6fml")
-speed = null
-max_health = null
 bomb_scene = ExtResource("2_hicpa")
 knockback_force = 200.0
 invincibility_time = 0.5
-coins = null
-bombs = null
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
