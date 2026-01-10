@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://byxgdifc1jnr"]
+[gd_scene load_steps=4 format=3 uid="uid://byxgdifc1jnr"]
 
 [ext_resource type="Script" uid="uid://bopcypak2ir8s" path="res://scripts/SettingsMenu.gd" id="1_yelko"]
+[ext_resource type="FontFile" uid="uid://cd2yngqm441q4" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="2_1yw23"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dd8lr"]
 
 [node name="SettingsMenu" type="Control"]
 layout_mode = 3
@@ -44,6 +47,7 @@ value = 1.0
 [node name="risolution" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Risoluzione"
+label_settings = SubResource("LabelSettings_dd8lr")
 horizontal_alignment = 1
 
 [node name="ResOptionButton" type="OptionButton" parent="VBoxContainer"]
@@ -54,4 +58,5 @@ layout_mode = 2
 
 [node name="PlayButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_1yw23")
 text = "GIOCA"
