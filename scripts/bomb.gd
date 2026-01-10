@@ -1,6 +1,8 @@
 extends RigidBody2D
 
 @export var damage = 5
+# NUOVO: Danno massiccio contro le strutture (Spawner, Casse, Muri distruttibili)
+@export var structure_damage = 30 
 
 # Variabile per assicurarci che esploda una volta sola
 var exploded = false
@@ -13,7 +15,7 @@ func _on_timer_timeout():
 	explode()
 
 func explode():
-	# PROTEZIONE 1: Evita doppie esplosioni (se timer e collisione accadono insieme)
+	# PROTEZIONE 1: Evita doppie esplosioni
 	if exploded:
 		return
 	exploded = true
@@ -22,17 +24,13 @@ func explode():
 	$AnimatedSprite2D.play("explosion")
 	$AnimatedSprite2D.scale = Vector2(4, 4) 
 	
-	# Blocchiamo la bomba dov'è, così non rotola via mentre esplode
+	# Blocchiamo la bomba dov'è
 	freeze = true 
 	
 	# 2. LOGICA SICURA: Attiva l'area di danno
-	# IMPORTANTE: Usiamo set_deferred invece di cambiare "monitoring" direttamente.
-	# Questo evita crash se il motore fisico sta lavorando in quel momento.
 	$BlastArea.set_deferred("monitoring", true)
 	
-	# PROTEZIONE 2: Tempismo Fisico
-	# Invece di un timer a caso (0.1), aspettiamo esattamente 2 frame fisici.
-	# Questo garantisce che Godot abbia aggiornato la lista dei corpi sovrapposti.
+	# PROTEZIONE 2: Tempismo Fisico (2 frame di attesa)
 	await get_tree().physics_frame
 	await get_tree().physics_frame
 	
@@ -41,7 +39,6 @@ func explode():
 	
 	for body in bodies:
 		# PROTEZIONE 3: Il corpo esiste ancora?
-		# Se un nemico muore nello stesso istante, questa riga evita il crash.
 		if not is_instance_valid(body):
 			continue
 		
@@ -51,14 +48,21 @@ func explode():
 
 		# Gestione Danno
 		if body.has_method("take_damage"):
-			# Logica originale: Se è il player, fa solo 1 danno
+			
+			# CASO A: È il Player (Danno ridotto)
 			if body.is_in_group("player"):
 				body.take_damage(2, global_position)
+			
+			# CASO B: È uno Spawner (Riconosciuto perché ha il metodo spawn_enemy)
+			# Questo è il "Danno d'assedio"
+			elif body.has_method("spawn_enemy"):
+				print("BOOM! Struttura demolita!")
+				body.take_damage(structure_damage, global_position)
+				
+			# CASO C: Nemici normali (Scheletri, Slime, ecc.)
 			else:
-				# Altrimenti fa danno pieno (es. ai nemici)
 				body.take_damage(damage, global_position)
 
 	# 4. PULIZIA
-	# Aspettiamo che l'animazione finisca prima di sparire, altrimenti non si vede il BOOM!
 	await $AnimatedSprite2D.animation_finished
 	queue_free()

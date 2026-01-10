@@ -26,10 +26,18 @@ func start_battle():
 		print("Battaglia Iniziata! Nemici: ", enemy_count)
 		room_started = true
 		close_all_doors()
+		
+		# --- NOVITÀ: SVEGLIA GLI SPAWNER ---
+		# Cerchiamo dentro il nodo Enemies se c'è qualcuno che deve essere attivato
+		for child in $Enemies.get_children():
+			if child.has_method("activate_spawner"):
+				child.activate_spawner()
+		# -----------------------------------
+		
 	else:
 		room_cleared = true
 
-func _process(delta):
+func _process(_delta):
 	if room_started and !room_cleared:
 		# Se il numero di VERI nemici scende a 0
 		if count_enemies() == 0:
@@ -44,16 +52,14 @@ func count_enemies():
 		
 		# --- SICUREZZA 1: Esiste ancora in memoria? ---
 		if not is_instance_valid(child):
-			continue # Salta al prossimo, questo è corrotto
+			continue 
 			
 		# --- SICUREZZA 2: Sta morendo? ---
-		# "is_queued_for_deletion()" restituisce VERO se hai chiamato queue_free()
-		# ma il nodo non è ancora sparito del tutto.
 		if child.is_queued_for_deletion():
-			continue # Ignoralo, è come se fosse già morto
+			continue 
 		
 		# --- CONTROLLO REALE ---
-		# Se è vivo, vegeto e fa parte del gruppo nemici:
+		# Se è vivo e fa parte del gruppo nemici:
 		if child.is_in_group("enemies"):
 			count += 1
 			
