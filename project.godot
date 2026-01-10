@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="esame1"
-run/main_scene="uid://c7qn6reikqpwx"
+run/main_scene="uid://bjk1sij5hryim"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
