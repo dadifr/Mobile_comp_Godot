@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b4p2ag0n4ui3x"]
+[gd_scene load_steps=12 format=3 uid="uid://b4p2ag0n4ui3x"]
 
 [ext_resource type="Script" uid="uid://m5ev2frp3o1n" path="res://scripts/character_selection.gd" id="1_7xed0"]
 [ext_resource type="PackedScene" uid="uid://cjkp6iup5bgc3" path="res://scenes/pg/cavaliere.tscn" id="2_wh1ae"]
@@ -7,8 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://flgyr6efghe2" path="res://assets/sprites/frames pg e utility/character/knight_m_idle_anim_f0.png" id="4_iixut"]
 [ext_resource type="Texture2D" uid="uid://ded544xo5cem3" path="res://assets/sprites/frames pg e utility/character/elf_m_idle_anim_f0.png" id="5_dv8bk"]
 [ext_resource type="PackedScene" uid="uid://bjaiw72yylptu" path="res://scenes/pg/lizard.tscn" id="5_v724p"]
+[ext_resource type="PackedScene" uid="uid://bfh75dgljhtwx" path="res://scenes/pg/mago.tscn" id="6_7rsvw"]
 [ext_resource type="Texture2D" uid="uid://l4mvjx0sr5t5" path="res://assets/sprites/frames pg e utility/character/dwarf_m_idle_anim_f0.png" id="7_iixut"]
 [ext_resource type="Texture2D" uid="uid://bvsgl2fwpb4yf" path="res://assets/sprites/frames pg e utility/character/lizard_m_idle_anim_f0.png" id="8_iixut"]
+[ext_resource type="Texture2D" uid="uid://bclwst5k6jahl" path="res://assets/sprites/frames pg e utility/character/wizzard_m_idle_anim_f0.png" id="10_v724p"]
 
 [node name="CharacterSelection" type="Control"]
 layout_mode = 3
@@ -20,6 +22,7 @@ knight_scene = ExtResource("2_wh1ae")
 elf_scene = ExtResource("3_cqj7k")
 dwarf_scene = ExtResource("4_cqj7k")
 lizard_scene = ExtResource("5_v724p")
+mage_scene = ExtResource("6_7rsvw")
 
 [node name="ImCavaliere" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(16, 16)
@@ -65,6 +68,17 @@ texture = ExtResource("8_iixut")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="ImMago" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 0
+offset_left = 393.0
+offset_top = 122.0
+offset_right = 442.0
+offset_bottom = 185.0
+texture = ExtResource("10_v724p")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 155.0
@@ -87,3 +101,7 @@ text = "Nano"
 [node name="BtnLizard" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 text = "Lizard"
+
+[node name="BtnMago" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Mago"

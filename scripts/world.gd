@@ -11,7 +11,7 @@ func _ready():
 		player_instance = GameManager.selected_character_scene.instantiate()
 	else:
 		print("Nessun personaggio scelto, carico Knight di default.")
-		player_instance = load("res://scenes/cavaliere.tscn").instantiate()
+		player_instance = load("res://scenes/pg/cavaliere.tscn").instantiate()
 	
 	# --- 2. POSIZIONAMENTO ---
 	if has_node("SpawnPoint"):

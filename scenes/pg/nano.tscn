@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dbdbpdr62vcwp" path="res://assets/sprites/frames pg e utility/character/dwarf_m_run_anim_f1.png" id="8_8v82s"]
 [ext_resource type="Texture2D" uid="uid://dncy2rp0hwn07" path="res://assets/sprites/frames pg e utility/character/dwarf_m_run_anim_f2.png" id="9_m8okl"]
 [ext_resource type="Texture2D" uid="uid://cb4w7gbcsfsg5" path="res://assets/sprites/frames pg e utility/character/dwarf_m_run_anim_f3.png" id="10_tc087"]
-[ext_resource type="PackedScene" uid="uid://duc60vna0lhl8" path="res://scenes/armi/bastone magico.tscn" id="12_al5kh"]
+[ext_resource type="PackedScene" uid="uid://cdvkgub272qvd" path="res://scenes/armi/ascia.tscn" id="12_al5kh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_drixs"]
 atlas = ExtResource("2_tlf1f")
@@ -150,5 +150,4 @@ shape = SubResource("CircleShape2D_mdl7e")
 position = Vector2(10, 7)
 metadata/_edit_group_ = true
 
-[node name="bastone magico" parent="Hand" instance=ExtResource("12_al5kh")]
-scale = Vector2(0.7, 0.7)
+[node name="Spada" parent="Hand" instance=ExtResource("12_al5kh")]
