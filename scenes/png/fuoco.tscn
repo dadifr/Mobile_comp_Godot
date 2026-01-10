@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3 uid="uid://dm32lxcpq6rig"]
+
+[ext_resource type="Script" uid="uid://c2jdgcy0u88mr" path="res://scripts/fuoco.gd" id="1_dvfs3"]
+[ext_resource type="Texture2D" uid="uid://cd8osu3fh1atb" path="res://assets/sprites/frames pg e utility/utility/flame.png" id="2_51cc1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_68lqu"]
+atlas = ExtResource("2_51cc1")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbh2b"]
+atlas = ExtResource("2_51cc1")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6tydc"]
+atlas = ExtResource("2_51cc1")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m350k"]
+atlas = ExtResource("2_51cc1")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nspu0"]
+atlas = ExtResource("2_51cc1")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iqjw6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_68lqu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbh2b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6tydc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m350k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nspu0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y4un3"]
+size = Vector2(5, 5)
+
+[node name="fuoco" type="Area2D"]
+script = ExtResource("1_dvfs3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1.1250002, -2)
+scale = Vector2(0.4453125, 0.484375)
+sprite_frames = SubResource("SpriteFrames_iqjw6")
+frame_progress = 0.012855583
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_y4un3")

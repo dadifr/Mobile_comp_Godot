@@ -1,0 +1,114 @@
+[gd_scene load_steps=22 format=3 uid="uid://ce1na6swhktac"]
+
+[ext_resource type="Script" uid="uid://cqnplvtb0jm6m" path="res://scripts/creeper.gd" id="1_t3wml"]
+[ext_resource type="Texture2D" uid="uid://dehuysxkmhdnj" path="res://assets/sprites/frames pg e utility/mob/pumpkin_dude_idle_anim_f0.png" id="2_5jvu3"]
+[ext_resource type="Texture2D" uid="uid://ch243w848uruq" path="res://assets/sprites/frames pg e utility/mob/pumpkin_dude_idle_anim_f1.png" id="3_qiocg"]
+[ext_resource type="Texture2D" uid="uid://tulbcdk34ily" path="res://assets/sprites/frames pg e utility/mob/pumpkin_dude_idle_anim_f2.png" id="4_xwioc"]
+[ext_resource type="Texture2D" uid="uid://dcbdyq3o1v02a" path="res://assets/sprites/frames pg e utility/mob/pumpkin_dude_idle_anim_f3.png" id="5_jtbr6"]
+[ext_resource type="Texture2D" uid="uid://bwdm5a24qcjq6" path="res://assets/sprites/frames pg e utility/mob/pumpkin_dude_run_anim_f0.png" id="6_5nyt5"]
+[ext_resource type="Texture2D" uid="uid://v5t1ak3si13j" path="res://assets/sprites/frames pg e utility/mob/pumpkin_dude_run_anim_f1.png" id="7_ofrmc"]
+[ext_resource type="Texture2D" uid="uid://c5jp0d1sx7m4g" path="res://assets/sprites/frames pg e utility/mob/pumpkin_dude_run_anim_f2.png" id="8_363cy"]
+[ext_resource type="Texture2D" uid="uid://da4blwp4mh1sc" path="res://assets/sprites/frames pg e utility/mob/pumpkin_dude_run_anim_f3.png" id="9_bc1ra"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5jvu3"]
+size = Vector2(12, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ub30t"]
+atlas = ExtResource("2_5jvu3")
+region = Rect2(0, 0, 16, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7b4a"]
+atlas = ExtResource("3_qiocg")
+region = Rect2(0, 0, 16, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3ra5"]
+atlas = ExtResource("4_xwioc")
+region = Rect2(0, 0, 16, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s42vw"]
+atlas = ExtResource("5_jtbr6")
+region = Rect2(0, 0, 16, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eb3mf"]
+atlas = ExtResource("6_5nyt5")
+region = Rect2(0, 0, 16, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j7c5e"]
+atlas = ExtResource("7_ofrmc")
+region = Rect2(0, 0, 16, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ngn5"]
+atlas = ExtResource("8_363cy")
+region = Rect2(0, 0, 16, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0nn0w"]
+atlas = ExtResource("9_bc1ra")
+region = Rect2(0, 0, 16, 23)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ddy0k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ub30t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f7b4a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3ra5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s42vw")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eb3mf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j7c5e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ngn5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0nn0w")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5jvu3"]
+radius = 26.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qiocg"]
+radius = 8.0
+height = 26.0
+
+[node name="Creeper" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_t3wml")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_5jvu3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ddy0k")
+animation = &"run"
+autoplay = "idle"
+
+[node name="ExplosionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
+shape = SubResource("CircleShape2D_5jvu3")
+disabled = true
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("CapsuleShape2D_qiocg")

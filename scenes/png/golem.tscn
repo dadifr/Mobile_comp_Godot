@@ -1,0 +1,110 @@
+[gd_scene load_steps=21 format=3 uid="uid://b3jcocfhip3x"]
+
+[ext_resource type="Script" path="res://scripts/golem.gd" id="1_ljd4m"]
+[ext_resource type="Texture2D" uid="uid://bbfm4qw3hal8h" path="res://assets/sprites/frames pg e utility/mob/big_zombie_idle_anim_f0.png" id="2_nub7p"]
+[ext_resource type="Texture2D" uid="uid://dfslyj3yl2kr6" path="res://assets/sprites/frames pg e utility/mob/big_zombie_idle_anim_f1.png" id="3_eknom"]
+[ext_resource type="Texture2D" uid="uid://6kw5244b4h2y" path="res://assets/sprites/frames pg e utility/mob/big_zombie_idle_anim_f2.png" id="4_x8aww"]
+[ext_resource type="Texture2D" uid="uid://kywkkgqgbdfn" path="res://assets/sprites/frames pg e utility/mob/big_zombie_idle_anim_f3.png" id="5_2q3ud"]
+[ext_resource type="Texture2D" uid="uid://ex7qtop7b6oh" path="res://assets/sprites/frames pg e utility/mob/big_zombie_run_anim_f0.png" id="6_u5w5m"]
+[ext_resource type="Texture2D" uid="uid://bgdcjr46k2enm" path="res://assets/sprites/frames pg e utility/mob/big_zombie_run_anim_f1.png" id="7_dyork"]
+[ext_resource type="Texture2D" uid="uid://ct0qudbm1eyt7" path="res://assets/sprites/frames pg e utility/mob/big_zombie_run_anim_f2.png" id="8_tahf8"]
+[ext_resource type="Texture2D" uid="uid://51y34ul02wpy" path="res://assets/sprites/frames pg e utility/mob/big_zombie_run_anim_f3.png" id="9_1uw8r"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ihq0w"]
+radius = 8.0
+height = 28.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wiuyd"]
+atlas = ExtResource("2_nub7p")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1mvl"]
+atlas = ExtResource("3_eknom")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpbab"]
+atlas = ExtResource("4_x8aww")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ln3eq"]
+atlas = ExtResource("5_2q3ud")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpuna"]
+atlas = ExtResource("6_u5w5m")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7w6rw"]
+atlas = ExtResource("7_dyork")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8nsyq"]
+atlas = ExtResource("8_tahf8")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_si7d2"]
+atlas = ExtResource("9_1uw8r")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ybu2y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wiuyd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y1mvl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpbab")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ln3eq")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dpuna")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7w6rw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8nsyq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_si7d2")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_51f5e"]
+height = 32.0
+
+[node name="Golem" type="CharacterBody2D"]
+script = ExtResource("1_ljd4m")
+speed = 30.0
+detection_range = 1500.0
+max_health = 30
+damage = 2
+knockback_force = 150.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("CapsuleShape2D_ihq0w")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ybu2y")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+position = Vector2(0, 6)
+shape = SubResource("CapsuleShape2D_51f5e")
