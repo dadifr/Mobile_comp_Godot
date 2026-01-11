@@ -10,25 +10,7 @@ extends CharacterBody2D
 @export var attack_cooldown_time = 1.5 # Tempo in cui sta fermo dopo l'attacco
 @export var coin_scene: PackedScene
 @export var potionH_scene: PackedScene # <--- La nuova pozione
-@export_group("Dash Attack Settings")
-@export var dash_speed = 100.0        # Velocità dello scatto
-@export var dash_duration = 0.2       # Quanto dura un singolo scatto
-@export var dash_pause = 0.8          # Pausa tra uno scatto e l'altro
-@export var dash_cooldown = 3.0       # Ogni quanti secondi può rifare questa mossa
-@export var final_stun_time = 2     # Tempo in cui resta fermo alla fine dei 3 scatti
 
-var dash_timer = 0.0                  # Timer interno per il cooldown della mossa
-var is_dashing = false                # Flag per lo stato di scatto
-
-# Sotto le altre variabili @export
-@export var bullet_scene: PackedScene # Trascina qui la scena Bullet
-@export var burst_count = 3           # Numero di colpi per ogni raffica
-@export var burst_delay = 0.2         # Tempo tra un proiettile e l'altro della stessa raffica
-@export var shoot_cooldown = 4.0      # Tempo tra una raffica e l'altra
-@export var shoot_range = 200.0
-
-var shoot_timer = 0.0
-var is_shooting = false
 # Probabilità (0.15 = 15%, 0.5 = 50%)
 @export var potion_chance: float = 0.10 
 @export var coin_chance: float = 0.60
@@ -66,25 +48,7 @@ func _physics_process(delta):
 		velocity = velocity.move_toward(Vector2.ZERO, 800 * delta)
 		move_and_slide()
 		return 
-	# --- NUOVO: GESTIONE DASH ATTACK ---
-	if is_dashing:
-		return
 
-	if is_attacking:
-		move_and_slide() 
-		return
-
-	# Gestione Timer Cooldown Dash
-	if dash_timer > 0:
-		dash_timer -= delta
-
-	if player != null:
-		var distance = global_position.distance_to(player.global_position)
-		
-		# Se è nel range, il cooldown è scaduto e non sta già facendo altro: SCATTA!
-		if distance < detection_range and dash_timer <= 0:
-			perform_dash_attack()
-			return # Esci per non sovrascrivere la velocity
 	# --- 2. FIX: GESTIONE ATTACCO CON RINCULO ---
 	if is_attacking:
 		# NON forziamo velocity a zero qui. 
@@ -173,68 +137,6 @@ func _physics_process(delta):
 			# Usiamo la stessa tecnica "Anti-Railgun" per evitare che voli via
 			collider.linear_velocity = push_dir * push_speed
 	# --- FINE CODICE SPINTA ---
-
-func perform_dash_attack():
-	# --- 1. PREAVVISO ---
-	velocity = Vector2.ZERO
-	is_dashing = true
-	modulate = Color(1.0, 0.5, 0.0) 
-	await get_tree().create_timer(0.5).timeout
-	modulate = Color(1, 1, 1)
-	
-	dash_timer = dash_cooldown 
-
-	if player == null or is_hurt: 
-		is_dashing = false
-		return
-
-	var dash_dir = (player.global_position - global_position).normalized()
-	velocity = dash_dir * dash_speed
-	anim.play("run")
-	anim.flip_h = velocity.x < 0
-
-	# --- 2. MOVIMENTO CONTINUO ---
-	var hit_wall = false
-	while not hit_wall:
-		# Spostiamo il mob manualmente calcolando il movimento di questo frame
-		var motion = velocity * get_physics_process_delta_time()
-		
-		# move_and_collide restituisce la collisione se avviene
-		var collision_info = move_and_collide(motion)
-		
-		if collision_info:
-			var collider = collision_info.get_collider()
-			
-			if collider.is_in_group("player"):
-				# COLPISCE IL PLAYER: fa danno e...
-				dash_hit_logic(collider)
-				
-				# ...CONTINUA IL MOTO: sommiamo la parte di movimento rimanente 
-				# per evitare che il mob si "impunti" sul player
-				global_position += collision_info.get_remainder()
-			else:
-				# COLPISCE UN MURO (o altro): si ferma
-				hit_wall = true
-		
-		await get_tree().process_frame 
-
-	# --- 3. STUN FINALE ---
-	velocity = Vector2.ZERO
-	anim.play("idle")
-	await get_tree().create_timer(final_stun_time).timeout
-	is_dashing = false
-	
-func dash_hit_logic(target):
-	# Evitiamo di colpire il player mille volte nello stesso scatto
-	# Se il player ha già un timer di invulnerabilità nel suo script, questo è opzionale
-	if target.has_method("take_damage"):
-		# Esempio: Il dash infligge il DOPPIO del danno normale
-		var dash_damage = damage * 2 
-		target.take_damage(dash_damage, global_position)
-		
-		# Opzionale: Se vuoi che lo scatto si fermi appena colpisce il player
-		# time_passed = dash_duration
-		
 
 # --- FUNZIONE ATTACCO AGGIORNATA ---
 func attack_player(target):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://c7qn6reikqpwx"]
+[gd_scene load_steps=41 format=4 uid="uid://c7qn6reikqpwx"]
 
 [ext_resource type="Script" uid="uid://bogrtnwqahvmw" path="res://scripts/world.gd" id="1_4mrxx"]
 [ext_resource type="Texture2D" uid="uid://c61msblyysns7" path="res://assets/sprites/atlas_floor-16x16.png" id="1_4wyf3"]
@@ -21,11 +21,12 @@
 [ext_resource type="Texture2D" uid="uid://bphak388rseq7" path="res://assets/sprites/frames pg e utility/utility/flask_big_red.png" id="17_7t5mc"]
 [ext_resource type="PackedScene" uid="uid://b2f6kkkahowj8" path="res://scenes/BombPickup.tscn" id="18_pm21f"]
 [ext_resource type="Texture2D" uid="uid://bdyydwnu4jn5u" path="res://assets/sprites/frames pg e utility/utility/bomb_f0.png" id="19_2lf6f"]
-[ext_resource type="PackedScene" uid="uid://bh3ge7u2lnfub" path="res://scenes/EnemySpawner.tscn" id="22_4kbfs"]
+[ext_resource type="PackedScene" path="res://scenes/EnemySpawner.tscn" id="22_4kbfs"]
 [ext_resource type="PackedScene" uid="uid://jmf43nm046k8" path="res://scenes/potion_g.tscn" id="22_xgqkh"]
 [ext_resource type="PackedScene" uid="uid://himxfj0h22tb" path="res://scenes/png/demone_g.tscn" id="23_f17e3"]
 [ext_resource type="Texture2D" uid="uid://d5tiwl8ay46a" path="res://assets/sprites/frames pg e utility/utility/flask_yellow.png" id="23_munwf"]
 [ext_resource type="PackedScene" uid="uid://ckx5ef3aa2io3" path="res://scenes/BigShieldPotion.tscn" id="24_ts3gi"]
+[ext_resource type="PackedScene" uid="uid://da821d2wac2xl" path="res://scenes/png/ogre.tscn" id="24_x2olw"]
 [ext_resource type="Texture2D" uid="uid://h6rymqa35saf" path="res://assets/sprites/frames pg e utility/utility/flask_big_yellow.png" id="25_0nbtd"]
 [ext_resource type="PackedScene" uid="uid://civoxj0m4pffw" path="res://scenes/SmallPotionB.tscn" id="26_ts3gi"]
 [ext_resource type="Texture2D" uid="uid://bsij0qajd10ki" path="res://assets/sprites/frames pg e utility/utility/flask_blue.png" id="27_0nbtd"]
@@ -499,39 +500,43 @@ max_coins = 10
 position = Vector2(358.5, 204.5)
 
 [node name="zombie" parent="DungeonRoom/Enemies" index="0" instance=ExtResource("9_7r4gi")]
-position = Vector2(397, 69)
+position = Vector2(930, 67)
 motion_mode = 1
 
 [node name="goblin" parent="DungeonRoom/Enemies" index="1" instance=ExtResource("6_qfnet")]
-position = Vector2(226, 57)
+position = Vector2(947, 104)
 motion_mode = 1
 
 [node name="goblin2" parent="DungeonRoom/Enemies" index="2" instance=ExtResource("6_qfnet")]
-position = Vector2(624, 78)
+position = Vector2(922, 102)
 motion_mode = 1
 potionH_scene = ExtResource("9_w7kh3")
 
 [node name="zombie2" parent="DungeonRoom/Enemies" index="3" instance=ExtResource("9_7r4gi")]
-position = Vector2(600, 186)
+position = Vector2(949, 69)
 motion_mode = 1
 coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("9_w7kh3")
 
 [node name="scheletro" parent="DungeonRoom/Enemies" index="4" groups=["enemies"] instance=ExtResource("14_2lf6f")]
-position = Vector2(83, 128)
+position = Vector2(980, 110)
 
 [node name="Creeper" parent="DungeonRoom/Enemies" index="5" groups=["enemies"] instance=ExtResource("15_7iits")]
-position = Vector2(60, 51)
+position = Vector2(975, 66)
 coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("9_o8fc1")
 potion_chance = 0.7
 coin_chance = 0.3
 
 [node name="EnemySpawner" parent="DungeonRoom/Enemies" index="6" instance=ExtResource("22_4kbfs")]
-position = Vector2(616, 40)
+position = Vector2(874, 72)
 
 [node name="DemoneG" parent="DungeonRoom/Enemies" index="7" groups=["enemies"] instance=ExtResource("23_f17e3")]
-position = Vector2(423, 329)
+position = Vector2(759, 165)
+
+[node name="ogre" parent="DungeonRoom/Enemies" index="8" groups=["enemies"] instance=ExtResource("24_x2olw")]
+position = Vector2(408, 251)
+motion_mode = 1
 
 [node name="Door" parent="DungeonRoom/Doors" index="0" instance=ExtResource("5_71j4m")]
 position = Vector2(369, 400)
