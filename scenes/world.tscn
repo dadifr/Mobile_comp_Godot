@@ -36,6 +36,7 @@
 [ext_resource type="Texture2D" uid="uid://b8sn5ax3v15ep" path="res://assets/sprites/frames pg e utility/utility/flask_green.png" id="31_4kbfs"]
 [ext_resource type="PackedScene" uid="uid://tdr8wsktl1an" path="res://scenes/BigSpeedPotion.tscn" id="32_f17e3"]
 [ext_resource type="Texture2D" uid="uid://yf8tjoivi64p" path="res://assets/sprites/frames pg e utility/utility/flask_big_green.png" id="33_x2olw"]
+[ext_resource type="PackedScene" uid="uid://vaveg5gn5tj3" path="res://scenes/Spikes.tscn" id="36_x2olw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4wyf3"]
 texture = ExtResource("1_4wyf3")
@@ -704,5 +705,16 @@ big_speed_potion_scene = ExtResource("32_f17e3")
 big_speed_potion_texture = ExtResource("33_x2olw")
 big_speed_potion_price_range = Vector2i(20, 23)
 big_speed_potion_chance = 0.09
+
+[node name="Spikes" parent="." instance=ExtResource("36_x2olw")]
+position = Vector2(296, 440)
+
+[node name="Spikes2" parent="." instance=ExtResource("36_x2olw")]
+position = Vector2(312, 440)
+safe_time = 1.9
+
+[node name="Spikes3" parent="." instance=ExtResource("36_x2olw")]
+position = Vector2(328, 440)
+safe_time = 1.8
 
 [editable path="DungeonRoom"]
