@@ -530,7 +530,7 @@ coin_chance = 0.3
 [node name="EnemySpawner" parent="DungeonRoom/Enemies" index="6" instance=ExtResource("22_4kbfs")]
 position = Vector2(616, 40)
 
-[node name="DemoneG" parent="DungeonRoom/Enemies" index="7" instance=ExtResource("23_f17e3")]
+[node name="DemoneG" parent="DungeonRoom/Enemies" index="7" groups=["enemies"] instance=ExtResource("23_f17e3")]
 position = Vector2(423, 329)
 
 [node name="Door" parent="DungeonRoom/Doors" index="0" instance=ExtResource("5_71j4m")]
