@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 [gd_scene load_steps=43 format=4 uid="uid://c7qn6reikqpwx"]
+=======
+[gd_scene load_steps=44 format=4 uid="uid://c7qn6reikqpwx"]
+>>>>>>> 7a486f3e6ed3c7693dd4f37a46015302939624c2
 
 [ext_resource type="Script" uid="uid://bogrtnwqahvmw" path="res://scripts/world.gd" id="1_4mrxx"]
 [ext_resource type="Texture2D" uid="uid://c61msblyysns7" path="res://assets/sprites/atlas_floor-16x16.png" id="1_4wyf3"]
@@ -21,12 +25,12 @@
 [ext_resource type="Texture2D" uid="uid://bphak388rseq7" path="res://assets/sprites/frames pg e utility/utility/flask_big_red.png" id="17_7t5mc"]
 [ext_resource type="PackedScene" uid="uid://b2f6kkkahowj8" path="res://scenes/BombPickup.tscn" id="18_pm21f"]
 [ext_resource type="Texture2D" uid="uid://bdyydwnu4jn5u" path="res://assets/sprites/frames pg e utility/utility/bomb_f0.png" id="19_2lf6f"]
-[ext_resource type="PackedScene" path="res://scenes/EnemySpawner.tscn" id="22_4kbfs"]
+[ext_resource type="PackedScene" uid="uid://bh3ge7u2lnfub" path="res://scenes/EnemySpawner.tscn" id="22_4kbfs"]
 [ext_resource type="PackedScene" uid="uid://jmf43nm046k8" path="res://scenes/potion_g.tscn" id="22_xgqkh"]
 [ext_resource type="PackedScene" uid="uid://himxfj0h22tb" path="res://scenes/png/demone_g.tscn" id="23_f17e3"]
 [ext_resource type="Texture2D" uid="uid://d5tiwl8ay46a" path="res://assets/sprites/frames pg e utility/utility/flask_yellow.png" id="23_munwf"]
 [ext_resource type="PackedScene" uid="uid://ckx5ef3aa2io3" path="res://scenes/BigShieldPotion.tscn" id="24_ts3gi"]
-[ext_resource type="PackedScene" uid="uid://da821d2wac2xl" path="res://scenes/png/ogre.tscn" id="24_x2olw"]
+[ext_resource type="PackedScene" path="res://scenes/png/ogre.tscn" id="24_x2olw"]
 [ext_resource type="Texture2D" uid="uid://h6rymqa35saf" path="res://assets/sprites/frames pg e utility/utility/flask_big_yellow.png" id="25_0nbtd"]
 [ext_resource type="PackedScene" uid="uid://fitfnms5lymi" path="res://scenes/png/demone.tscn" id="25_ggc52"]
 [ext_resource type="PackedScene" uid="uid://civoxj0m4pffw" path="res://scenes/SmallPotionB.tscn" id="26_ts3gi"]
@@ -37,7 +41,13 @@
 [ext_resource type="Texture2D" uid="uid://b8sn5ax3v15ep" path="res://assets/sprites/frames pg e utility/utility/flask_green.png" id="31_4kbfs"]
 [ext_resource type="PackedScene" uid="uid://tdr8wsktl1an" path="res://scenes/BigSpeedPotion.tscn" id="32_f17e3"]
 [ext_resource type="Texture2D" uid="uid://yf8tjoivi64p" path="res://assets/sprites/frames pg e utility/utility/flask_big_green.png" id="33_x2olw"]
+<<<<<<< HEAD
 [ext_resource type="PackedScene" path="res://scenes/Spikes.tscn" id="36_x2olw"]
+=======
+[ext_resource type="PackedScene" uid="uid://vaveg5gn5tj3" path="res://scenes/Spikes.tscn" id="36_x2olw"]
+[ext_resource type="PackedScene" uid="uid://d3ob7fnoptfnx" path="res://scenes/Lever.tscn" id="38_l8ah6"]
+[ext_resource type="PackedScene" uid="uid://dvt58f6pau8fq" path="res://scenes/GateSpikes.tscn" id="39_e75v4"]
+>>>>>>> 7a486f3e6ed3c7693dd4f37a46015302939624c2
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4wyf3"]
 texture = ExtResource("1_4wyf3")
@@ -720,5 +730,24 @@ safe_time = 1.9
 [node name="Spikes3" parent="." instance=ExtResource("36_x2olw")]
 position = Vector2(328, 440)
 safe_time = 1.8
+
+[node name="Lever" parent="." node_paths=PackedStringArray("target_spikes") instance=ExtResource("38_l8ah6")]
+position = Vector2(280, 472)
+target_spikes = [NodePath("../GateSpikes"), NodePath("../GateSpikes2"), NodePath("../GateSpikes3"), NodePath("../GateSpikes4"), NodePath("../GateSpikes5")]
+
+[node name="GateSpikes" parent="." instance=ExtResource("39_e75v4")]
+position = Vector2(440, 425)
+
+[node name="GateSpikes2" parent="." instance=ExtResource("39_e75v4")]
+position = Vector2(440, 440)
+
+[node name="GateSpikes3" parent="." instance=ExtResource("39_e75v4")]
+position = Vector2(440, 456)
+
+[node name="GateSpikes4" parent="." instance=ExtResource("39_e75v4")]
+position = Vector2(440, 472)
+
+[node name="GateSpikes5" parent="." instance=ExtResource("39_e75v4")]
+position = Vector2(440, 488)
 
 [editable path="DungeonRoom"]
