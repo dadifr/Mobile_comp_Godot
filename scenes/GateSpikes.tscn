@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://dvt58f6pau8fq"]
+
+[ext_resource type="Script" uid="uid://b5yurdnlh61su" path="res://scripts/GateSpikes.gd" id="1_04pda"]
+[ext_resource type="Texture2D" uid="uid://c61msblyysns7" path="res://assets/sprites/atlas_floor-16x16.png" id="2_nsm4l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hsdvm"]
+atlas = ExtResource("2_nsm4l")
+region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhsys"]
+atlas = ExtResource("2_nsm4l")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6iea5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hsdvm")
+}],
+"loop": true,
+"name": &"active",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lhsys")
+}],
+"loop": true,
+"name": &"safe",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xs371"]
+size = Vector2(14, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_04pda"]
+size = Vector2(10, 10)
+
+[node name="GateSpikes" type="Area2D"]
+script = ExtResource("1_04pda")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6iea5")
+animation = &"safe"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xs371")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_04pda")
