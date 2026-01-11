@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://c7qn6reikqpwx"]
+[gd_scene load_steps=45 format=4 uid="uid://c7qn6reikqpwx"]
 
 [ext_resource type="Script" uid="uid://bogrtnwqahvmw" path="res://scripts/world.gd" id="1_4mrxx"]
 [ext_resource type="Texture2D" uid="uid://c61msblyysns7" path="res://assets/sprites/atlas_floor-16x16.png" id="1_4wyf3"]
@@ -38,6 +38,8 @@
 [ext_resource type="PackedScene" uid="uid://tdr8wsktl1an" path="res://scenes/BigSpeedPotion.tscn" id="32_f17e3"]
 [ext_resource type="Texture2D" uid="uid://yf8tjoivi64p" path="res://assets/sprites/frames pg e utility/utility/flask_big_green.png" id="33_x2olw"]
 [ext_resource type="PackedScene" uid="uid://vaveg5gn5tj3" path="res://scenes/Spikes.tscn" id="36_x2olw"]
+[ext_resource type="PackedScene" uid="uid://d3ob7fnoptfnx" path="res://scenes/Lever.tscn" id="38_l8ah6"]
+[ext_resource type="PackedScene" uid="uid://dvt58f6pau8fq" path="res://scenes/GateSpikes.tscn" id="39_e75v4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4wyf3"]
 texture = ExtResource("1_4wyf3")
@@ -723,6 +725,25 @@ safe_time = 1.8
 
 [node name="Spikes4" parent="." instance=ExtResource("36_x2olw")]
 position = Vector2(344, 440)
-safe_time = 1.8
+safe_time = 1.7
+
+[node name="Lever" parent="." node_paths=PackedStringArray("target_spikes") instance=ExtResource("38_l8ah6")]
+position = Vector2(280, 472)
+target_spikes = [NodePath("../GateSpikes"), NodePath("../GateSpikes2"), NodePath("../GateSpikes3"), NodePath("../GateSpikes4"), NodePath("../GateSpikes5")]
+
+[node name="GateSpikes" parent="." instance=ExtResource("39_e75v4")]
+position = Vector2(440, 424)
+
+[node name="GateSpikes2" parent="." instance=ExtResource("39_e75v4")]
+position = Vector2(440, 440)
+
+[node name="GateSpikes3" parent="." instance=ExtResource("39_e75v4")]
+position = Vector2(440, 456)
+
+[node name="GateSpikes4" parent="." instance=ExtResource("39_e75v4")]
+position = Vector2(440, 472)
+
+[node name="GateSpikes5" parent="." instance=ExtResource("39_e75v4")]
+position = Vector2(440, 488)
 
 [editable path="DungeonRoom"]
