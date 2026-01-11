@@ -717,6 +717,7 @@ position = Vector2(296, 440)
 
 [node name="Spikes5" parent="." instance=ExtResource("36_x2olw")]
 position = Vector2(280, 440)
+safe_time = 2.1
 
 [node name="Spikes2" parent="." instance=ExtResource("36_x2olw")]
 position = Vector2(312, 440)
