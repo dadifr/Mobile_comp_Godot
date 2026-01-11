@@ -2,23 +2,35 @@ extends Area2D
 
 @export var damage: int = 1
 
-# Variabile di stato: True = fanno male, False = puoi passare
+# Variabile di stato
 var is_active = true
 
 @onready var anim = $AnimatedSprite2D
+# Riferimento al muro fisico (collisione solida)
+# Assicurati che il percorso sia corretto rispetto alla tua scena!
+@onready var wall_collision = $StaticBody2D/CollisionShape2D
 
 func _ready():
-	# All'inizio sono alzate e pericolose
+	# All'inizio sono alzate, pericolose e SOLIDE
 	is_active = true
 	anim.play("active")
 	
+	# Attiviamo il muro (false significa "non disabilitato", quindi attivo)
+	if wall_collision:
+		wall_collision.set_deferred("disabled", false)
+	
 	body_entered.connect(_on_body_entered)
 
-# Questa funzione verrà chiamata dalla Leva
+# Questa funzione viene chiamata dalla Leva
 func open_gate():
 	is_active = false
-	anim.play("safe") # Animazione spine abbassate
-	print("Il passaggio è aperto!")
+	anim.play("safe")
+	
+	# DISATTIVIAMO IL MURO: Ora il giocatore può camminarci sopra
+	if wall_collision:
+		wall_collision.set_deferred("disabled", true)
+		
+	print("Il passaggio è aperto! Muro rimosso.")
 
 func _on_body_entered(body):
 	# Fanno danno SOLO se sono attive
