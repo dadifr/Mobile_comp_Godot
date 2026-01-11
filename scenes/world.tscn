@@ -21,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://bphak388rseq7" path="res://assets/sprites/frames pg e utility/utility/flask_big_red.png" id="17_7t5mc"]
 [ext_resource type="PackedScene" uid="uid://b2f6kkkahowj8" path="res://scenes/BombPickup.tscn" id="18_pm21f"]
 [ext_resource type="Texture2D" uid="uid://bdyydwnu4jn5u" path="res://assets/sprites/frames pg e utility/utility/bomb_f0.png" id="19_2lf6f"]
-[ext_resource type="PackedScene" path="res://scenes/EnemySpawner.tscn" id="22_4kbfs"]
+[ext_resource type="PackedScene" uid="uid://bh3ge7u2lnfub" path="res://scenes/EnemySpawner.tscn" id="22_4kbfs"]
 [ext_resource type="PackedScene" uid="uid://jmf43nm046k8" path="res://scenes/potion_g.tscn" id="22_xgqkh"]
 [ext_resource type="PackedScene" uid="uid://himxfj0h22tb" path="res://scenes/png/demone_g.tscn" id="23_f17e3"]
 [ext_resource type="Texture2D" uid="uid://d5tiwl8ay46a" path="res://assets/sprites/frames pg e utility/utility/flask_yellow.png" id="23_munwf"]

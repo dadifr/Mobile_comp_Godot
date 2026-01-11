@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bh3ge7u2lnfub"]
 
-[ext_resource type="Script" uid="uid://c1o108g08omva" path="res://EnemySpawner.gd" id="1_ks4g3"]
+[ext_resource type="Script" uid="uid://c1o108g08omva" path="res://scripts/EnemySpawner.gd" id="1_ks4g3"]
 [ext_resource type="PackedScene" uid="uid://dfgjlp1lau0g8" path="res://scenes/png/zombie.tscn" id="2_3d38x"]
 [ext_resource type="Texture2D" uid="uid://d1oga2yj8nbpd" path="res://assets/sprites/frames mappa/pavimenti/hole.png" id="2_csfkq"]
 [ext_resource type="Script" uid="uid://d0f8cdwkf66lr" path="res://scripts/SpawnRate.gd" id="2_n6vr5"]
