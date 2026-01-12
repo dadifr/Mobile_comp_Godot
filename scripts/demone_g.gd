@@ -11,10 +11,10 @@ extends CharacterBody2D
 @export var coin_scene: PackedScene
 @export var potionH_scene: PackedScene # <--- La nuova pozione
 @export_group("Dash Attack Settings")
-@export var dash_speed = 170.0        # Velocità dello scatto
-@export var dash_duration = 1       # Quanto dura un singolo scatto
+@export var dash_speed = 220.0        # Velocità dello scatto
+@export var dash_duration = 2.5       # Quanto dura un singolo scatto
 @export var dash_pause = 0.8          # Pausa tra uno scatto e l'altro
-@export var dash_cooldown = 2.0       # Ogni quanti secondi può rifare questa mossa
+@export var dash_cooldown = 3.5       # Ogni quanti secondi può rifare questa mossa
 @export var final_stun_time = 2     # Tempo in cui resta fermo alla fine dei 3 scatti
 
 var dash_timer = 0.0                  # Timer interno per il cooldown della mossa
@@ -176,49 +176,54 @@ func _physics_process(delta):
 	# --- FINE CODICE SPINTA ---
 
 func perform_dash_attack():
-	# --- 1. PREAVVISO ---
+	# --- 1. PREAVVISO (Il mob si prepara) ---
 	velocity = Vector2.ZERO
 	is_dashing = true
-	modulate = Color(1.0, 0.5, 0.0) 
+	modulate = Color(1.0, 0.5, 0.0) # Arancione per avvertire
 	await get_tree().create_timer(0.5).timeout
 	modulate = Color(1, 1, 1)
 	
 	dash_timer = dash_cooldown 
 
-	# RIMOSSO: if is_hurt: return 
 	if player == null: 
 		is_dashing = false
 		return
 
+	# Calcoliamo la direzione all'inizio dello scatto (non cambierà durante il dash)
 	var dash_dir = (player.global_position - global_position).normalized()
 	velocity = dash_dir * dash_speed
-
-	# --- 2. MOVIMENTO CONTINUO ---
-	var hit_wall = false
-	while not hit_wall:
-		# Spostiamo il mob manualmente calcolando il movimento di questo frame
-		var motion = velocity * get_physics_process_delta_time()
+	
+	# --- 2. MOVIMENTO PER UNA DURATA FISSA ---
+	var time_passed = 0.0
+	
+	# Il loop continua finché non finisce il tempo dello scatto
+	while time_passed < dash_duration:
+		var delta = get_physics_process_delta_time()
+		time_passed += delta
 		
-		# move_and_collide restituisce la collisione se avviene
+		# Calcoliamo il movimento di questo frame
+		var motion = velocity * delta
+		
+		# Muoviamo il mob e controlliamo le collisioni
 		var collision_info = move_and_collide(motion)
 		
 		if collision_info:
 			var collider = collision_info.get_collider()
 			
 			if collider.is_in_group("player"):
-				# COLPISCE IL PLAYER: fa danno e...
+				# Se colpisce il player, fa danno ma CONTINUA lo scatto
 				dash_hit_logic(collider)
-				
-				# ...CONTINUA IL MOTO: sommiamo la parte di movimento rimanente 
-				# per evitare che il mob si "impunti" sul player
+				# Scivola oltre il player per finire la corsa
 				global_position += collision_info.get_remainder()
 			else:
-				# COLPISCE UN MURO (o altro): si ferma
-				hit_wall = true
+				# Se colpisce un MURO, allora si ferma forzatamente (opzionale)
+				# Se vuoi che scivoli lungo i muri invece di fermarsi, 
+				# dovresti usare velocity = velocity.slide(collision_info.get_normal())
+				break 
 		
 		await get_tree().process_frame 
 
-	# --- 3. STUN FINALE ---
+	# --- 3. STUN FINALE (Il mob riprende fiato) ---
 	velocity = Vector2.ZERO
 	anim.play("idle")
 	await get_tree().create_timer(final_stun_time).timeout

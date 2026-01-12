@@ -11,10 +11,10 @@ extends CharacterBody2D
 @export var coin_scene: PackedScene
 @export var potionH_scene: PackedScene # <--- La nuova pozione
 @export_group("Dash Attack Settings")
-@export var dash_speed = 75.0        # Velocità dello scatto
-@export var dash_duration = 1       # Quanto dura un singolo scatto
+@export var dash_speed = 100.0        # Velocità dello scatto
+@export var dash_duration = 1.0       # Quanto dura un singolo scatto
 @export var dash_pause = 0.8          # Pausa tra uno scatto e l'altro
-@export var dash_cooldown = 3.0       # Ogni quanti secondi può rifare questa mossa
+@export var dash_cooldown = 3.5       # Ogni quanti secondi può rifare questa mossa
 @export var final_stun_time = 2     # Tempo in cui resta fermo alla fine dei 3 scatti
 
 var dash_timer = 0.0                  # Timer interno per il cooldown della mossa
@@ -62,7 +62,8 @@ func _draw():
 
 func _physics_process(delta):
 	# 1. GESTIONE KNOCKBACK (Priorità Massima)
-	if is_hurt:
+	# Se sta subendo knockback MA NON sta dashando, allora processa il dolore
+	if is_hurt and not is_dashing:
 		velocity = velocity.move_toward(Vector2.ZERO, 800 * delta)
 		move_and_slide()
 		return 
@@ -175,63 +176,70 @@ func _physics_process(delta):
 	# --- FINE CODICE SPINTA ---
 
 func perform_dash_attack():
-	# 1. PREAVVISO (Il nemico si ferma e cambia colore)
-	is_dashing = true
+	# --- 1. PREAVVISO (Il mob si prepara) ---
 	velocity = Vector2.ZERO
-	modulate = Color(2.0, 0.5, 0.5) # Diventa rossastro/arancione (Bloom se hai HDR)
-	
-	# Aspetta mezzo secondo per caricare il colpo
+	is_dashing = true
+	modulate = Color(1.0, 0.5, 0.0) # Arancione per avvertire
 	await get_tree().create_timer(0.5).timeout
-	modulate = Color(1, 1, 1) # Torna normale
+	modulate = Color(1, 1, 1)
 	
-	if player == null or is_hurt: 
+	dash_timer = dash_cooldown 
+
+	if player == null: 
 		is_dashing = false
 		return
 
-	# 2. CALCOLO DIREZIONE E SCATTO SINGOLO
+	# Calcoliamo la direzione all'inizio dello scatto (non cambierà durante il dash)
 	var dash_dir = (player.global_position - global_position).normalized()
 	velocity = dash_dir * dash_speed
 	
-	# Gestione animazione e flip
-	anim.play("run")
-	anim.flip_h = velocity.x < 0
-
-	# 3. ESECUZIONE DELLO SCATTO (Durata definita da dash_duration)
-	# Usiamo un timer per decidere quanto dura lo scatto fisico
-	var duration_timer = get_tree().create_timer(dash_duration)
+	# --- 2. MOVIMENTO PER UNA DURATA FISSA ---
+	var time_passed = 0.0
 	
-	# Finché il timer non scade, il nemico si muove
-	while duration_timer.time_left > 0 and not is_hurt:
-		var collision = move_and_collide(velocity * get_physics_process_delta_time())
+	# Il loop continua finché non finisce il tempo dello scatto
+	while time_passed < dash_duration:
+		var delta = get_physics_process_delta_time()
+		time_passed += delta
 		
-		if collision:
-			var collider = collision.get_collider()
+		# Calcoliamo il movimento di questo frame
+		var motion = velocity * delta
+		
+		# Muoviamo il mob e controlliamo le collisioni
+		var collision_info = move_and_collide(motion)
+		
+		if collision_info:
+			var collider = collision_info.get_collider()
+			
 			if collider.is_in_group("player"):
+				# Se colpisce il player, fa danno ma CONTINUA lo scatto
 				dash_hit_logic(collider)
-				# Dopo aver colpito il player, decidiamo se fermarci o passargli attraverso
-				# Se vuoi che si fermi subito dopo il colpo, scommenta la riga sotto:
-				# break 
+				# Scivola oltre il player per finire la corsa
+				global_position += collision_info.get_remainder()
 			else:
-				# Se sbatte contro un muro, interrompe lo scatto
-				break
-				
-		await get_tree().process_frame
+				# Se colpisce un MURO, allora si ferma forzatamente (opzionale)
+				# Se vuoi che scivoli lungo i muri invece di fermarsi, 
+				# dovresti usare velocity = velocity.slide(collision_info.get_normal())
+				break 
+		
+		await get_tree().process_frame 
 
-	# 4. FINE SCATTO E STUN (Il nemico riprende fiato)
+	# --- 3. STUN FINALE (Il mob riprende fiato) ---
 	velocity = Vector2.ZERO
 	anim.play("idle")
-	
-	# Applica il tempo di cooldown e lo stun finale
-	dash_timer = dash_cooldown 
 	await get_tree().create_timer(final_stun_time).timeout
-	
 	is_dashing = false
 	
 func dash_hit_logic(target):
-	# Applica il danno solo se il target ha il metodo
+	# Evitiamo di colpire il player mille volte nello stesso scatto
+	# Se il player ha già un timer di invulnerabilità nel suo script, questo è opzionale
 	if target.has_method("take_damage"):
-		target.take_damage(damage * 2, global_position)
-		print("Colpo critico da scatto!")
+		# Esempio: Il dash infligge il DOPPIO del danno normale
+		var dash_damage = damage * 2 
+		target.take_damage(dash_damage, global_position)
+		
+		# Opzionale: Se vuoi che lo scatto si fermi appena colpisce il player
+		# time_passed = dash_duration
+		
 
 # --- FUNZIONE ATTACCO AGGIORNATA ---
 func attack_player(target):
@@ -281,15 +289,25 @@ func pick_new_state():
 
 func take_damage(amount, source_pos = Vector2.ZERO):
 	current_health -= amount
-	if source_pos != Vector2.ZERO:
-		var knockback_dir = (global_position - source_pos).normalized()
-		velocity = knockback_dir * knockback_force
-		is_hurt = true 
 	
+	# Se NON sta dashando, applica il knockback normalmente
+	if not is_dashing:
+		if source_pos != Vector2.ZERO:
+			var knockback_dir = (global_position - source_pos).normalized()
+			velocity = knockback_dir * knockback_force
+			is_hurt = true 
+	else:
+		# Se sta dashando, magari facciamo solo un flash rosso più veloce
+		# senza cambiare la velocity o impostare is_hurt = true
+		pass
+
 	modulate = Color(1, 0, 0)
 	await get_tree().create_timer(0.2).timeout
 	modulate = Color(1, 1, 1)
-	is_hurt = false
+	
+	if not is_dashing:
+		is_hurt = false
+	
 	was_chasing = true 
 	
 	if current_health <= 0:
