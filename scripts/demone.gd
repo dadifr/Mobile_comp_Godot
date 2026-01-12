@@ -10,21 +10,28 @@ extends CharacterBody2D
 @export var attack_cooldown_time = 1.5 # Tempo in cui sta fermo dopo l'attacco
 @export var coin_scene: PackedScene
 @export var potionH_scene: PackedScene # <--- La nuova pozione
+@export_group("Dash Attack Settings")
+@export var dash_speed = 100.0        # Velocità dello scatto
+@export var dash_duration = 1.0       # Quanto dura un singolo scatto
+@export var dash_pause = 0.8          # Pausa tra uno scatto e l'altro
+@export var dash_cooldown = 3.5       # Ogni quanti secondi può rifare questa mossa
+@export var final_stun_time = 2     # Tempo in cui resta fermo alla fine dei 3 scatti
 
-@export_group("Area Attack Settings")
-@export var aoe_damage = 1
-@export var aoe_cooldown = 3.0  # Ogni quanti secondi fa il danno
-@export var aoe_enabled = true
+var dash_timer = 0.0                  # Timer interno per il cooldown della mossa
+var is_dashing = false                # Flag per lo stato di scatto
 
-var aoe_timer = 0.0
-@onready var aura_area = $AuraDanno # Assicurati che il nome coincida
+# Sotto le altre variabili @export
+@export var bullet_scene: PackedScene # Trascina qui la scena Bullet
+@export var burst_count = 3           # Numero di colpi per ogni raffica
+@export var burst_delay = 0.2         # Tempo tra un proiettile e l'altro della stessa raffica
+@export var shoot_cooldown = 4.0      # Tempo tra una raffica e l'altra
+@export var shoot_range = 200.0
 
-
+var shoot_timer = 0.0
+var is_shooting = false
 # Probabilità (0.15 = 15%, 0.5 = 50%)
 @export var potion_chance: float = 0.10 
 @export var coin_chance: float = 0.60
-
-
 
 # --- VARIABILI INTERNE ---
 var current_health = 3
@@ -52,18 +59,33 @@ func _ready():
 
 func _draw():
 	draw_circle(Vector2.ZERO, detection_range, Color(1, 0, 0, 0.1))
-	# Disegna un cerchio rosso trasparente basato sul timer
-	var color = Color(1, 0, 0, (aoe_timer / aoe_cooldown) * 0.4)
-	# Sostituisci 50 con il raggio della tua CollisionShape
-	draw_circle(Vector2.ZERO, 50, color)
+
 func _physics_process(delta):
 	# 1. GESTIONE KNOCKBACK (Priorità Massima)
-	queue_redraw() # Forza il ridisegno ogni frame per vedere l'animazione
-	if is_hurt:
+	# Se sta subendo knockback MA NON sta dashando, allora processa il dolore
+	if is_hurt and not is_dashing:
 		velocity = velocity.move_toward(Vector2.ZERO, 800 * delta)
 		move_and_slide()
 		return 
+	# --- NUOVO: GESTIONE DASH ATTACK ---
+	if is_dashing:
+		return
 
+	if is_attacking:
+		move_and_slide() 
+		return
+
+	# Gestione Timer Cooldown Dash
+	if dash_timer > 0:
+		dash_timer -= delta
+
+	if player != null:
+		var distance = global_position.distance_to(player.global_position)
+		
+		# Se è nel range, il cooldown è scaduto e non sta già facendo altro: SCATTA!
+		if distance < detection_range and dash_timer <= 0:
+			perform_dash_attack()
+			return # Esci per non sovrascrivere la velocity
 	# --- 2. FIX: GESTIONE ATTACCO CON RINCULO ---
 	if is_attacking:
 		# NON forziamo velocity a zero qui. 
@@ -131,13 +153,6 @@ func _physics_process(delta):
 		if collider.is_in_group("player") and not is_attacking:
 			if collider.has_method("take_damage"):
 				attack_player(collider)
-# 6. GESTIONE DANNO AD AREA PERIODICO
-	if aoe_enabled:
-		aoe_timer += delta
-		if aoe_timer >= aoe_cooldown:
-			perform_aoe_attack()
-			aoe_timer = 0.0 # Reset del timer
-			
 
 	# --- INIZIO CODICE SPINTA BOMBA ---
 	for i in get_slide_collision_count():
@@ -159,19 +174,73 @@ func _physics_process(delta):
 			# Usiamo la stessa tecnica "Anti-Railgun" per evitare che voli via
 			collider.linear_velocity = push_dir * push_speed
 	# --- FINE CODICE SPINTA ---
-func perform_aoe_attack():
-	# Feedback visivo: un piccolo flash o cambio colore per far capire l'attacco
-	var tween = create_tween()
-	tween.tween_property(aura_area, "modulate", Color(1, 0, 0, 0.5), 0.1)
-	tween.tween_property(aura_area, "modulate", Color(1, 1, 1, 0), 0.2)
 
-	# Prende tutti i corpi che stanno toccando l'Area2D in questo istante
-	var overlapping_bodies = aura_area.get_overlapping_bodies()
+func perform_dash_attack():
+	# --- 1. PREAVVISO (Il mob si prepara) ---
+	velocity = Vector2.ZERO
+	is_dashing = true
+	modulate = Color(1.0, 0.5, 0.0) # Arancione per avvertire
+	await get_tree().create_timer(0.5).timeout
+	modulate = Color(1, 1, 1)
 	
-	for body in overlapping_bodies:
-		if body.is_in_group("player") and body.has_method("take_damage"):
-			body.take_damage(aoe_damage, global_position)
-			print("Il giocatore è stato colpito dall'aura!")
+	dash_timer = dash_cooldown 
+
+	if player == null: 
+		is_dashing = false
+		return
+
+	# Calcoliamo la direzione all'inizio dello scatto (non cambierà durante il dash)
+	var dash_dir = (player.global_position - global_position).normalized()
+	velocity = dash_dir * dash_speed
+	
+	# --- 2. MOVIMENTO PER UNA DURATA FISSA ---
+	var time_passed = 0.0
+	
+	# Il loop continua finché non finisce il tempo dello scatto
+	while time_passed < dash_duration:
+		var delta = get_physics_process_delta_time()
+		time_passed += delta
+		
+		# Calcoliamo il movimento di questo frame
+		var motion = velocity * delta
+		
+		# Muoviamo il mob e controlliamo le collisioni
+		var collision_info = move_and_collide(motion)
+		
+		if collision_info:
+			var collider = collision_info.get_collider()
+			
+			if collider.is_in_group("player"):
+				# Se colpisce il player, fa danno ma CONTINUA lo scatto
+				dash_hit_logic(collider)
+				# Scivola oltre il player per finire la corsa
+				global_position += collision_info.get_remainder()
+			else:
+				# Se colpisce un MURO, allora si ferma forzatamente (opzionale)
+				# Se vuoi che scivoli lungo i muri invece di fermarsi, 
+				# dovresti usare velocity = velocity.slide(collision_info.get_normal())
+				break 
+		
+		await get_tree().process_frame 
+
+	# --- 3. STUN FINALE (Il mob riprende fiato) ---
+	velocity = Vector2.ZERO
+	anim.play("idle")
+	await get_tree().create_timer(final_stun_time).timeout
+	is_dashing = false
+	
+func dash_hit_logic(target):
+	# Evitiamo di colpire il player mille volte nello stesso scatto
+	# Se il player ha già un timer di invulnerabilità nel suo script, questo è opzionale
+	if target.has_method("take_damage"):
+		# Esempio: Il dash infligge il DOPPIO del danno normale
+		var dash_damage = damage * 2 
+		target.take_damage(dash_damage, global_position)
+		
+		# Opzionale: Se vuoi che lo scatto si fermi appena colpisce il player
+		# time_passed = dash_duration
+		
+
 # --- FUNZIONE ATTACCO AGGIORNATA ---
 func attack_player(target):
 	# 1. Blocchiamo l'AI
@@ -203,8 +272,6 @@ func attack_player(target):
 	# 6. Sblocca il mob
 	is_attacking = false
 
-
-
 # --- LE ALTRE FUNZIONI RIMANGONO UGUALI ---
 func start_investigation():
 	is_investigating = true
@@ -222,15 +289,25 @@ func pick_new_state():
 
 func take_damage(amount, source_pos = Vector2.ZERO):
 	current_health -= amount
-	if source_pos != Vector2.ZERO:
-		var knockback_dir = (global_position - source_pos).normalized()
-		velocity = knockback_dir * knockback_force
-		is_hurt = true 
 	
+	# Se NON sta dashando, applica il knockback normalmente
+	if not is_dashing:
+		if source_pos != Vector2.ZERO:
+			var knockback_dir = (global_position - source_pos).normalized()
+			velocity = knockback_dir * knockback_force
+			is_hurt = true 
+	else:
+		# Se sta dashando, magari facciamo solo un flash rosso più veloce
+		# senza cambiare la velocity o impostare is_hurt = true
+		pass
+
 	modulate = Color(1, 0, 0)
 	await get_tree().create_timer(0.2).timeout
 	modulate = Color(1, 1, 1)
-	is_hurt = false
+	
+	if not is_dashing:
+		is_hurt = false
+	
 	was_chasing = true 
 	
 	if current_health <= 0:

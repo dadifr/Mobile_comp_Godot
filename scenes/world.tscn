@@ -763,7 +763,7 @@ max_coins = 10
 [node name="DungeonRoom" parent="." instance=ExtResource("12_jhx03")]
 
 [node name="CollisionShape2D" parent="DungeonRoom/Detector" index="0"]
-position = Vector2(307, -66)
+position = Vector2(307, -65)
 
 [node name="zombie" parent="DungeonRoom/Enemies" index="0" instance=ExtResource("9_7r4gi")]
 position = Vector2(386, 121)
