@@ -89,7 +89,7 @@ height = 34.0
 [node name="DemoneG" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_jb627")
-speed = 10.0
+speed = 30.0
 detection_range = 1500.0
 max_health = 40
 

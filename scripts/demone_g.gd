@@ -11,10 +11,10 @@ extends CharacterBody2D
 @export var coin_scene: PackedScene
 @export var potionH_scene: PackedScene # <--- La nuova pozione
 @export_group("Dash Attack Settings")
-@export var dash_speed = 100.0        # Velocità dello scatto
-@export var dash_duration = 0.2       # Quanto dura un singolo scatto
+@export var dash_speed = 170.0        # Velocità dello scatto
+@export var dash_duration = 1       # Quanto dura un singolo scatto
 @export var dash_pause = 0.8          # Pausa tra uno scatto e l'altro
-@export var dash_cooldown = 3.0       # Ogni quanti secondi può rifare questa mossa
+@export var dash_cooldown = 2.0       # Ogni quanti secondi può rifare questa mossa
 @export var final_stun_time = 2     # Tempo in cui resta fermo alla fine dei 3 scatti
 
 var dash_timer = 0.0                  # Timer interno per il cooldown della mossa
@@ -62,7 +62,8 @@ func _draw():
 
 func _physics_process(delta):
 	# 1. GESTIONE KNOCKBACK (Priorità Massima)
-	if is_hurt:
+	# Se sta subendo knockback MA NON sta dashando, allora processa il dolore
+	if is_hurt and not is_dashing:
 		velocity = velocity.move_toward(Vector2.ZERO, 800 * delta)
 		move_and_slide()
 		return 
@@ -184,14 +185,13 @@ func perform_dash_attack():
 	
 	dash_timer = dash_cooldown 
 
-	if player == null or is_hurt: 
+	# RIMOSSO: if is_hurt: return 
+	if player == null: 
 		is_dashing = false
 		return
 
 	var dash_dir = (player.global_position - global_position).normalized()
 	velocity = dash_dir * dash_speed
-	anim.play("run")
-	anim.flip_h = velocity.x < 0
 
 	# --- 2. MOVIMENTO CONTINUO ---
 	var hit_wall = false
@@ -284,15 +284,25 @@ func pick_new_state():
 
 func take_damage(amount, source_pos = Vector2.ZERO):
 	current_health -= amount
-	if source_pos != Vector2.ZERO:
-		var knockback_dir = (global_position - source_pos).normalized()
-		velocity = knockback_dir * knockback_force
-		is_hurt = true 
 	
+	# Se NON sta dashando, applica il knockback normalmente
+	if not is_dashing:
+		if source_pos != Vector2.ZERO:
+			var knockback_dir = (global_position - source_pos).normalized()
+			velocity = knockback_dir * knockback_force
+			is_hurt = true 
+	else:
+		# Se sta dashando, magari facciamo solo un flash rosso più veloce
+		# senza cambiare la velocity o impostare is_hurt = true
+		pass
+
 	modulate = Color(1, 0, 0)
 	await get_tree().create_timer(0.2).timeout
 	modulate = Color(1, 1, 1)
-	is_hurt = false
+	
+	if not is_dashing:
+		is_hurt = false
+	
 	was_chasing = true 
 	
 	if current_health <= 0:
