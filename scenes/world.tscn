@@ -539,11 +539,11 @@ position = Vector2(874, 72)
 position = Vector2(773, 174)
 
 [node name="ogre" parent="DungeonRoom/Enemies" index="8" groups=["enemies"] instance=ExtResource("24_x2olw")]
-position = Vector2(848, 231)
+position = Vector2(426, 219)
 motion_mode = 1
 
 [node name="demone" parent="DungeonRoom/Enemies" index="9" groups=["enemies"] instance=ExtResource("25_ggc52")]
-position = Vector2(589, 225)
+position = Vector2(921, 242)
 
 [node name="Door" parent="DungeonRoom/Doors" index="0" instance=ExtResource("5_71j4m")]
 position = Vector2(369, 400)

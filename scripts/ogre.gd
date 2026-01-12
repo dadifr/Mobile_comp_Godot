@@ -11,9 +11,20 @@ extends CharacterBody2D
 @export var coin_scene: PackedScene
 @export var potionH_scene: PackedScene # <--- La nuova pozione
 
+@export_group("Area Attack Settings")
+@export var aoe_damage = 1
+@export var aoe_cooldown = 3.0  # Ogni quanti secondi fa il danno
+@export var aoe_enabled = true
+
+var aoe_timer = 0.0
+@onready var aura_area = $AuraDanno # Assicurati che il nome coincida
+
+
 # Probabilità (0.15 = 15%, 0.5 = 50%)
 @export var potion_chance: float = 0.10 
 @export var coin_chance: float = 0.60
+
+
 
 # --- VARIABILI INTERNE ---
 var current_health = 3
@@ -41,9 +52,13 @@ func _ready():
 
 func _draw():
 	draw_circle(Vector2.ZERO, detection_range, Color(1, 0, 0, 0.1))
-
+	# Disegna un cerchio rosso trasparente basato sul timer
+	var color = Color(1, 0, 0, (aoe_timer / aoe_cooldown) * 0.4)
+	# Sostituisci 50 con il raggio della tua CollisionShape
+	draw_circle(Vector2.ZERO, 50, color)
 func _physics_process(delta):
 	# 1. GESTIONE KNOCKBACK (Priorità Massima)
+	queue_redraw() # Forza il ridisegno ogni frame per vedere l'animazione
 	if is_hurt:
 		velocity = velocity.move_toward(Vector2.ZERO, 800 * delta)
 		move_and_slide()
@@ -116,6 +131,13 @@ func _physics_process(delta):
 		if collider.is_in_group("player") and not is_attacking:
 			if collider.has_method("take_damage"):
 				attack_player(collider)
+# 6. GESTIONE DANNO AD AREA PERIODICO
+	if aoe_enabled:
+		aoe_timer += delta
+		if aoe_timer >= aoe_cooldown:
+			perform_aoe_attack()
+			aoe_timer = 0.0 # Reset del timer
+			
 
 	# --- INIZIO CODICE SPINTA BOMBA ---
 	for i in get_slide_collision_count():
@@ -137,7 +159,19 @@ func _physics_process(delta):
 			# Usiamo la stessa tecnica "Anti-Railgun" per evitare che voli via
 			collider.linear_velocity = push_dir * push_speed
 	# --- FINE CODICE SPINTA ---
+func perform_aoe_attack():
+	# Feedback visivo: un piccolo flash o cambio colore per far capire l'attacco
+	var tween = create_tween()
+	tween.tween_property(aura_area, "modulate", Color(1, 0, 0, 0.5), 0.1)
+	tween.tween_property(aura_area, "modulate", Color(1, 1, 1, 0), 0.2)
 
+	# Prende tutti i corpi che stanno toccando l'Area2D in questo istante
+	var overlapping_bodies = aura_area.get_overlapping_bodies()
+	
+	for body in overlapping_bodies:
+		if body.is_in_group("player") and body.has_method("take_damage"):
+			body.take_damage(aoe_damage, global_position)
+			print("Il giocatore è stato colpito dall'aura!")
 # --- FUNZIONE ATTACCO AGGIORNATA ---
 func attack_player(target):
 	# 1. Blocchiamo l'AI
@@ -168,6 +202,8 @@ func attack_player(target):
 	
 	# 6. Sblocca il mob
 	is_attacking = false
+
+
 
 # --- LE ALTRE FUNZIONI RIMANGONO UGUALI ---
 func start_investigation():
