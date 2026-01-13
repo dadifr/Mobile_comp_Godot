@@ -33,6 +33,12 @@ func _ready():
 	
 	# 2. SETUP DISTANZA SCUDI
 	shield_bar.add_theme_constant_override("separation", -5)
+	
+	if DisplayServer.is_touchscreen_available():
+		visible = true
+	else:
+		# Se siamo su PC
+		visible = false
 
 # --- FUNZIONI BOOST DANNO (BLU) ---
 func _on_boost_updated(time_left):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://gtwmvgnk2yr8"]
+[gd_scene load_steps=18 format=3 uid="uid://gtwmvgnk2yr8"]
 
 [ext_resource type="Script" uid="uid://cot8w4emyh3b" path="res://scripts/hud.gd" id="1_7hsmw"]
 [ext_resource type="Texture2D" uid="uid://dsybg5kuwroqx" path="res://assets/sprites/frames pg e utility/HUD/ui_heart_full.png" id="2_nysna"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://dsukoll36sc7p" path="res://assets/sprites/frames pg e utility/utility/coin_anim_f0.png" id="5_f6qnu"]
 [ext_resource type="Texture2D" uid="uid://bdyydwnu4jn5u" path="res://assets/sprites/frames pg e utility/utility/bomb_f0.png" id="6_k4w17"]
 [ext_resource type="FontFile" uid="uid://dkt7bc255iugs" path="res://assets/fonts/PixelOperator8.ttf" id="8_twldb"]
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="9_8cuoo"]
+[ext_resource type="Texture2D" uid="uid://bdhtr0b7avbb5" path="res://assets/sprites/frames pg e utility/HUD/buttons.png" id="10_cf6ij"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8cuoo"]
 atlas = ExtResource("2_twldb")
@@ -19,6 +21,22 @@ region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_8cuoo"]
 font = ExtResource("8_twldb")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_meimr"]
+atlas = ExtResource("10_cf6ij")
+region = Rect2(239, 533, 397, 334)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rve7n"]
+atlas = ExtResource("10_cf6ij")
+region = Rect2(1612, 531, 402, 336)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ljw04"]
+atlas = ExtResource("10_cf6ij")
+region = Rect2(2303, 533, 404, 334)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_467v5"]
+atlas = ExtResource("10_cf6ij")
+region = Rect2(925, 532, 399, 335)
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_7hsmw")
@@ -112,3 +130,34 @@ label_settings = SubResource("LabelSettings_8cuoo")
 [node name="SpeedLabel" type="Label" parent="MarginContainer/StatsContainer"]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_8cuoo")
+
+[node name="Virtual Joystick" parent="." instance=ExtResource("9_8cuoo")]
+offset_left = 11.0
+offset_top = -113.0
+offset_right = 253.0
+offset_bottom = 94.0
+scale = Vector2(0.4, 0.4)
+
+[node name="Btn_Attacco" type="TouchScreenButton" parent="."]
+position = Vector2(519, 289)
+scale = Vector2(0.1, 0.1)
+texture_normal = SubResource("AtlasTexture_meimr")
+action = "attack"
+
+[node name="Btn_Dash" type="TouchScreenButton" parent="."]
+position = Vector2(471, 240)
+scale = Vector2(0.1, 0.1)
+texture_normal = SubResource("AtlasTexture_rve7n")
+action = "dash"
+
+[node name="Btn_Interazione" type="TouchScreenButton" parent="."]
+position = Vector2(568, 240)
+scale = Vector2(0.1, 0.1)
+texture_normal = SubResource("AtlasTexture_ljw04")
+action = "interact"
+
+[node name="Btn_Bomba" type="TouchScreenButton" parent="."]
+position = Vector2(519, 190)
+scale = Vector2(0.1, 0.1)
+texture_normal = SubResource("AtlasTexture_467v5")
+action = "place_bomb"
