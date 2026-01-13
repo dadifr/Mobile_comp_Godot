@@ -766,28 +766,34 @@ max_coins = 10
 position = Vector2(307, -65)
 
 [node name="zombie" parent="DungeonRoom/Enemies" index="0" instance=ExtResource("9_7r4gi")]
+z_index = 1
 position = Vector2(386, 121)
 motion_mode = 1
 
 [node name="goblin" parent="DungeonRoom/Enemies" index="1" instance=ExtResource("6_qfnet")]
+z_index = 1
 position = Vector2(947, 104)
 motion_mode = 1
 
 [node name="goblin2" parent="DungeonRoom/Enemies" index="2" instance=ExtResource("6_qfnet")]
+z_index = 1
 position = Vector2(922, 102)
 motion_mode = 1
 potionH_scene = ExtResource("9_w7kh3")
 
 [node name="zombie2" parent="DungeonRoom/Enemies" index="3" instance=ExtResource("9_7r4gi")]
+z_index = 1
 position = Vector2(949, 69)
 motion_mode = 1
 coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("9_w7kh3")
 
 [node name="scheletro" parent="DungeonRoom/Enemies" index="4" groups=["enemies"] instance=ExtResource("14_2lf6f")]
+z_index = 1
 position = Vector2(423, 132)
 
 [node name="Creeper" parent="DungeonRoom/Enemies" index="5" groups=["enemies"] instance=ExtResource("15_7iits")]
+z_index = 1
 position = Vector2(1013, 57)
 coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("9_o8fc1")
@@ -798,9 +804,11 @@ coin_chance = 0.3
 position = Vector2(874, 72)
 
 [node name="DemoneG" parent="DungeonRoom/Enemies" index="7" groups=["enemies"] instance=ExtResource("23_f17e3")]
+z_index = 1
 position = Vector2(1044, 118)
 
 [node name="ogre" parent="DungeonRoom/Enemies" index="8" groups=["enemies"] instance=ExtResource("24_x2olw")]
+z_index = 1
 position = Vector2(1046, 175)
 motion_mode = 1
 
@@ -972,7 +980,7 @@ big_speed_potion_price_range = Vector2i(20, 23)
 big_speed_potion_chance = 0.09
 
 [node name="Spikes" parent="." instance=ExtResource("36_x2olw")]
-position = Vector2(296, 440)
+position = Vector2(376, 167)
 
 [node name="Spikes2" parent="." instance=ExtResource("36_x2olw")]
 position = Vector2(312, 440)
