@@ -1,9 +1,9 @@
-[gd_scene load_steps=33 format=3 uid="uid://cxsnqkbt5dmkr"]
+[gd_scene format=3 uid="uid://cxsnqkbt5dmkr"]
 
 [ext_resource type="Script" uid="uid://do6m2n1vmo274" path="res://scripts/chest.gd" id="1_w02o5"]
 [ext_resource type="Texture2D" uid="uid://bt4hf3ne1mela" path="res://assets/sprites/frames mappa/porte e deco/chest_empty_open_anim_f0.png" id="2_ilhio"]
 [ext_resource type="PackedScene" uid="uid://dub3x4144frvp" path="res://scenes/coin.tscn" id="2_kg5gm"]
-[ext_resource type="PackedScene" uid="uid://r6lksf7a5u0v" path="res://scenes/potion_h.tscn" id="3_8me8i"]
+[ext_resource type="PackedScene" uid="uid://r6lksf7a5u0v" path="res://scenes/potion/potion_h.tscn" id="3_8me8i"]
 [ext_resource type="Texture2D" uid="uid://ys3be5iouged" path="res://assets/sprites/frames mappa/porte e deco/chest_empty_open_anim_f1.png" id="3_kg5gm"]
 [ext_resource type="Texture2D" uid="uid://car6thfhjsbut" path="res://assets/sprites/frames mappa/porte e deco/chest_full_open_anim_f0.png" id="4_8me8i"]
 [ext_resource type="Texture2D" uid="uid://d0cab4mpsowks" path="res://assets/sprites/frames mappa/porte e deco/chest_full_open_anim_f1.png" id="5_lfymr"]
