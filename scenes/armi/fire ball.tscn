@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bk3licnvoy0sd"]
+[gd_scene format=3 uid="uid://bk3licnvoy0sd"]
 
 [ext_resource type="Texture2D" uid="uid://b65f10jgfk0y8" path="res://assets/sprites/frames pg e utility/utility/explosion.png" id="1_rd71d"]
 [ext_resource type="Script" uid="uid://dovva42npnkat" path="res://scripts/armi/fire_ball.gd" id="1_y662s"]
@@ -47,7 +47,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"creazione",
-"speed": 6.0
+"speed": 4.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -58,21 +58,21 @@ animations = [{
 }],
 "loop": true,
 "name": &"movimento",
-"speed": 5.0
+"speed": 6.0
 }]
 
-[node name="FireBall" type="Area2D"]
+[node name="FireBall" type="Area2D" unique_id=1701541818]
 script = ExtResource("1_y662s")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1629609426]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=729006833]
 position = Vector2(-2.9234553e-07, 4.257474e-07)
 rotation = 1.5707964
 scale = Vector2(0.9999996, 0.9999996)
 shape = SubResource("CircleShape2D_y662s")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1665636420]
 position = Vector2(-2.9234553e-07, 4.257474e-07)
 rotation = 1.5707964
 scale = Vector2(0.9999996, 0.9999996)

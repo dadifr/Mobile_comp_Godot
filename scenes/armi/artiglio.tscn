@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://dcahukeipe13m"]
+
+[ext_resource type="Script" uid="uid://diduwde2qas4s" path="res://scripts/armi/artiglio.gd" id="1_4p5ad"]
+[ext_resource type="Texture2D" uid="uid://c8ggwy8cpppn7" path="res://assets/sprites/frames pg e utility/armi/SFX300_nyknck/SFX304_nyknck/SFX304_01.png" id="1_c7frg"]
+[ext_resource type="Texture2D" uid="uid://cdx2k2e4ecw2q" path="res://assets/sprites/frames pg e utility/armi/SFX300_nyknck/SFX304_nyknck/SFX304_02.png" id="2_bjeve"]
+[ext_resource type="Texture2D" uid="uid://b4kxt45r1udyo" path="res://assets/sprites/frames pg e utility/armi/SFX300_nyknck/SFX304_nyknck/SFX304_03.png" id="3_dqqjc"]
+[ext_resource type="Texture2D" uid="uid://m7thra2nh1v6" path="res://assets/sprites/frames pg e utility/armi/SFX300_nyknck/SFX304_nyknck/SFX304_04.png" id="4_uqsp1"]
+[ext_resource type="Texture2D" uid="uid://i33pm8uri3sa" path="res://assets/sprites/frames pg e utility/armi/SFX300_nyknck/SFX304_nyknck/SFX304_05.png" id="5_th0dk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hp0u0"]
+atlas = ExtResource("1_c7frg")
+region = Rect2(0, 0, 35, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqy86"]
+atlas = ExtResource("2_bjeve")
+region = Rect2(0, 0, 35, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ag583"]
+atlas = ExtResource("3_dqqjc")
+region = Rect2(0, 0, 35, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqk03"]
+atlas = ExtResource("4_uqsp1")
+region = Rect2(0, 0, 35, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpdk2"]
+atlas = ExtResource("5_th0dk")
+region = Rect2(0, 0, 35, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4enyn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hp0u0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqy86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ag583")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqk03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dpdk2")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c7frg"]
+size = Vector2(30, 28)
+
+[node name="artiglio" type="Area2D" unique_id=1633956590]
+script = ExtResource("1_4p5ad")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1026036886]
+position = Vector2(0.23939136, -0.119696595)
+rotation = -3.1415925
+scale = Vector2(0.8, 0.817)
+sprite_frames = SubResource("SpriteFrames_4enyn")
+frame = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=40021716]
+position = Vector2(-1, -1)
+shape = SubResource("RectangleShape2D_c7frg")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bjaiw72yylptu"]
+[gd_scene format=3 uid="uid://bjaiw72yylptu"]
 
 [ext_resource type="Script" uid="uid://duh7e6f4tpugl" path="res://scripts/cavaliere.gd" id="1_81uaw"]
 [ext_resource type="PackedScene" uid="uid://cdcedd8m54axk" path="res://scenes/bomb.tscn" id="2_wo0on"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dwj3v7u70q8kd" path="res://assets/sprites/frames pg e utility/character/lizard_m_run_anim_f1.png" id="9_xpdqf"]
 [ext_resource type="Texture2D" uid="uid://maptiopqqvry" path="res://assets/sprites/frames pg e utility/character/lizard_m_run_anim_f2.png" id="10_nhb3k"]
 [ext_resource type="Texture2D" uid="uid://dgh0frijbx6q2" path="res://assets/sprites/frames pg e utility/character/lizard_m_run_anim_f3.png" id="11_h3ti1"]
+[ext_resource type="PackedScene" uid="uid://dcahukeipe13m" path="res://scenes/armi/artiglio.tscn" id="12_oip1y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4uh4w"]
 atlas = ExtResource("3_h21u0")
@@ -122,7 +123,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_mdl7e"]
 radius = 6.0
 
-[node name="lizard" type="CharacterBody2D" groups=["player"]]
+[node name="lizard" type="CharacterBody2D" unique_id=1222116370 groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_81uaw")
 speed = 110.0
@@ -130,19 +131,21 @@ bomb_scene = ExtResource("2_wo0on")
 knockback_force = 200.0
 metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1278476385]
 sprite_frames = SubResource("SpriteFrames_o4126")
-animation = &"dead"
+animation = &"run"
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=688899596]
 position = Vector2(0, 6)
 zoom = Vector2(1.8, 1.8)
 position_smoothing_enabled = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1368439983]
 position = Vector2(0, 6)
 shape = SubResource("CircleShape2D_mdl7e")
 
-[node name="Hand" type="Marker2D" parent="."]
+[node name="Hand" type="Marker2D" parent="." unique_id=1264728160]
 position = Vector2(10, 7)
 metadata/_edit_group_ = true
+
+[node name="artiglio" parent="Hand" unique_id=1633956590 instance=ExtResource("12_oip1y")]

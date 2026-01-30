@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b4p2ag0n4ui3x"]
+[gd_scene format=3 uid="uid://b4p2ag0n4ui3x"]
 
 [ext_resource type="Script" uid="uid://m5ev2frp3o1n" path="res://scripts/character_selection.gd" id="1_7xed0"]
 [ext_resource type="PackedScene" uid="uid://cjkp6iup5bgc3" path="res://scenes/pg/cavaliere.tscn" id="2_wh1ae"]
@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bvsgl2fwpb4yf" path="res://assets/sprites/frames pg e utility/character/lizard_m_idle_anim_f0.png" id="8_iixut"]
 [ext_resource type="Texture2D" uid="uid://bclwst5k6jahl" path="res://assets/sprites/frames pg e utility/character/wizzard_m_idle_anim_f0.png" id="10_v724p"]
 
-[node name="CharacterSelection" type="Control"]
+[node name="CharacterSelection" type="Control" unique_id=2090471556]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -24,7 +24,7 @@ dwarf_scene = ExtResource("4_cqj7k")
 lizard_scene = ExtResource("5_v724p")
 mage_scene = ExtResource("6_7rsvw")
 
-[node name="ImCavaliere" type="TextureRect" parent="."]
+[node name="ImCavaliere" type="TextureRect" parent="." unique_id=1810237542]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 0
 offset_left = 178.0
@@ -35,7 +35,7 @@ texture = ExtResource("4_iixut")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ImElfo" type="TextureRect" parent="."]
+[node name="ImElfo" type="TextureRect" parent="." unique_id=683386314]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 0
 offset_left = 238.0
@@ -46,7 +46,7 @@ texture = ExtResource("5_dv8bk")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ImNano" type="TextureRect" parent="."]
+[node name="ImNano" type="TextureRect" parent="." unique_id=718138890]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 0
 offset_left = 280.0
@@ -57,7 +57,7 @@ texture = ExtResource("7_iixut")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ImLizard" type="TextureRect" parent="."]
+[node name="ImLizard" type="TextureRect" parent="." unique_id=974930417]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 0
 offset_left = 337.0
@@ -68,7 +68,7 @@ texture = ExtResource("8_iixut")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ImMago" type="TextureRect" parent="."]
+[node name="ImMago" type="TextureRect" parent="." unique_id=22104655]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 0
 offset_left = 393.0
@@ -79,29 +79,29 @@ texture = ExtResource("10_v724p")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1994785153]
 layout_mode = 0
 offset_left = 155.0
 offset_top = 191.0
 offset_right = 467.0
 offset_bottom = 235.0
 
-[node name="BtnCavaliere" type="Button" parent="HBoxContainer"]
+[node name="BtnCavaliere" type="Button" parent="HBoxContainer" unique_id=124920731]
 layout_mode = 2
 text = "Cavaliere"
 
-[node name="BtnElfo" type="Button" parent="HBoxContainer"]
+[node name="BtnElfo" type="Button" parent="HBoxContainer" unique_id=1007403960]
 layout_mode = 2
 text = "Elfo"
 
-[node name="BtnNano" type="Button" parent="HBoxContainer"]
+[node name="BtnNano" type="Button" parent="HBoxContainer" unique_id=1391645179]
 layout_mode = 2
 text = "Nano"
 
-[node name="BtnLizard" type="Button" parent="HBoxContainer"]
+[node name="BtnLizard" type="Button" parent="HBoxContainer" unique_id=1273480992]
 layout_mode = 2
 text = "Lizard"
 
-[node name="BtnMago" type="Button" parent="HBoxContainer"]
+[node name="BtnMago" type="Button" parent="HBoxContainer" unique_id=1506481271]
 layout_mode = 2
 text = "Mago"
