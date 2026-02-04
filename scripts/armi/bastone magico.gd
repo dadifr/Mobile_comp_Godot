@@ -34,18 +34,16 @@ func shoot():
 	if not projectile_scene: return
 	
 	var player = get_tree().get_first_node_in_group("player")
-	var dir = Vector2.RIGHT
-	var final_damage = 1 
+	
+	var shoot_dir = Vector2.RIGHT
+	if scale.x < 0:
+		shoot_dir = Vector2.LEFT
+	
+	var final_damage = 2 # Danno base
 	
 	if player:
-		if "last_direction" in player and player.last_direction != Vector2.ZERO:
-			dir = player.last_direction
-		
-		var bonus = 0
 		if "current_damage_bonus" in player:
-			bonus = player.current_damage_bonus
-		
-		final_damage = 2 + bonus
+			final_damage += player.current_damage_bonus
 
 	var fireball = projectile_scene.instantiate()
 	
@@ -53,8 +51,8 @@ func shoot():
 		fireball.global_position = spawn_point.global_position
 	else:
 		fireball.global_position = global_position
-	
-	fireball.setup(dir, final_damage, player)
+		
+	fireball.setup(shoot_dir, final_damage, player)
 	
 	get_tree().root.add_child(fireball)
 	

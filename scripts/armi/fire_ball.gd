@@ -21,10 +21,12 @@ func _ready():
 	get_tree().create_timer(life_time).timeout.connect(queue_free)
 
 func setup(new_dir, new_damage, who_shot):
-	direction = new_dir
+	direction = new_dir.normalized() # Usiamo normalized per sicurezza
 	damage = new_damage
 	shooter = who_shot
-	rotation = direction.angle()
+	rotation = direction.angle() 
+	if direction.x < 0:
+		$AnimatedSprite2D.flip_v = true
 
 func _physics_process(delta):
 	# Movimento
