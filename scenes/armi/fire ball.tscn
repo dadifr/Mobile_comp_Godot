@@ -47,7 +47,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"creazione",
-"speed": 4.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -62,7 +62,9 @@ animations = [{
 }]
 
 [node name="FireBall" type="Area2D" unique_id=1701541818]
+scale = Vector2(0.8, 0.8)
 script = ExtResource("1_y662s")
+speed = 200.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1629609426]
 

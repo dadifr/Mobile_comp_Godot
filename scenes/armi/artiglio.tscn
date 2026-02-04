@@ -51,18 +51,19 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c7frg"]
-size = Vector2(30, 28)
+size = Vector2(15.5, 13.5)
 
 [node name="artiglio" type="Area2D" unique_id=1633956590]
 script = ExtResource("1_4p5ad")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1026036886]
-position = Vector2(0.23939136, -0.119696595)
+position = Vector2(-0.3590889, -0.4787835)
 rotation = -3.1415925
-scale = Vector2(0.8, 0.817)
+scale = Vector2(0.596, 0.6)
 sprite_frames = SubResource("SpriteFrames_4enyn")
 frame = 4
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=40021716]
-position = Vector2(-1, -1)
+position = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_c7frg")

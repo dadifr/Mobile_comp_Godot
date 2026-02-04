@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://duc60vna0lhl8"]
+[gd_scene format=3 uid="uid://duc60vna0lhl8"]
 
 [ext_resource type="Script" uid="uid://b8eb5he1mn8is" path="res://scripts/armi/bastone magico.gd" id="1_soldd"]
 [ext_resource type="PackedScene" uid="uid://bk3licnvoy0sd" path="res://scenes/armi/fire ball.tscn" id="2_j04g0"]
@@ -8,19 +8,23 @@
 radius = 4.0
 height = 24.0
 
-[node name="bastone magico" type="Area2D"]
+[node name="bastone magico" type="Area2D" unique_id=1910993198]
 rotation = 0.2617994
+scale = Vector2(0.7, 0.7)
 script = ExtResource("1_soldd")
 projectile_scene = ExtResource("2_j04g0")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=328529323]
 position = Vector2(0, -12)
+scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_nrma4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1735127472]
 position = Vector2(0, -12)
+scale = Vector2(0.7, 0.7)
 shape = SubResource("CapsuleShape2D_1kpwy")
 disabled = true
 
-[node name="Punta" type="Marker2D" parent="."]
+[node name="Punta" type="Marker2D" parent="." unique_id=697198200]
 position = Vector2(0.10153583, -22.803284)
+scale = Vector2(0.7, 0.7)

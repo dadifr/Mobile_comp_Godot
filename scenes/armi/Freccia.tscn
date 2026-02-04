@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b35xdrb6dmdaa"]
+[gd_scene format=3 uid="uid://b35xdrb6dmdaa"]
 
 [ext_resource type="Script" uid="uid://b0ib0od1keyei" path="res://scripts/armi/freccia.gd" id="1_xf8dy"]
 [ext_resource type="Texture2D" uid="uid://dtfr1b0801tln" path="res://assets/sprites/frames pg e utility/armi/weapon_arrow.png" id="2_a4dbt"]
@@ -6,16 +6,16 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjt7m"]
 size = Vector2(2.8571436, 14.285719)
 
-[node name="Freccia" type="Area2D"]
+[node name="Freccia" type="Area2D" unique_id=1550734921]
 scale = Vector2(0.7, 0.7)
 script = ExtResource("1_xf8dy")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=267228315]
 rotation = 1.5707964
 scale = Vector2(0.8, 0.882)
 texture = ExtResource("2_a4dbt")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1035891363]
 position = Vector2(-2.9234553e-07, 4.257474e-07)
 rotation = 1.5707964
 scale = Vector2(0.9999996, 0.9999996)

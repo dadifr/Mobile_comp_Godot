@@ -149,3 +149,4 @@ position = Vector2(10, 7)
 metadata/_edit_group_ = true
 
 [node name="artiglio" parent="Hand" unique_id=1633956590 instance=ExtResource("12_oip1y")]
+visible = false

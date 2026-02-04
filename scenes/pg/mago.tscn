@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bfh75dgljhtwx"]
+[gd_scene format=3 uid="uid://bfh75dgljhtwx"]
 
 [ext_resource type="Script" uid="uid://duh7e6f4tpugl" path="res://scripts/cavaliere.gd" id="1_r6j4t"]
 [ext_resource type="PackedScene" uid="uid://cdcedd8m54axk" path="res://scenes/bomb.tscn" id="2_gioyb"]
@@ -123,7 +123,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_mdl7e"]
 radius = 6.0
 
-[node name="cavaliere" type="CharacterBody2D" groups=["player"]]
+[node name="cavaliere" type="CharacterBody2D" unique_id=2022606678 groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_r6j4t")
 bomb_scene = ExtResource("2_gioyb")
@@ -131,24 +131,24 @@ knockback_force = 200.0
 invincibility_time = 0.5
 metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=690329757]
 sprite_frames = SubResource("SpriteFrames_o4126")
 animation = &"hurt"
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2116975472]
 position = Vector2(0, 6)
 zoom = Vector2(1.8, 1.8)
 position_smoothing_enabled = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=734487589]
 position = Vector2(0, 6)
 shape = SubResource("CircleShape2D_mdl7e")
 
-[node name="Hand" type="Marker2D" parent="."]
-position = Vector2(10, 7)
+[node name="Hand" type="Marker2D" parent="." unique_id=573951131]
+position = Vector2(9, 10)
 metadata/_edit_group_ = true
 
-[node name="bastone magico" parent="Hand" instance=ExtResource("12_t0jya")]
+[node name="bastone magico" parent="Hand" unique_id=99475479 instance=ExtResource("12_t0jya")]
 
-[node name="DamageBoostTimer" type="Timer" parent="."]
+[node name="DamageBoostTimer" type="Timer" parent="." unique_id=85599958]
 one_shot = true

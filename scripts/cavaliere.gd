@@ -154,7 +154,7 @@ func _physics_process(delta):
 	if is_instance_valid(speed_timer) and not speed_timer.is_stopped():
 		speed_updated.emit(speed_timer.time_left)
 
-	# --- 10. MOVIMENTO ---
+	# MOVIMENTO
 	move_and_slide()
 	
 	for i in get_slide_collision_count():
@@ -164,7 +164,7 @@ func _physics_process(delta):
 			var push_dir = -collision.get_normal()
 			collider.linear_velocity = push_dir * speed * 1.5
 
-# --- LOGICA DASH ---
+# DASH
 func start_dash():
 	is_dashing = true
 	can_dash = false

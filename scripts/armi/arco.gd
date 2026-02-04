@@ -23,25 +23,28 @@ func _ready():
 	set_as_top_level(true)
 
 func _process(_delta):
-	# --- 1. TROVA IL PLAYER ---
 	var player = get_tree().get_first_node_in_group("player")
 	
 	if player:
-		# --- 2. INSEGUI LA MANO (Necessario perché siamo Top Level) ---
-		# Cerchiamo il nodo "Hand" dentro il player per sapere dove posizionarci.
 		var hand_node = player.get_node_or_null("Hand")
 		if hand_node:
-			# Copiamo la posizione globale della mano
 			global_position = hand_node.global_position
 			
-		# --- 3. GESTIONE ROTAZIONE VISIVA ---
-		if "last_direction" in player and player.last_direction != Vector2.ZERO:
+		# --- GESTIONE ROTAZIONE SOLO DESTRA/SINISTRA ---
+		if "last_direction" in player:
 			var dir = player.last_direction
-			# Ora possiamo usare l'angolo reale e pulito della direzione.
-			# Non serve più il trucco "abs(dir.x)" perché non siamo più influenzati dallo scale negativo.
-			rotation = dir.angle()
+			
+			if dir.x > 0:
+				# Se il player guarda a destra (anche se diagonalmente)
+				rotation = 0
+			elif dir.x < 0:
+				# Se il player guarda a sinistra (anche se diagonalmente)
+				rotation = PI # PI radianti equivale a 180 gradi
+			
+			# Nota: Se dir.x è esattamente 0 (movimento solo verticale), 
+			# l'arco manterrà l'ultima rotazione destra/sinistra impostata.
 
-	# --- 4. GESTIONE CARICAMENTO ---
+	# --- GESTIONE CARICAMENTO ---
 	if is_charging:
 		if Input.is_action_just_released("attack"):
 			shoot()
@@ -66,34 +69,22 @@ func reset_bow():
 func shoot():
 	if not arrow_scene: return
 	
-	var player = get_tree().get_first_node_in_group("player")
+	var shoot_direction = Vector2.RIGHT.rotated(rotation)
 	
-	var direction = Vector2.RIGHT
-	var damage_bonus = 0
-	
-	if player:
-		if "last_direction" in player and player.last_direction != Vector2.ZERO:
-			direction = player.last_direction
-		if "current_damage_bonus" in player:
-			damage_bonus = player.current_damage_bonus
-	
-	# Creazione freccia
 	var arrow = arrow_scene.instantiate()
-	# La posizione di spawn è la nostra posizione globale attuale
-	arrow.global_position = global_position 
-	arrow.direction = direction
-	arrow.rotation = direction.angle()
 	
+	arrow.global_position = global_position 
+	arrow.direction = shoot_direction
+	arrow.rotation = rotation
+	
+	var player = get_tree().get_first_node_in_group("player")
 	if player:
 		arrow.shooter = player
-	
-	# Iniezione danno
-	if damage_bonus > 0:
-		arrow.damage += damage_bonus
+		if "current_damage_bonus" in player:
+			arrow.damage += player.current_damage_bonus
 	
 	get_tree().root.add_child(arrow)
 	
-	# Cooldown
 	can_shoot = false
 	await get_tree().create_timer(fire_rate).timeout
 	can_shoot = true

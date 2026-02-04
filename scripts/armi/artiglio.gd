@@ -1,42 +1,48 @@
 extends Area2D
 
-@export var damage = 1
-
+@export var damage: int = 2
 @onready var anim = $AnimatedSprite2D
 @onready var collision = $CollisionShape2D
 
 func _ready():
-	# Assicuriamoci che all'inizio non faccia male
+	visible = false 
 	collision.disabled = true
-	# Collega il segnale per colpire
-	body_entered.connect(_on_body_entered)
+	
+	if not body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
 
 func attack():
+	self.visible = true
+	anim.stop()
 	collision.disabled = false
 	anim.play("default")
-	# Aspetta che l'animazione finisca per spegnere la collisione
-	if not anim.animation_finished.is_connected(_on_animation_finished):
-		anim.animation_finished.connect(_on_animation_finished)
+	
+	
+	if not anim.animation_finished.is_connected(_on_attack_finished):
+		anim.animation_finished.connect(_on_attack_finished, CONNECT_ONE_SHOT)
 
-func _on_animation_finished():
+func _on_attack_finished():
 	collision.disabled = true
+	self.visible = false
 
 func _on_body_entered(body):
+	
 	if not is_instance_valid(body) or body.is_in_group("player"):
 		return 
 
-	# Colpisci solo se il corpo ha il metodo take_damage
 	if body.has_method("take_damage"):
-		var total_damage = damage 
-		
-		# Recupera il bonus dal player in modo più sicuro
-		var owner_node = get_parent().get_parent()
-		if "current_damage_bonus" in owner_node:
-			total_damage += owner_node.current_damage_bonus
-			
+		var total_damage = _calculate_total_damage()
 		body.take_damage(total_damage, global_position)
-		# Debug
-		print("Colpito! Danno Base: ", damage, " + Bonus: ", (total_damage - damage))
+		print("Nemico colpito! Danno: ", total_damage)
+	else:
+		print("Corpo toccato: ", body.name, " ma non ha il metodo take_damage")
 
-	elif body is TileMap or body is StaticBody2D or body is TileMapLayer:
-		print("sting! Colpito un muro.")
+func _calculate_total_damage() -> int:
+	var total = damage
+	
+	var players = get_tree().get_nodes_in_group("player")
+	if players.size() > 0:
+		var player = players[0]
+		if "current_damage_bonus" in player:
+			total += player.current_damage_bonus
+	return total
