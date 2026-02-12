@@ -128,7 +128,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"esplosione",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -184,6 +184,8 @@ shape = SubResource("RectangleShape2D_5jvu3")
 sprite_frames = SubResource("SpriteFrames_ddy0k")
 animation = &"esplosione"
 autoplay = "idle"
+frame = 10
+frame_progress = 1.0
 
 [node name="ExplosionArea" type="Area2D" parent="." unique_id=2102134224]
 

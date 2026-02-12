@@ -173,14 +173,14 @@ func explode():
 	for target in targets:
 		if target.is_in_group("player") and target.has_method("take_damage"):
 			target.take_damage(explosion_damage, global_position)
-		# Opzionale: danneggia anche altri nemici!
-	# 4. Il mob muore nell'esplosione
+			
+	await anim.animation_finished
+	# Il mob muore
 	die_instantly()
 
 func die_instantly():
 	# Una morte rapida senza loot o con loot specifico
 	queue_free()
-# --- LE ALTRE FUNZIONI RIMANGONO UGUALI ---
 func start_investigation():
 	is_investigating = true
 	investigation_timer = investigation_duration
