@@ -96,7 +96,7 @@ func _physics_process(delta):
 					pick_new_state()
 				velocity = move_direction * patrol_speed
 
-	# 4. GESTIONE ANIMAZIONI
+	# animazioni
 	if velocity.length() > 0:
 		anim.play("run")
 		if not is_investigating:
@@ -107,10 +107,10 @@ func _physics_process(delta):
 	else:
 		anim.play("idle")
 
-	# 5. MOVIMENTO E COLLISIONI
+	# movimento
 	move_and_slide()
 	
-	# Controllo collisioni per attaccare
+	# Controllo collisioni
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
@@ -120,36 +120,27 @@ func _physics_process(delta):
 			if collider.has_method("take_damage"):
 				attack_player(collider)
 
-	# --- INIZIO CODICE SPINTA BOMBA ---
+	# spinta bomba
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		
-		# Se il nemico sbatte contro un oggetto rigido (Bomba)
+		# Se il nemico sbatte contro un oggetto rigido
 		if collider is RigidBody2D:
-			# 1. Calcoliamo la direzione della spinta
-			# Usiamo "-normal" che è la direzione opposta all'urto
 			var push_dir = -collision.get_normal()
-			
-			# 2. Velocità di spinta
-			# Facciamo che il nemico spinge un po' più piano del giocatore
-			# (o uguale, dipende da quanto è forte lo scheletro)
+			# nemico spinge un po' più piano del giocatore
 			var push_speed = 100.0 
-			
-			# 3. Sovrascriviamo la velocità della bomba
-			# Usiamo la stessa tecnica "Anti-Railgun" per evitare che voli via
+			# evitare che voli via
 			collider.linear_velocity = push_dir * push_speed
-	# --- FINE CODICE SPINTA ---
-
-# --- FUNZIONE ATTACCO AGGIORNATA ---
+	
 func attack_player(target):
 	if is_attacking: return
 	is_attacking = true
 	
-	# 1. Fase di avvertimento (il mob si ferma e lampeggia)
+	# avvertimento
 	velocity = Vector2.ZERO
-	modulate = Color(2, 2, 2) # Diventa molto luminoso (effetto White)
-	anim.play("idle") # O un'animazione di "caricamento"
+	modulate = Color(2, 2, 2)
+	anim.play("idle")
 	
 	await get_tree().create_timer(fuse_time).timeout
 	
@@ -160,9 +151,7 @@ func attack_player(target):
 func explode():
 	print("BOOM!")
 	anim.play("esplosione")
-	# Esempio: $ExplosionParticles.emitting = true
-	
-	# 3. Controlla chi è nell'area dell'esplosione
+
 	# Attiviamo l'area per un istante
 	$ExplosionArea/CollisionShape2D.set_deferred("disabled", false)
 	
@@ -175,7 +164,7 @@ func explode():
 			target.take_damage(explosion_damage, global_position)
 			
 	await anim.animation_finished
-	# Il mob muore
+	#muore
 	die_instantly()
 
 func die_instantly():
@@ -215,22 +204,18 @@ func die():
 	print("Goblin eliminato!")
 	set_physics_process(false)
 	$CollisionShape2D.set_deferred("disabled", true)
-	# --- SISTEMA DI LOOT LOGICO ---
-	var random_roll = randf() # Genera un numero da 0.0 a 1.0
+	# lot
+	var random_roll = randf()
 	
-	# CONTROLLO 1: Pozione (È la più rara, controlliamo per prima)
-	# Esempio: Se random_roll è 0.10 (che è < 0.15), vinci la pozione.
+	# Pozione (È la più rara, controlliamo per prima)
 	if potionH_scene and random_roll < potion_chance:
 		spawn_loot(potionH_scene)
 		
-	# CONTROLLO 2: Moneta
-	# Usiamo "elif": quindi se hai già vinto la pozione, NON entri qui.
-	# Sommiamo le chance: da 0.15 a 0.65 (0.15 + 0.5) vince la moneta.
+	# Moneta
 	elif coin_scene and random_roll < (potion_chance + coin_chance):
 		spawn_loot(coin_scene)
 	
 	# Se il numero è molto alto (es. 0.8), non entra in nessuno dei due if
-	# e il mostro non droppa nulla (sfortuna!).
 	
 	queue_free()
 

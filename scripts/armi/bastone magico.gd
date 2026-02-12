@@ -38,7 +38,7 @@ func shoot():
 	if scale.x < 0:
 		shoot_dir = Vector2.LEFT
 	
-	var final_damage = 2 # Danno base
+	var final_damage = 2
 	
 	if player:
 		if "current_damage_bonus" in player:
