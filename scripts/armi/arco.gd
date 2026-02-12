@@ -17,6 +17,9 @@ func _ready():
 	if freccia_visiva:
 		freccia_visiva.visible = false
 		
+	# --- FIX STRETCHING: Top Level ---
+	# Rendiamo l'arco indipendente dalle trasformazioni del padre.
+	# In questo modo NON eredita lo "scale.x = -1" della mano che causava lo stretch.
 	set_as_top_level(true)
 
 func _process(_delta):
@@ -27,14 +30,21 @@ func _process(_delta):
 		if hand_node:
 			global_position = hand_node.global_position
 			
+		# --- GESTIONE ROTAZIONE SOLO DESTRA/SINISTRA ---
 		if "last_direction" in player:
 			var dir = player.last_direction
 			
 			if dir.x > 0:
+				# Se il player guarda a destra (anche se diagonalmente)
 				rotation = 0
 			elif dir.x < 0:
-				rotation = PI 
-				
+				# Se il player guarda a sinistra (anche se diagonalmente)
+				rotation = PI # PI radianti equivale a 180 gradi
+			
+			# Nota: Se dir.x è esattamente 0 (movimento solo verticale), 
+			# l'arco manterrà l'ultima rotazione destra/sinistra impostata.
+
+	# --- GESTIONE CARICAMENTO ---
 	if is_charging:
 		if Input.is_action_just_released("attack"):
 			shoot()

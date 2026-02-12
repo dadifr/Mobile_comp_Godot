@@ -14,7 +14,7 @@ extends CharacterBody2D
 @export var coin_scene: PackedScene
 @export var potionH_scene: PackedScene # <--- La nuova pozione
 
-# Probabilità (0.15 = 15%, 0.5 = 50%)
+# Probabilità
 @export var potion_chance: float = 0.10 
 @export var coin_chance: float = 0.60
 
@@ -155,10 +155,11 @@ func attack_player(target):
 	
 	# 2. Esecuzione dell'esplosione
 	explode()
+	
 
 func explode():
 	print("BOOM!")
-	# Mostra un'animazione o particelle (se ne hai)
+	anim.play("esplosione")
 	# Esempio: $ExplosionParticles.emitting = true
 	
 	# 3. Controlla chi è nell'area dell'esplosione
@@ -173,7 +174,6 @@ func explode():
 		if target.is_in_group("player") and target.has_method("take_damage"):
 			target.take_damage(explosion_damage, global_position)
 		# Opzionale: danneggia anche altri nemici!
-	
 	# 4. Il mob muore nell'esplosione
 	die_instantly()
 
@@ -215,7 +215,6 @@ func die():
 	print("Goblin eliminato!")
 	set_physics_process(false)
 	$CollisionShape2D.set_deferred("disabled", true)
-	
 	# --- SISTEMA DI LOOT LOGICO ---
 	var random_roll = randf() # Genera un numero da 0.0 a 1.0
 	

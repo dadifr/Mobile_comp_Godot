@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bh3ge7u2lnfub"]
+[gd_scene format=3 uid="uid://bh3ge7u2lnfub"]
 
 [ext_resource type="Script" uid="uid://c1o108g08omva" path="res://scripts/EnemySpawner.gd" id="1_ks4g3"]
 [ext_resource type="PackedScene" uid="uid://dfgjlp1lau0g8" path="res://scenes/png/zombie.tscn" id="2_3d38x"]
@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://d0f8cdwkf66lr" path="res://scripts/SpawnRate.gd" id="2_n6vr5"]
 [ext_resource type="PackedScene" uid="uid://cyq48r8dxvud" path="res://scenes/png/goblin.tscn" id="3_3vhok"]
 [ext_resource type="PackedScene" uid="uid://dtha5aeas62a6" path="res://scenes/png/scheletro.tscn" id="4_gtc37"]
-[ext_resource type="PackedScene" uid="uid://dakjm2y4ejv47" path="res://scenes/png/creeper.tscn" id="5_j64qd"]
+[ext_resource type="PackedScene" uid="uid://dakjm2y4ejv47" path="res://scenes/png/Creeper.tscn" id="5_j64qd"]
 
 [sub_resource type="Resource" id="Resource_3vhok"]
 script = ExtResource("2_n6vr5")

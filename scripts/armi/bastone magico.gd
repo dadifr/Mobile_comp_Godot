@@ -1,4 +1,4 @@
-extends Node2D
+extends Area2D
 
 @export var projectile_scene: PackedScene 
 @export var fire_rate: float = 0.5
@@ -20,14 +20,11 @@ func _process(_delta):
 		
 		if "last_direction" in player:
 			var dir = player.last_direction
-			
+			rotation = 0 
 			if dir.x < 0:
 				scale.x = -0.7
-				rotation = -0.3
 			elif dir.x > 0:
 				scale.x = 0.7
-				rotation = 0.3
-
 func attack():
 	if not can_shoot: return
 	shoot()

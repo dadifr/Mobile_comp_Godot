@@ -145,7 +145,7 @@ position = Vector2(0, 6)
 shape = SubResource("CircleShape2D_mdl7e")
 
 [node name="Hand" type="Marker2D" parent="." unique_id=573951131]
-position = Vector2(7, 15)
+position = Vector2(9, 10)
 metadata/_edit_group_ = true
 
 [node name="bastone magico" parent="Hand" unique_id=99475479 instance=ExtResource("12_t0jya")]

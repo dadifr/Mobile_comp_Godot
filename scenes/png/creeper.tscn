@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://dakjm2y4ejv47"]
+[gd_scene format=3 uid="uid://dakjm2y4ejv47"]
 
 [ext_resource type="Script" uid="uid://cqnplvtb0jm6m" path="res://scripts/creeper.gd" id="1_t3wml"]
 [ext_resource type="Texture2D" uid="uid://dehuysxkmhdnj" path="res://assets/sprites/frames pg e utility/mob/pumpkin_dude_idle_anim_f0.png" id="2_5jvu3"]
+[ext_resource type="Texture2D" uid="uid://6flu0oks2863" path="res://assets/sprites/Explosion Assets/Explosion Assets/Explosion Animation.png" id="2_hq8xf"]
 [ext_resource type="Texture2D" uid="uid://ch243w848uruq" path="res://assets/sprites/frames pg e utility/mob/pumpkin_dude_idle_anim_f1.png" id="3_qiocg"]
 [ext_resource type="Texture2D" uid="uid://tulbcdk34ily" path="res://assets/sprites/frames pg e utility/mob/pumpkin_dude_idle_anim_f2.png" id="4_xwioc"]
 [ext_resource type="Texture2D" uid="uid://dcbdyq3o1v02a" path="res://assets/sprites/frames pg e utility/mob/pumpkin_dude_idle_anim_f3.png" id="5_jtbr6"]
@@ -12,6 +13,50 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5jvu3"]
 size = Vector2(12, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8sym"]
+atlas = ExtResource("2_hq8xf")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aagxf"]
+atlas = ExtResource("2_hq8xf")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mh1uv"]
+atlas = ExtResource("2_hq8xf")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e47wi"]
+atlas = ExtResource("2_hq8xf")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6nk4d"]
+atlas = ExtResource("2_hq8xf")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5u3sn"]
+atlas = ExtResource("2_hq8xf")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1lji"]
+atlas = ExtResource("2_hq8xf")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3l0r"]
+atlas = ExtResource("2_hq8xf")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0a37n"]
+atlas = ExtResource("2_hq8xf")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0i61b"]
+atlas = ExtResource("2_hq8xf")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1exx"]
+atlas = ExtResource("2_hq8xf")
+region = Rect2(640, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ub30t"]
 atlas = ExtResource("2_5jvu3")
@@ -47,6 +92,44 @@ region = Rect2(0, 0, 16, 23)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ddy0k"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8sym")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aagxf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mh1uv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e47wi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6nk4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5u3sn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1lji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3l0r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0a37n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0i61b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1exx")
+}],
+"loop": false,
+"name": &"esplosione",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ub30t")
@@ -89,26 +172,26 @@ radius = 26.0
 radius = 8.0
 height = 26.0
 
-[node name="Creeper" type="CharacterBody2D"]
+[node name="Creeper" type="CharacterBody2D" unique_id=1342783513]
 motion_mode = 1
 script = ExtResource("1_t3wml")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=8819519]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_5jvu3")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1177429962]
 sprite_frames = SubResource("SpriteFrames_ddy0k")
-animation = &"run"
+animation = &"esplosione"
 autoplay = "idle"
 
-[node name="ExplosionArea" type="Area2D" parent="."]
+[node name="ExplosionArea" type="Area2D" parent="." unique_id=2102134224]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea" unique_id=1668320091]
 shape = SubResource("CircleShape2D_5jvu3")
 disabled = true
 
-[node name="hitbox" type="Area2D" parent="."]
+[node name="hitbox" type="Area2D" parent="." unique_id=45092255]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=1521307550]
 shape = SubResource("CapsuleShape2D_qiocg")
