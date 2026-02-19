@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://dcuiblel7ihlf" path="res://scenes/DungeonRoom.tscn" id="12_jhx03"]
 [ext_resource type="PackedScene" uid="uid://cdcedd8m54axk" path="res://scenes/bomb.tscn" id="12_q5onr"]
 [ext_resource type="PackedScene" uid="uid://dtha5aeas62a6" path="res://scenes/png/scheletro.tscn" id="14_2lf6f"]
-[ext_resource type="PackedScene" uid="uid://dakjm2y4ejv47" path="res://scenes/png/creeper.tscn" id="15_7iits"]
+[ext_resource type="PackedScene" uid="uid://dakjm2y4ejv47" path="res://scenes/png/Creeper.tscn" id="15_7iits"]
 [ext_resource type="PackedScene" uid="uid://djqh3veqpu1u" path="res://scenes/ShopItem.tscn" id="15_xo05s"]
 [ext_resource type="Texture2D" uid="uid://dyv6lp6j0fc5k" path="res://assets/sprites/frames pg e utility/utility/flask_red.png" id="16_dss4m"]
 [ext_resource type="Texture2D" uid="uid://bphak388rseq7" path="res://assets/sprites/frames pg e utility/utility/flask_big_red.png" id="17_7t5mc"]
@@ -1460,7 +1460,7 @@ position = Vector2(423, 132)
 
 [node name="Creeper" parent="DungeonRoom/Enemies" index="5" unique_id=78381794 groups=["enemies"] instance=ExtResource("15_7iits")]
 z_index = 1
-position = Vector2(1013, 57)
+position = Vector2(584, -132)
 coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("9_o8fc1")
 potion_chance = 0.7

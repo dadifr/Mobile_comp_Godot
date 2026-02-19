@@ -33,9 +33,7 @@ func _physics_process(delta):
 	position += direction * speed * delta
 
 func _on_animation_finished():
-	# loop
-	if anim.animation == "creazione":
-		anim.play("movimento") # Assicurati che questa si chiami "movimento" (o "default")
+	anim.play("movimento")
 
 func _on_body_entered(body):
 	if not is_instance_valid(body):

@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dcahukeipe13m"]
+[gd_scene load_steps=0 format=3 uid="uid://dcahukeipe13m"]
 
 [ext_resource type="Script" uid="uid://diduwde2qas4s" path="res://scripts/armi/artiglio.gd" id="1_4p5ad"]
 [ext_resource type="Texture2D" uid="uid://c8ggwy8cpppn7" path="res://assets/sprites/frames pg e utility/armi/SFX300_nyknck/SFX304_nyknck/SFX304_01.png" id="1_c7frg"]
