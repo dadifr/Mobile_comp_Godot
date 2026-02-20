@@ -11,7 +11,7 @@ extends CharacterBody2D
 @export var coin_scene: PackedScene
 @export var potionH_scene: PackedScene # <--- La nuova pozione
 @export_group("Dash Attack Settings")
-@export var dash_speed = 220.0        # Velocità dello scatto
+@export var dash_speed = 170.0        # Velocità dello scatto
 @export var dash_duration = 2.5       # Quanto dura un singolo scatto
 @export var dash_pause = 0.8          # Pausa tra uno scatto e l'altro
 @export var dash_cooldown = 3.5       # Ogni quanti secondi può rifare questa mossa

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://himxfj0h22tb"]
+[gd_scene format=3 uid="uid://himxfj0h22tb"]
 
 [ext_resource type="Script" uid="uid://ev6frc3e8jmj" path="res://scripts/demone_g.gd" id="1_jb627"]
 [ext_resource type="Texture2D" uid="uid://di0ifeut52g23" path="res://assets/sprites/frames pg e utility/mob/big_demon_idle_anim_f0.png" id="2_rd7g4"]
@@ -86,24 +86,24 @@ animations = [{
 radius = 11.0
 height = 34.0
 
-[node name="DemoneG" type="CharacterBody2D"]
+[node name="DemoneG" type="CharacterBody2D" unique_id=1313072376]
 motion_mode = 1
 script = ExtResource("1_jb627")
 speed = 30.0
 detection_range = 1500.0
 max_health = 40
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1884368133]
 position = Vector2(-1, 2.5)
 shape = SubResource("RectangleShape2D_jb627")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=118771989]
 sprite_frames = SubResource("SpriteFrames_t3h22")
 animation = &"run"
 autoplay = "idle"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=190359339]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1967582534]
 position = Vector2(-1, 2)
 shape = SubResource("CapsuleShape2D_o24tn")
