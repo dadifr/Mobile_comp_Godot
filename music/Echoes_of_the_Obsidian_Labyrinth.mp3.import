@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Echoes_of_the_Obsidian_Labyrinth.mp3-f19fe9b4
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

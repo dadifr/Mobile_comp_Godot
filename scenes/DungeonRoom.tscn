@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c4llx4aasd5ng" path="res://scripts/dungeon_room.gd" id="1_ovmbm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3538w"]
-size = Vector2(294, 161)
+size = Vector2(310, 102)
 
 [node name="DungeonRoom" type="Node2D" unique_id=1477039953]
 script = ExtResource("1_ovmbm")
