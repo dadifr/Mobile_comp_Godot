@@ -39,7 +39,6 @@ func start_battle():
 
 func _process(_delta):
 	if room_started and !room_cleared:
-		# Se il numero di VERI nemici scende a 0
 		if count_enemies() == 0:
 			win_battle()
 
