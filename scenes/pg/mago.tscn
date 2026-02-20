@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dvg5gxlj2h4ga" path="res://assets/sprites/frames pg e utility/character/wizzard_m_run_anim_f2.png" id="10_vb5uy"]
 [ext_resource type="Texture2D" uid="uid://2v0jcde2a0vk" path="res://assets/sprites/frames pg e utility/character/wizzard_m_run_anim_f3.png" id="11_0mo84"]
 [ext_resource type="PackedScene" uid="uid://duc60vna0lhl8" path="res://scenes/armi/bastone magico.tscn" id="12_t0jya"]
+[ext_resource type="AudioStream" uid="uid://cmla1o2pj5hw4" path="res://music/sounds/hurt.wav" id="13_gioyb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1itnr"]
 atlas = ExtResource("3_r6j4t")
@@ -152,3 +153,7 @@ metadata/_edit_group_ = true
 
 [node name="DamageBoostTimer" type="Timer" parent="." unique_id=85599958]
 one_shot = true
+
+[node name="SfxHurt" type="AudioStreamPlayer" parent="." unique_id=735733464]
+stream = ExtResource("13_gioyb")
+volume_db = -15.0

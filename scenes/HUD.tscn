@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://gtwmvgnk2yr8"]
+[gd_scene format=3 uid="uid://gtwmvgnk2yr8"]
 
 [ext_resource type="Script" uid="uid://cot8w4emyh3b" path="res://scripts/hud.gd" id="1_7hsmw"]
 [ext_resource type="Texture2D" uid="uid://dsybg5kuwroqx" path="res://assets/sprites/frames pg e utility/HUD/ui_heart_full.png" id="2_nysna"]
@@ -10,6 +10,7 @@
 [ext_resource type="FontFile" uid="uid://dkt7bc255iugs" path="res://assets/fonts/PixelOperator8.ttf" id="8_twldb"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="9_8cuoo"]
 [ext_resource type="Texture2D" uid="uid://bdhtr0b7avbb5" path="res://assets/sprites/frames pg e utility/HUD/buttons.png" id="10_cf6ij"]
+[ext_resource type="AudioStream" uid="uid://c5n6agaxex70t" path="res://music/sounds/power_up.wav" id="11_meimr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8cuoo"]
 atlas = ExtResource("2_twldb")
@@ -38,7 +39,7 @@ region = Rect2(2303, 533, 404, 334)
 atlas = ExtResource("10_cf6ij")
 region = Rect2(925, 532, 399, 335)
 
-[node name="HUD" type="CanvasLayer"]
+[node name="HUD" type="CanvasLayer" unique_id=1533356223]
 script = ExtResource("1_7hsmw")
 shield_full = SubResource("AtlasTexture_8cuoo")
 shield_half = SubResource("AtlasTexture_cf6ij")
@@ -46,118 +47,121 @@ full_heart_texture = ExtResource("2_nysna")
 half_heart_texture = ExtResource("3_f6qnu")
 empty_heart_texture = ExtResource("4_k4w17")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=635826452]
 offset_right = 217.0
 offset_bottom = 165.0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 
-[node name="StatsContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="StatsContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1089083632]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="ShieldBar" type="HBoxContainer" parent="MarginContainer/StatsContainer"]
+[node name="ShieldBar" type="HBoxContainer" parent="MarginContainer/StatsContainer" unique_id=587662377]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/separation = -10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/StatsContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/StatsContainer" unique_id=306488709]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Heart1" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer"]
+[node name="Heart1" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer" unique_id=192953314]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("2_nysna")
 stretch_mode = 5
 
-[node name="Heart2" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer"]
+[node name="Heart2" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer" unique_id=792588603]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("2_nysna")
 stretch_mode = 5
 
-[node name="Heart3" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer"]
+[node name="Heart3" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer" unique_id=1934704233]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("2_nysna")
 stretch_mode = 5
 
-[node name="Heart4" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer"]
+[node name="Heart4" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer" unique_id=1611700408]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("2_nysna")
 stretch_mode = 5
 
-[node name="Heart5" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer"]
+[node name="Heart5" type="TextureRect" parent="MarginContainer/StatsContainer/HBoxContainer" unique_id=2107825705]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("2_nysna")
 stretch_mode = 5
 
-[node name="CoinRow" type="HBoxContainer" parent="MarginContainer/StatsContainer"]
+[node name="CoinRow" type="HBoxContainer" parent="MarginContainer/StatsContainer" unique_id=1393049936]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/StatsContainer/CoinRow"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/StatsContainer/CoinRow" unique_id=973194417]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 texture = ExtResource("5_f6qnu")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CoinLabel" type="Label" parent="MarginContainer/StatsContainer/CoinRow"]
+[node name="CoinLabel" type="Label" parent="MarginContainer/StatsContainer/CoinRow" unique_id=42293618]
 layout_mode = 2
 text = "x 0"
 
-[node name="BombRow" type="HBoxContainer" parent="MarginContainer/StatsContainer"]
+[node name="BombRow" type="HBoxContainer" parent="MarginContainer/StatsContainer" unique_id=1412234267]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/StatsContainer/BombRow"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/StatsContainer/BombRow" unique_id=72247156]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 texture = ExtResource("6_k4w17")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BombLabel" type="Label" parent="MarginContainer/StatsContainer/BombRow"]
+[node name="BombLabel" type="Label" parent="MarginContainer/StatsContainer/BombRow" unique_id=1572223919]
 layout_mode = 2
 text = "x 0"
 
-[node name="BoostLabel" type="Label" parent="MarginContainer/StatsContainer"]
+[node name="BoostLabel" type="Label" parent="MarginContainer/StatsContainer" unique_id=1651658194]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_8cuoo")
 
-[node name="SpeedLabel" type="Label" parent="MarginContainer/StatsContainer"]
+[node name="SpeedLabel" type="Label" parent="MarginContainer/StatsContainer" unique_id=447726093]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_8cuoo")
 
-[node name="Virtual Joystick" parent="." instance=ExtResource("9_8cuoo")]
+[node name="Virtual Joystick" parent="." unique_id=313316691 instance=ExtResource("9_8cuoo")]
 offset_left = 11.0
 offset_top = -113.0
 offset_right = 253.0
 offset_bottom = 94.0
 scale = Vector2(0.4, 0.4)
 
-[node name="Btn_Attacco" type="TouchScreenButton" parent="."]
+[node name="Btn_Attacco" type="TouchScreenButton" parent="." unique_id=770553218]
 position = Vector2(519, 289)
 scale = Vector2(0.1, 0.1)
 texture_normal = SubResource("AtlasTexture_meimr")
 action = "attack"
 
-[node name="Btn_Dash" type="TouchScreenButton" parent="."]
+[node name="Btn_Dash" type="TouchScreenButton" parent="." unique_id=719465052]
 position = Vector2(471, 240)
 scale = Vector2(0.1, 0.1)
 texture_normal = SubResource("AtlasTexture_rve7n")
 action = "dash"
 
-[node name="Btn_Interazione" type="TouchScreenButton" parent="."]
+[node name="Btn_Interazione" type="TouchScreenButton" parent="." unique_id=1387345449]
 position = Vector2(568, 240)
 scale = Vector2(0.1, 0.1)
 texture_normal = SubResource("AtlasTexture_ljw04")
 action = "interact"
 
-[node name="Btn_Bomba" type="TouchScreenButton" parent="."]
+[node name="Btn_Bomba" type="TouchScreenButton" parent="." unique_id=935775222]
 position = Vector2(519, 190)
 scale = Vector2(0.1, 0.1)
 texture_normal = SubResource("AtlasTexture_467v5")
 action = "place_bomb"
+
+[node name="SfxBuff" type="AudioStreamPlayer" parent="." unique_id=17105109]
+stream = ExtResource("11_meimr")

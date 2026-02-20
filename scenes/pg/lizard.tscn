@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://maptiopqqvry" path="res://assets/sprites/frames pg e utility/character/lizard_m_run_anim_f2.png" id="10_nhb3k"]
 [ext_resource type="Texture2D" uid="uid://dgh0frijbx6q2" path="res://assets/sprites/frames pg e utility/character/lizard_m_run_anim_f3.png" id="11_h3ti1"]
 [ext_resource type="PackedScene" uid="uid://dcahukeipe13m" path="res://scenes/armi/artiglio.tscn" id="12_oip1y"]
+[ext_resource type="AudioStream" uid="uid://cmla1o2pj5hw4" path="res://music/sounds/hurt.wav" id="13_oip1y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4uh4w"]
 atlas = ExtResource("3_h21u0")
@@ -150,3 +151,7 @@ metadata/_edit_group_ = true
 
 [node name="artiglio" parent="Hand" unique_id=1633956590 instance=ExtResource("12_oip1y")]
 visible = false
+
+[node name="SfxHurt" type="AudioStreamPlayer" parent="." unique_id=837159771]
+stream = ExtResource("13_oip1y")
+volume_db = -15.0

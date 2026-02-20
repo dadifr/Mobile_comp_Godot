@@ -16,14 +16,20 @@ extends CanvasLayer
 @onready var bomb_label = $MarginContainer/StatsContainer/BombRow/BombLabel
 
 # Riferimenti alle Label Timer
-# Assicurati che i nomi dei nodi nella scena HUD siano corretti!
 @onready var boost_label = $MarginContainer/StatsContainer/BoostLabel 
 @onready var speed_label = $MarginContainer/StatsContainer/SpeedLabel 
+
+# --- NUOVO: RIFERIMENTO AL NODO AUDIO DEL BUFF ---
+@onready var sfx_buff = $SfxBuff
 
 @onready var hearts = $MarginContainer/StatsContainer/HBoxContainer.get_children()
 
 # Variabile per ricordare quanti cuori stiamo usando
 var active_hearts_count = 0
+
+# --- NUOVO: VARIABILI PER MEMORIZZARE LO STATO DEI BUFF ---
+var was_boost_active = false
+var was_speed_active = false
 
 # --- INITIALIZZAZIONE (_READY) ---
 func _ready():
@@ -34,28 +40,34 @@ func _ready():
 	# 2. SETUP DISTANZA SCUDI
 	shield_bar.add_theme_constant_override("separation", -5)
 	
-	if DisplayServer.is_touchscreen_available():
-		visible = true
-	else:
-		# Se siamo su PC
-		visible = false
+	# ATTENZIONE BUG RISOLTO: 
+	# Nel tuo vecchio script nascondevi TUTTO l'HUD su PC!
+	# Ora nascondiamo SOLO il joystick (se ce l'hai qui dentro), altrimenti togli questo blocco.
+	if not DisplayServer.is_touchscreen_available():
+		var joystick = get_node_or_null("VirtualJoystick") # Controlla se hai il joystick
+		if joystick: joystick.visible = false
+
 
 # --- FUNZIONI BOOST DANNO (BLU) ---
 func _on_boost_updated(time_left):
 	if boost_label == null: return
 	
 	if time_left > 0:
+		# --- LOGICA DEL SUONO ---
+		if not was_boost_active:
+			was_boost_active = true
+			if sfx_buff: sfx_buff.play() # Suona SOLO all'attivazione
+			
 		boost_label.visible = true
 		boost_label.text = "DMG UP: " + str("%.1f" % time_left) + "s"
 		
 		# Logica Colore
 		if time_left < 3.0:
-			# Rosso lampeggiante se sta per finire
 			boost_label.modulate = Color(1, 0.3, 0.3) 
 		else:
-			# --- MODIFICA QUI: BLU LUMINOSO (Invece di Bianco) ---
 			boost_label.modulate = Color(0.5, 0.8, 1.0) 
 	else:
+		was_boost_active = false # Resettiamo la memoria quando finisce
 		boost_label.visible = false
 
 # --- FUNZIONI BOOST VELOCITÀ (VERDE) ---
@@ -63,14 +75,20 @@ func _on_speed_updated(time_left):
 	if speed_label == null: return
 	
 	if time_left > 0:
+		# --- LOGICA DEL SUONO ---
+		if not was_speed_active:
+			was_speed_active = true
+			if sfx_buff: sfx_buff.play() # Suona SOLO all'attivazione
+			
 		speed_label.visible = true
 		speed_label.text = "SPD UP: " + str("%.1f" % time_left) + "s"
 		
 		if time_left < 3.0:
-			speed_label.modulate = Color(1, 0.3, 0.3) # Rosso
+			speed_label.modulate = Color(1, 0.3, 0.3) 
 		else:
-			speed_label.modulate = Color(0.5, 1.0, 0.5) # Verde Fluo
+			speed_label.modulate = Color(0.5, 1.0, 0.5) 
 	else:
+		was_speed_active = false # Resettiamo la memoria quando finisce
 		speed_label.visible = false
 
 # --- FUNZIONI AGGIORNAMENTO ARMATURA ---

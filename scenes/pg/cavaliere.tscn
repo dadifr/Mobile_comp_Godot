@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cjkp6iup5bgc3"]
+[gd_scene format=3 uid="uid://cjkp6iup5bgc3"]
 
 [ext_resource type="Script" uid="uid://duh7e6f4tpugl" path="res://scripts/cavaliere.gd" id="1_v6fml"]
 [ext_resource type="Texture2D" uid="uid://flgyr6efghe2" path="res://assets/sprites/frames pg e utility/character/knight_m_idle_anim_f0.png" id="2_3li8b"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://cx5ie5t2est86" path="res://assets/sprites/frames pg e utility/character/knight_m_run_anim_f2.png" id="9_lkdrv"]
 [ext_resource type="Texture2D" uid="uid://dl0huqnul2otf" path="res://assets/sprites/frames pg e utility/character/knight_m_run_anim_f3.png" id="10_p7iby"]
 [ext_resource type="PackedScene" uid="uid://dvc3r0o6syryv" path="res://scenes/armi/spada.tscn" id="12_hicpa"]
+[ext_resource type="AudioStream" uid="uid://cmla1o2pj5hw4" path="res://music/sounds/hurt.wav" id="13_mdomp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o4126"]
 atlas = ExtResource("2_6eyey")
@@ -123,7 +124,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_mdl7e"]
 radius = 6.0
 
-[node name="cavaliere" type="CharacterBody2D" groups=["player"]]
+[node name="cavaliere" type="CharacterBody2D" unique_id=1089998461 groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_v6fml")
 bomb_scene = ExtResource("2_hicpa")
@@ -131,24 +132,28 @@ knockback_force = 200.0
 invincibility_time = 0.5
 metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=624005001]
 sprite_frames = SubResource("SpriteFrames_o4126")
 animation = &"idle"
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=889593310]
 position = Vector2(0, 6)
 zoom = Vector2(1.8, 1.8)
 position_smoothing_enabled = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=980549606]
 position = Vector2(0, 6)
 shape = SubResource("CircleShape2D_mdl7e")
 
-[node name="Hand" type="Marker2D" parent="."]
+[node name="Hand" type="Marker2D" parent="." unique_id=963442908]
 position = Vector2(10, 7)
 metadata/_edit_group_ = true
 
-[node name="Spada" parent="Hand" instance=ExtResource("12_hicpa")]
+[node name="Spada" parent="Hand" unique_id=1635989429 instance=ExtResource("12_hicpa")]
 
-[node name="DamageBoostTimer" type="Timer" parent="."]
+[node name="DamageBoostTimer" type="Timer" parent="." unique_id=884575353]
 one_shot = true
+
+[node name="SfxHurt" type="AudioStreamPlayer" parent="." unique_id=1032826256]
+stream = ExtResource("13_mdomp")
+volume_db = -15.0

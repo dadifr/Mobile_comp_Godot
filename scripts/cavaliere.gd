@@ -24,6 +24,7 @@ var game_over_screen = preload("res://scenes/GameOverScreen.tscn")
 # Riferimenti ai nodi
 @onready var anim = $AnimatedSprite2D
 @onready var hand = $Hand
+@onready var sfx_hurt = $SfxHurt
 
 # Riferimenti all'HUD
 @export_group("Utility")
@@ -259,6 +260,10 @@ func take_damage(amount, enemy_pos = Vector2.ZERO):
 			die()
 			return
 
+	# --- FAI PARTIRE IL SUONO DEL DANNO QUI ---
+	if sfx_hurt:
+		sfx_hurt.play()
+	
 	start_invincibility()
 	if enemy_pos != Vector2.ZERO:
 		var knockback_dir = (global_position - enemy_pos).normalized()

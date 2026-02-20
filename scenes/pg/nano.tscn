@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bmpeipw8r4nj7"]
+[gd_scene format=3 uid="uid://bmpeipw8r4nj7"]
 
 [ext_resource type="Script" uid="uid://duh7e6f4tpugl" path="res://scripts/cavaliere.gd" id="1_vsplu"]
 [ext_resource type="Texture2D" uid="uid://cla5kisxpp4ny" path="res://assets/sprites/frames pg e utility/character/dwarf_m_hit_anim_f0.png" id="2_tlf1f"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dncy2rp0hwn07" path="res://assets/sprites/frames pg e utility/character/dwarf_m_run_anim_f2.png" id="9_m8okl"]
 [ext_resource type="Texture2D" uid="uid://cb4w7gbcsfsg5" path="res://assets/sprites/frames pg e utility/character/dwarf_m_run_anim_f3.png" id="10_tc087"]
 [ext_resource type="PackedScene" uid="uid://cdvkgub272qvd" path="res://scenes/armi/ascia.tscn" id="12_al5kh"]
+[ext_resource type="AudioStream" uid="uid://cmla1o2pj5hw4" path="res://music/sounds/hurt.wav" id="13_choku"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_drixs"]
 atlas = ExtResource("2_tlf1f")
@@ -123,7 +124,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_mdl7e"]
 radius = 7.0
 
-[node name="nano" type="CharacterBody2D" groups=["player"]]
+[node name="nano" type="CharacterBody2D" unique_id=687246207 groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_vsplu")
 speed = 60.0
@@ -133,21 +134,25 @@ knockback_force = 200.0
 invincibility_time = 0.5
 metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1483006528]
 sprite_frames = SubResource("SpriteFrames_o4126")
 animation = &"idle"
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=141342055]
 position = Vector2(0, 6)
 zoom = Vector2(1.8, 1.8)
 position_smoothing_enabled = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=192322221]
 position = Vector2(0, 6)
 shape = SubResource("CircleShape2D_mdl7e")
 
-[node name="Hand" type="Marker2D" parent="."]
+[node name="Hand" type="Marker2D" parent="." unique_id=936187497]
 position = Vector2(10, 7)
 metadata/_edit_group_ = true
 
-[node name="Spada" parent="Hand" instance=ExtResource("12_al5kh")]
+[node name="Spada" parent="Hand" unique_id=929786093 instance=ExtResource("12_al5kh")]
+
+[node name="SfxHurt" type="AudioStreamPlayer" parent="." unique_id=482823782]
+stream = ExtResource("13_choku")
+volume_db = -15.0
