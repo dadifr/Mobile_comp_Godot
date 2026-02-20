@@ -91,6 +91,8 @@ height = 34.0
 script = ExtResource("1_m7kra")
 laser_scene = ExtResource("2_88j4l")
 shoot_cooldown = 6.0
+charge_time = 1.0
+post_shoot_pause = 1.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=567933249]
 sprite_frames = SubResource("SpriteFrames_fejge")
