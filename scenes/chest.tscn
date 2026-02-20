@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://do6m2n1vmo274" path="res://scripts/chest.gd" id="1_w02o5"]
 [ext_resource type="Texture2D" uid="uid://bt4hf3ne1mela" path="res://assets/sprites/frames mappa/porte e deco/chest_empty_open_anim_f0.png" id="2_ilhio"]
 [ext_resource type="PackedScene" uid="uid://dub3x4144frvp" path="res://scenes/coin.tscn" id="2_kg5gm"]
-[ext_resource type="PackedScene" uid="uid://r6lksf7a5u0v" path="res://scenes/potion/potion_h.tscn" id="3_8me8i"]
 [ext_resource type="Texture2D" uid="uid://ys3be5iouged" path="res://assets/sprites/frames mappa/porte e deco/chest_empty_open_anim_f1.png" id="3_kg5gm"]
 [ext_resource type="Texture2D" uid="uid://car6thfhjsbut" path="res://assets/sprites/frames mappa/porte e deco/chest_full_open_anim_f0.png" id="4_8me8i"]
 [ext_resource type="Texture2D" uid="uid://d0cab4mpsowks" path="res://assets/sprites/frames mappa/porte e deco/chest_full_open_anim_f1.png" id="5_lfymr"]
@@ -12,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bwatqv4stfmjb" path="res://assets/sprites/frames mappa/porte e deco/chest_mimic_open_anim_f0.png" id="7_up8i7"]
 [ext_resource type="Texture2D" uid="uid://bnq54co03h0wq" path="res://assets/sprites/frames mappa/porte e deco/chest_mimic_open_anim_f1.png" id="8_nnvde"]
 [ext_resource type="Texture2D" uid="uid://6unu1frf36ea" path="res://assets/sprites/frames mappa/porte e deco/chest_mimic_open_anim_f2.png" id="9_sj8sc"]
+[ext_resource type="AudioStream" uid="uid://deejpcago4mx7" path="res://music/sounds/tap.wav" id="12_up8i7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_up8i7"]
 atlas = ExtResource("2_ilhio")
@@ -161,23 +161,26 @@ size = Vector2(16, 12)
 [sub_resource type="CircleShape2D" id="CircleShape2D_q0kb7"]
 radius = 11.0
 
-[node name="Chest" type="StaticBody2D"]
+[node name="Chest" type="StaticBody2D" unique_id=794488120]
 script = ExtResource("1_w02o5")
 coin_scene = ExtResource("2_kg5gm")
-potion_scene = ExtResource("3_8me8i")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=74486075]
 sprite_frames = SubResource("SpriteFrames_4jbkx")
 animation = &"mimic"
 autoplay = "closed"
 frame = 6
 frame_progress = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=407995582]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_88c7k")
 
-[node name="TriggerArea" type="Area2D" parent="."]
+[node name="TriggerArea" type="Area2D" parent="." unique_id=1375285515]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea" unique_id=2003810680]
 shape = SubResource("CircleShape2D_q0kb7")
+
+[node name="SfxOpenChest" type="AudioStreamPlayer2D" parent="." unique_id=1269141527]
+stream = ExtResource("12_up8i7")
+max_distance = 500.0

@@ -64,6 +64,11 @@ extends Area2D
 
 # Variabili interne
 var player_in_range = null
+var is_bought = false # Aggiunto per evitare doppi acquisti accidentali
+
+# --- NUOVO: RIFERIMENTI AUDIO ---
+@onready var sfx_buy = $SfxBuy
+@onready var sfx_error = $SfxError
 
 func _ready():
 	if is_random_shop:
@@ -124,7 +129,7 @@ func setup_item(scene, texture, price_range):
 	price = randi_range(price_range.x, price_range.y)
 
 func _process(delta):
-	if player_in_range and Input.is_action_just_pressed("interact"):
+	if player_in_range and Input.is_action_just_pressed("interact") and not is_bought:
 		try_to_buy()
 
 func try_to_buy():
@@ -135,6 +140,8 @@ func try_to_buy():
 
 func buy_success():
 	if item_to_sell == null: return
+	
+	is_bought = true
 
 	player_in_range.coins -= price
 	
@@ -147,9 +154,21 @@ func buy_success():
 	item.global_position = global_position
 	get_parent().call_deferred("add_child", item)
 	
+	# --- GESTIONE AUDIO E DISTRUZIONE ---
+	# Nascondiamo l'oggetto e disabilitiamo le collisioni
+	hide()
+	set_deferred("monitoring", false)
+	
+	if sfx_buy:
+		sfx_buy.play()
+		await sfx_buy.finished
+		
 	queue_free()
 
 func buy_fail():
+	if sfx_error:
+		sfx_error.play()
+		
 	if has_node("Label"):
 		var original_color = Color.WHITE
 		$Label.modulate = Color.RED
@@ -157,7 +176,7 @@ func buy_fail():
 		tween.tween_property($Label, "modulate", original_color, 0.5)
 
 func _on_body_entered(body):
-	if body.is_in_group("player"):
+	if body.is_in_group("player") and not is_bought:
 		player_in_range = body
 		var tween = create_tween()
 		tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.1)

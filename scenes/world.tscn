@@ -1438,7 +1438,7 @@ motion_mode = 1
 
 [node name="goblin" parent="DungeonRoom/Enemies" index="1" unique_id=1299545854 instance=ExtResource("6_qfnet")]
 z_index = 1
-position = Vector2(1086, -120)
+position = Vector2(1159, -326)
 motion_mode = 1
 
 [node name="goblin2" parent="DungeonRoom/Enemies" index="2" unique_id=1038703519 instance=ExtResource("6_qfnet")]
@@ -1482,7 +1482,7 @@ motion_mode = 1
 position = Vector2(304, 288)
 
 [node name="ShopItem" parent="." unique_id=993565920 instance=ExtResource("15_xo05s")]
-position = Vector2(932, 248)
+position = Vector2(1064, -73)
 is_random_shop = true
 item_texture = ExtResource("16_dss4m")
 bomb_scene = ExtResource("18_pm21f")
@@ -1523,7 +1523,7 @@ big_speed_potion_price_range = Vector2i(20, 23)
 big_speed_potion_chance = 0.09
 
 [node name="ShopItem2" parent="." unique_id=932954850 instance=ExtResource("15_xo05s")]
-position = Vector2(848, 321)
+position = Vector2(1032, -73)
 is_random_shop = true
 item_texture = ExtResource("16_dss4m")
 bomb_scene = ExtResource("18_pm21f")
@@ -1564,7 +1564,7 @@ big_speed_potion_price_range = Vector2i(20, 23)
 big_speed_potion_chance = 0.09
 
 [node name="ShopItem3" parent="." unique_id=316907744 instance=ExtResource("15_xo05s")]
-position = Vector2(946, 323)
+position = Vector2(1096, -73)
 is_random_shop = true
 item_texture = ExtResource("16_dss4m")
 bomb_scene = ExtResource("18_pm21f")
@@ -1605,7 +1605,7 @@ big_speed_potion_price_range = Vector2i(20, 23)
 big_speed_potion_chance = 0.09
 
 [node name="ShopItem4" parent="." unique_id=308144936 instance=ExtResource("15_xo05s")]
-position = Vector2(949, 380)
+position = Vector2(1128, -73)
 is_random_shop = true
 item_texture = ExtResource("16_dss4m")
 bomb_scene = ExtResource("18_pm21f")

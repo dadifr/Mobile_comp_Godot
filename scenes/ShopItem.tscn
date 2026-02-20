@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://djqh3veqpu1u"]
+[gd_scene format=3 uid="uid://djqh3veqpu1u"]
 
 [ext_resource type="Script" uid="uid://cbp8joe0pdqs" path="res://scripts/ShopItem.gd" id="1_c6r3m"]
 [ext_resource type="Texture2D" uid="uid://dyv6lp6j0fc5k" path="res://assets/sprites/frames pg e utility/utility/flask_red.png" id="1_x134o"]
@@ -7,16 +7,16 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_yiefq"]
 radius = 7.0
 
-[node name="ShopItem" type="Area2D"]
+[node name="ShopItem" type="Area2D" unique_id=1577857396]
 script = ExtResource("1_c6r3m")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1625798438]
 texture = ExtResource("1_x134o")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1990363372]
 shape = SubResource("CircleShape2D_yiefq")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=607786712]
 offset_left = -7.0
 offset_top = 10.0
 offset_right = 21.0

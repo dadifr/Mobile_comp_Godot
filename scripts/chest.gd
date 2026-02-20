@@ -49,6 +49,9 @@ extends StaticBody2D
 
 var is_open = false
 
+# --- NUOVO: RIFERIMENTO AUDIO ---
+@onready var sfx_open = $SfxOpenChest
+
 func _ready():
 	if has_node("TriggerArea"):
 		$TriggerArea.body_entered.connect(_on_body_entered)
@@ -60,6 +63,11 @@ func _on_body_entered(body):
 
 func open_chest():
 	is_open = true
+	
+	# Riproduciamo il suono di apertura!
+	if sfx_open:
+		sfx_open.play()
+		
 	calculate_loot()
 
 func calculate_loot():
