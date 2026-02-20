@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ce1na6swhktac"]
+[gd_scene format=3 uid="uid://ce1na6swhktac"]
 
 [ext_resource type="Script" uid="uid://cqnplvtb0jm6m" path="res://scripts/creeper.gd" id="1_t3wml"]
 [ext_resource type="Texture2D" uid="uid://dehuysxkmhdnj" path="res://assets/sprites/frames pg e utility/mob/pumpkin_dude_idle_anim_f0.png" id="2_5jvu3"]
@@ -89,26 +89,26 @@ radius = 26.0
 radius = 8.0
 height = 26.0
 
-[node name="Creeper" type="CharacterBody2D"]
+[node name="Creeper" type="CharacterBody2D" unique_id=1113808157 groups=["enemies"]]
 motion_mode = 1
 script = ExtResource("1_t3wml")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1666954239]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_5jvu3")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=798613844]
 sprite_frames = SubResource("SpriteFrames_ddy0k")
 animation = &"run"
 autoplay = "idle"
 
-[node name="ExplosionArea" type="Area2D" parent="."]
+[node name="ExplosionArea" type="Area2D" parent="." unique_id=1867329453]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea" unique_id=814394804]
 shape = SubResource("CircleShape2D_5jvu3")
 disabled = true
 
-[node name="hitbox" type="Area2D" parent="."]
+[node name="hitbox" type="Area2D" parent="." unique_id=477054720]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=1005430803]
 shape = SubResource("CapsuleShape2D_qiocg")
