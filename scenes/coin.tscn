@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://dub3x4144frvp"]
+[gd_scene format=3 uid="uid://dub3x4144frvp"]
 
 [ext_resource type="Script" uid="uid://d1na73p463ya1" path="res://scripts/coin.gd" id="1_1ikuy"]
 [ext_resource type="Texture2D" uid="uid://dsukoll36sc7p" path="res://assets/sprites/frames pg e utility/utility/coin_anim_f0.png" id="1_d14el"]
 [ext_resource type="Texture2D" uid="uid://dfwntwxq06o11" path="res://assets/sprites/frames pg e utility/utility/coin_anim_f1.png" id="2_1ikuy"]
 [ext_resource type="Texture2D" uid="uid://d083dc778afn4" path="res://assets/sprites/frames pg e utility/utility/coin_anim_f2.png" id="3_wnlwo"]
 [ext_resource type="Texture2D" uid="uid://bd8nhaqydpesq" path="res://assets/sprites/frames pg e utility/utility/coin_anim_f3.png" id="4_jig8b"]
+[ext_resource type="AudioStream" uid="uid://c1b4diapxw13x" path="res://music/sounds/coin.wav" id="6_wnlwo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xmuha"]
 atlas = ExtResource("1_d14el")
@@ -45,16 +46,20 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_rojmm"]
 radius = 1.5
 
-[node name="Coin" type="Area2D"]
+[node name="Coin" type="Area2D" unique_id=1765447086]
 script = ExtResource("1_1ikuy")
 metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=735193263]
 scale = Vector2(1.7, 1.7)
 sprite_frames = SubResource("SpriteFrames_7cc30")
 autoplay = "default"
 frame_progress = 0.9347252
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=840935088]
 scale = Vector2(4, 4)
 shape = SubResource("CircleShape2D_rojmm")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1519566390]
+stream = ExtResource("6_wnlwo")
+volume_db = -12.0

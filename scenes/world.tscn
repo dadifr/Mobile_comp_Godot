@@ -1438,7 +1438,7 @@ motion_mode = 1
 
 [node name="goblin" parent="DungeonRoom/Enemies" index="1" unique_id=1299545854 instance=ExtResource("6_qfnet")]
 z_index = 1
-position = Vector2(947, 104)
+position = Vector2(1086, -120)
 motion_mode = 1
 
 [node name="goblin2" parent="DungeonRoom/Enemies" index="2" unique_id=1038703519 instance=ExtResource("6_qfnet")]
