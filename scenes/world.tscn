@@ -1433,7 +1433,7 @@ position = Vector2(-936, -136)
 
 [node name="zombie" parent="DungeonRoom/Enemies" index="0" unique_id=1823389608 instance=ExtResource("9_7r4gi")]
 z_index = 1
-position = Vector2(386, 121)
+position = Vector2(678, 166)
 motion_mode = 1
 
 [node name="goblin" parent="DungeonRoom/Enemies" index="1" unique_id=1299545854 instance=ExtResource("6_qfnet")]
@@ -1456,7 +1456,7 @@ potionH_scene = ExtResource("9_w7kh3")
 
 [node name="scheletro" parent="DungeonRoom/Enemies" index="4" unique_id=2030337148 groups=["enemies"] instance=ExtResource("14_2lf6f")]
 z_index = 1
-position = Vector2(423, 132)
+position = Vector2(724, 114)
 
 [node name="Creeper" parent="DungeonRoom/Enemies" index="5" unique_id=78381794 groups=["enemies"] instance=ExtResource("15_7iits")]
 z_index = 1
@@ -1471,7 +1471,7 @@ position = Vector2(874, 72)
 
 [node name="DemoneG" parent="DungeonRoom/Enemies" index="7" unique_id=1808277452 groups=["enemies"] instance=ExtResource("23_f17e3")]
 z_index = 1
-position = Vector2(1044, 118)
+position = Vector2(417, 163)
 
 [node name="ogre" parent="DungeonRoom/Enemies" index="8" unique_id=272101007 groups=["enemies"] instance=ExtResource("24_x2olw")]
 z_index = 1
@@ -1646,14 +1646,14 @@ big_speed_potion_price_range = Vector2i(20, 23)
 big_speed_potion_chance = 0.09
 
 [node name="Spikes" parent="." unique_id=256314321 instance=ExtResource("36_x2olw")]
-position = Vector2(376, 167)
+position = Vector2(536, 112)
 
 [node name="Spikes2" parent="." unique_id=964160991 instance=ExtResource("36_x2olw")]
-position = Vector2(312, 103)
+position = Vector2(586, 137)
 safe_time = 1.9
 
 [node name="Spikes3" parent="." unique_id=2143514567 instance=ExtResource("36_x2olw")]
-position = Vector2(296, 103)
+position = Vector2(598, 71)
 safe_time = 1.8
 
 [node name="Lever" parent="." unique_id=349389170 node_paths=PackedStringArray("target_spikes") instance=ExtResource("38_l8ah6")]
