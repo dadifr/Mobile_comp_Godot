@@ -26,21 +26,28 @@ func _process(_delta):
 		var hand_node = player.get_node_or_null("Hand")
 		if hand_node:
 			global_position = hand_node.global_position
-#rotazione
+			
+		# --- ROTAZIONE A 360 GRADI ---
 		if "last_direction" in player:
 			var dir = player.last_direction
-			if dir.x > 0:
-				rotation = 0
-			elif dir.x < 0:
-				rotation = PI 
-# caricamento
+			# Calcola automaticamente l'angolo in base alla direzione (su, giù, diagonali, ecc.)
+			rotation = dir.angle() 
+			
+			# Trucco visivo: impedisce all'arco di sembrare capovolto quando miri a sinistra
+			if dir.x < 0:
+				scale.y = -1
+			else:
+				scale.y = 1
+				
+	# --- CARICAMENTO ---
 	if is_charging:
 		if Input.is_action_just_released("attack"):
 			shoot()
 			reset_bow()
 
 func attack():
-	if not can_shoot: return
+	# Evita di far ripartire l'animazione se stiamo già caricando
+	if not can_shoot or is_charging: return 
 	is_charging = true
 	
 	if sprite_arco and texture_pulled:
@@ -58,21 +65,28 @@ func reset_bow():
 func shoot():
 	if not arrow_scene: return
 	
-	var shoot_direction = Vector2.RIGHT.rotated(rotation)
+	var player = get_tree().get_first_node_in_group("player")
+	if not player: return
+	
+	# La freccia andrà esattamente dove sta guardando il player
+	var shoot_direction = player.last_direction
 	
 	var arrow = arrow_scene.instantiate()
 	
 	arrow.global_position = global_position 
 	arrow.direction = shoot_direction
-	arrow.rotation = rotation
 	
-	var player = get_tree().get_first_node_in_group("player")
-	if player:
-		arrow.shooter = player
-		if "current_damage_bonus" in player:
-			arrow.damage += player.current_damage_bonus
+	# Ruotiamo anche la freccia verso il bersaglio
+	arrow.rotation = shoot_direction.angle()
 	
-	get_tree().root.add_child(arrow)
+	arrow.shooter = player
+	
+	# Applichiamo i bonus di danno se la freccia ha una variabile "damage"
+	if "current_damage_bonus" in player and "damage" in arrow:
+		arrow.damage += player.current_damage_bonus
+	
+	# Usiamo current_scene invece di root, così se cambi stanza non ci sono bug
+	get_tree().current_scene.add_child(arrow)
 	
 	can_shoot = false
 	await get_tree().create_timer(fire_rate).timeout

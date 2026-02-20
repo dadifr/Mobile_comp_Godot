@@ -1417,7 +1417,7 @@ size = Vector2(183, 224)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_18clu"]
 resource_local_to_scene = true
-size = Vector2(403, 390)
+size = Vector2(568, 390)
 
 [node name="world" type="Node2D" unique_id=1641687482]
 script = ExtResource("1_4mrxx")
@@ -1437,7 +1437,7 @@ position = Vector2(303, 368)
 [node name="HUD" parent="." unique_id=1538550412 instance=ExtResource("8_7r4gi")]
 
 [node name="Chest" parent="." unique_id=1944988705 instance=ExtResource("11_e3hyu")]
-position = Vector2(169, -530)
+position = Vector2(145, -553)
 potion_h_scene = ExtResource("9_w7kh3")
 big_potion_h_scene = ExtResource("9_o8fc1")
 shield_small_scene = ExtResource("22_xgqkh")
@@ -1549,7 +1549,7 @@ shape = SubResource("RectangleShape2D_8u370")
 
 [node name="zombie" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="0" unique_id=1823389608 instance=ExtResource("9_7r4gi")]
 z_index = 1
-position = Vector2(519, 140)
+position = Vector2(401, 156)
 motion_mode = 1
 
 [node name="CharacterBody2D" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="1" unique_id=1451606197 instance=ExtResource("19_8u370")]
@@ -2249,7 +2249,7 @@ position = Vector2(-456, -713)
 [node name="DungeonRoom6" parent="." unique_id=2138329488 instance=ExtResource("12_jhx03")]
 
 [node name="CollisionShape2D" parent="DungeonRoom6/Detector" parent_id_path=PackedInt32Array(2138329488, 131393299) index="0" unique_id=1644665846]
-position = Vector2(-407.5, -1654)
+position = Vector2(-409, -1654)
 shape = SubResource("RectangleShape2D_18clu")
 
 [node name="DemoneG" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="0" unique_id=1808277452 groups=["enemies"] instance=ExtResource("23_f17e3")]
