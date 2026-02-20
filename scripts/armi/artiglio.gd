@@ -12,6 +12,8 @@ func _ready():
 		body_entered.connect(_on_body_entered)
 
 func attack():
+	if anim.is_playing():
+		return
 	self.visible = true
 	anim.stop()
 	collision.disabled = false
