@@ -1467,7 +1467,7 @@ potion_chance = 0.7
 coin_chance = 0.3
 
 [node name="EnemySpawner" parent="DungeonRoom/Enemies" index="6" unique_id=1015821233 instance=ExtResource("22_4kbfs")]
-position = Vector2(874, 72)
+position = Vector2(765, 78)
 
 [node name="DemoneG" parent="DungeonRoom/Enemies" index="7" unique_id=1808277452 groups=["enemies"] instance=ExtResource("23_f17e3")]
 z_index = 1
