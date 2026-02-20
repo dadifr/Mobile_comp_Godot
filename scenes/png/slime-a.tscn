@@ -45,8 +45,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mfm1b"]
 size = Vector2(14, 14)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tlrsk"]
-size = Vector2(18, 18)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d4uas"]
+radius = 9.0
+height = 24.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1189645528]
 script = ExtResource("1_d4uas")
@@ -62,4 +63,4 @@ shape = SubResource("RectangleShape2D_mfm1b")
 [node name="Area2D" type="Area2D" parent="." unique_id=211425042]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=250052427]
-shape = SubResource("RectangleShape2D_tlrsk")
+shape = SubResource("CapsuleShape2D_d4uas")
