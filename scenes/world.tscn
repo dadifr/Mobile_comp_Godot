@@ -1414,6 +1414,10 @@ size = Vector2(261.00003, 252)
 resource_local_to_scene = true
 size = Vector2(183, 224)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eo1xk"]
+resource_local_to_scene = true
+size = Vector2(403, 390)
+
 [node name="world" type="Node2D" unique_id=1641687482]
 script = ExtResource("1_4mrxx")
 
@@ -1506,6 +1510,36 @@ mimic_chance = 0.15
 big_potion_h_chance = 0.15
 max_coins = 10
 
+[node name="Chest6" parent="." unique_id=1014052376 instance=ExtResource("11_e3hyu")]
+position = Vector2(-424, -1961)
+potion_h_scene = ExtResource("9_w7kh3")
+big_potion_h_scene = ExtResource("9_o8fc1")
+shield_small_scene = ExtResource("22_xgqkh")
+shield_big_scene = ExtResource("24_ts3gi")
+damage_potion_scene = ExtResource("26_ts3gi")
+big_damage_potion_scene = ExtResource("28_37qwj")
+speed_potion_scene = ExtResource("30_rup4s")
+big_speed_potion_scene = ExtResource("32_f17e3")
+bomb_scene = ExtResource("12_q5onr")
+mimic_chance = 0.15
+big_potion_h_chance = 0.15
+max_coins = 10
+
+[node name="Chest7" parent="." unique_id=1441857585 instance=ExtResource("11_e3hyu")]
+position = Vector2(-392, -1961)
+potion_h_scene = ExtResource("9_w7kh3")
+big_potion_h_scene = ExtResource("9_o8fc1")
+shield_small_scene = ExtResource("22_xgqkh")
+shield_big_scene = ExtResource("24_ts3gi")
+damage_potion_scene = ExtResource("26_ts3gi")
+big_damage_potion_scene = ExtResource("28_37qwj")
+speed_potion_scene = ExtResource("30_rup4s")
+big_speed_potion_scene = ExtResource("32_f17e3")
+bomb_scene = ExtResource("12_q5onr")
+mimic_chance = 0.15
+big_potion_h_chance = 0.15
+max_coins = 10
+
 [node name="DungeonRoom" parent="." unique_id=1165969380 instance=ExtResource("12_jhx03")]
 
 [node name="CollisionShape2D" parent="DungeonRoom/Detector" parent_id_path=PackedInt32Array(1165969380, 131393299) index="0" unique_id=1644665846]
@@ -1521,7 +1555,7 @@ motion_mode = 1
 position = Vector2(304, 288)
 
 [node name="Door2" parent="DungeonRoom/Doors" parent_id_path=PackedInt32Array(1165969380, 1990335327) index="1" unique_id=254184355 instance=ExtResource("5_71j4m")]
-position = Vector2(312, 96)
+position = Vector2(304, 96)
 
 [node name="ShopItem" parent="." unique_id=993565920 instance=ExtResource("15_xo05s")]
 position = Vector2(-264, -1129)
@@ -1892,6 +1926,170 @@ big_speed_potion_texture = ExtResource("33_x2olw")
 big_speed_potion_price_range = Vector2i(20, 23)
 big_speed_potion_chance = 0.09
 
+[node name="ShopItem10" parent="." unique_id=917591787 instance=ExtResource("15_xo05s")]
+position = Vector2(40, -1977)
+item_to_sell = ExtResource("9_o8fc1")
+item_texture = ExtResource("17_7t5mc")
+bomb_scene = ExtResource("18_pm21f")
+bomb_texture = ExtResource("19_2lf6f")
+bomb_price_range = Vector2i(5, 7)
+bomb_chance = 0.09
+potion_scene = ExtResource("9_w7kh3")
+potion_texture = ExtResource("16_dss4m")
+potion_price_range = Vector2i(3, 7)
+potion_chance = 0.09
+big_potion_scene = ExtResource("9_o8fc1")
+big_potion_texture = ExtResource("17_7t5mc")
+big_potion_price_range = Vector2i(5, 11)
+big_potion_chance = 0.09
+shield_small_scene = ExtResource("22_xgqkh")
+shield_small_texture = ExtResource("23_munwf")
+shield_small_price_range = Vector2i(8, 13)
+shield_small_chance = 0.09
+shield_big_scene = ExtResource("24_ts3gi")
+shield_big_texture = ExtResource("25_0nbtd")
+shield_big_price_range = Vector2i(12, 18)
+shield_big_chance = 0.09
+damage_potion_scene = ExtResource("26_ts3gi")
+damage_potion_texture = ExtResource("27_0nbtd")
+damage_potion_price_range = Vector2i(16, 22)
+damage_potion_chance = 0.09
+big_damage_potion_scene = ExtResource("28_37qwj")
+big_damage_potion_texture = ExtResource("29_navra")
+big_damage_potion_price_range = Vector2i(30, 32)
+big_damage_potion_chance = 0.09
+speed_potion_scene = ExtResource("30_rup4s")
+speed_potion_texture = ExtResource("31_4kbfs")
+speed_potion_price_range = Vector2i(12, 16)
+speed_potion_chance = 0.09
+big_speed_potion_scene = ExtResource("32_f17e3")
+big_speed_potion_texture = ExtResource("33_x2olw")
+big_speed_potion_price_range = Vector2i(20, 23)
+big_speed_potion_chance = 0.09
+
+[node name="ShopItem11" parent="." unique_id=160213319 instance=ExtResource("15_xo05s")]
+position = Vector2(72, -1977)
+item_to_sell = ExtResource("24_ts3gi")
+item_texture = ExtResource("25_0nbtd")
+bomb_scene = ExtResource("18_pm21f")
+bomb_texture = ExtResource("19_2lf6f")
+bomb_price_range = Vector2i(5, 7)
+bomb_chance = 0.09
+potion_scene = ExtResource("9_w7kh3")
+potion_texture = ExtResource("16_dss4m")
+potion_price_range = Vector2i(3, 7)
+potion_chance = 0.09
+big_potion_scene = ExtResource("9_o8fc1")
+big_potion_texture = ExtResource("17_7t5mc")
+big_potion_price_range = Vector2i(5, 11)
+big_potion_chance = 0.09
+shield_small_scene = ExtResource("22_xgqkh")
+shield_small_texture = ExtResource("23_munwf")
+shield_small_price_range = Vector2i(8, 13)
+shield_small_chance = 0.09
+shield_big_scene = ExtResource("24_ts3gi")
+shield_big_texture = ExtResource("25_0nbtd")
+shield_big_price_range = Vector2i(12, 18)
+shield_big_chance = 0.09
+damage_potion_scene = ExtResource("26_ts3gi")
+damage_potion_texture = ExtResource("27_0nbtd")
+damage_potion_price_range = Vector2i(16, 22)
+damage_potion_chance = 0.09
+big_damage_potion_scene = ExtResource("28_37qwj")
+big_damage_potion_texture = ExtResource("29_navra")
+big_damage_potion_price_range = Vector2i(30, 32)
+big_damage_potion_chance = 0.09
+speed_potion_scene = ExtResource("30_rup4s")
+speed_potion_texture = ExtResource("31_4kbfs")
+speed_potion_price_range = Vector2i(12, 16)
+speed_potion_chance = 0.09
+big_speed_potion_scene = ExtResource("32_f17e3")
+big_speed_potion_texture = ExtResource("33_x2olw")
+big_speed_potion_price_range = Vector2i(20, 23)
+big_speed_potion_chance = 0.09
+
+[node name="ShopItem12" parent="." unique_id=1279973535 instance=ExtResource("15_xo05s")]
+position = Vector2(72, -1945)
+item_to_sell = ExtResource("28_37qwj")
+item_texture = ExtResource("29_navra")
+bomb_scene = ExtResource("18_pm21f")
+bomb_texture = ExtResource("19_2lf6f")
+bomb_price_range = Vector2i(5, 7)
+bomb_chance = 0.09
+potion_scene = ExtResource("9_w7kh3")
+potion_texture = ExtResource("16_dss4m")
+potion_price_range = Vector2i(3, 7)
+potion_chance = 0.09
+big_potion_scene = ExtResource("9_o8fc1")
+big_potion_texture = ExtResource("17_7t5mc")
+big_potion_price_range = Vector2i(5, 11)
+big_potion_chance = 0.09
+shield_small_scene = ExtResource("22_xgqkh")
+shield_small_texture = ExtResource("23_munwf")
+shield_small_price_range = Vector2i(8, 13)
+shield_small_chance = 0.09
+shield_big_scene = ExtResource("24_ts3gi")
+shield_big_texture = ExtResource("25_0nbtd")
+shield_big_price_range = Vector2i(12, 18)
+shield_big_chance = 0.09
+damage_potion_scene = ExtResource("26_ts3gi")
+damage_potion_texture = ExtResource("27_0nbtd")
+damage_potion_price_range = Vector2i(16, 22)
+damage_potion_chance = 0.09
+big_damage_potion_scene = ExtResource("28_37qwj")
+big_damage_potion_texture = ExtResource("29_navra")
+big_damage_potion_price_range = Vector2i(30, 32)
+big_damage_potion_chance = 0.09
+speed_potion_scene = ExtResource("30_rup4s")
+speed_potion_texture = ExtResource("31_4kbfs")
+speed_potion_price_range = Vector2i(12, 16)
+speed_potion_chance = 0.09
+big_speed_potion_scene = ExtResource("32_f17e3")
+big_speed_potion_texture = ExtResource("33_x2olw")
+big_speed_potion_price_range = Vector2i(20, 23)
+big_speed_potion_chance = 0.09
+
+[node name="ShopItem13" parent="." unique_id=1884451421 instance=ExtResource("15_xo05s")]
+position = Vector2(40, -1945)
+item_to_sell = ExtResource("32_f17e3")
+item_texture = ExtResource("33_x2olw")
+bomb_scene = ExtResource("18_pm21f")
+bomb_texture = ExtResource("19_2lf6f")
+bomb_price_range = Vector2i(5, 7)
+bomb_chance = 0.09
+potion_scene = ExtResource("9_w7kh3")
+potion_texture = ExtResource("16_dss4m")
+potion_price_range = Vector2i(3, 7)
+potion_chance = 0.09
+big_potion_scene = ExtResource("9_o8fc1")
+big_potion_texture = ExtResource("17_7t5mc")
+big_potion_price_range = Vector2i(5, 11)
+big_potion_chance = 0.09
+shield_small_scene = ExtResource("22_xgqkh")
+shield_small_texture = ExtResource("23_munwf")
+shield_small_price_range = Vector2i(8, 13)
+shield_small_chance = 0.09
+shield_big_scene = ExtResource("24_ts3gi")
+shield_big_texture = ExtResource("25_0nbtd")
+shield_big_price_range = Vector2i(12, 18)
+shield_big_chance = 0.09
+damage_potion_scene = ExtResource("26_ts3gi")
+damage_potion_texture = ExtResource("27_0nbtd")
+damage_potion_price_range = Vector2i(16, 22)
+damage_potion_chance = 0.09
+big_damage_potion_scene = ExtResource("28_37qwj")
+big_damage_potion_texture = ExtResource("29_navra")
+big_damage_potion_price_range = Vector2i(30, 32)
+big_damage_potion_chance = 0.09
+speed_potion_scene = ExtResource("30_rup4s")
+speed_potion_texture = ExtResource("31_4kbfs")
+speed_potion_price_range = Vector2i(12, 16)
+speed_potion_chance = 0.09
+big_speed_potion_scene = ExtResource("32_f17e3")
+big_speed_potion_texture = ExtResource("33_x2olw")
+big_speed_potion_price_range = Vector2i(20, 23)
+big_speed_potion_chance = 0.09
+
 [node name="Spikes" parent="." unique_id=256314321 instance=ExtResource("36_x2olw")]
 position = Vector2(-616, -809)
 
@@ -1944,10 +2142,6 @@ position = Vector2(568, -553)
 [node name="GateSpikes6" parent="." unique_id=271776481 instance=ExtResource("39_e75v4")]
 position = Vector2(568, -569)
 
-[node name="DemoneG" parent="." unique_id=1808277452 groups=["enemies"] instance=ExtResource("23_f17e3")]
-z_index = 1
-position = Vector2(1176, -629)
-
 [node name="DungeonRoom2" parent="." unique_id=1477039953 instance=ExtResource("12_jhx03")]
 
 [node name="CollisionShape2D" parent="DungeonRoom2/Detector" parent_id_path=PackedInt32Array(1477039953, 131393299) index="0" unique_id=1644665846]
@@ -1968,7 +2162,7 @@ position = Vector2(551, -170)
 motion_mode = 1
 
 [node name="Door" parent="DungeonRoom2/Doors" parent_id_path=PackedInt32Array(1477039953, 1990335327) index="0" unique_id=1236130432 instance=ExtResource("5_71j4m")]
-position = Vector2(439, -63)
+position = Vector2(432, -64)
 
 [node name="DungeonRoom3" parent="." unique_id=959355561 instance=ExtResource("12_jhx03")]
 
@@ -1982,7 +2176,7 @@ position = Vector2(1013, -313)
 motion_mode = 1
 
 [node name="Door" parent="DungeonRoom3/Doors" parent_id_path=PackedInt32Array(959355561, 1990335327) index="0" unique_id=714958643 instance=ExtResource("5_71j4m")]
-position = Vector2(1048, -352)
+position = Vector2(1040, -352)
 
 [node name="DungeonRoom4" parent="." unique_id=1772701840 instance=ExtResource("12_jhx03")]
 position = Vector2(791.94, -11.369019)
@@ -2024,7 +2218,7 @@ position = Vector2(-615, -747)
 position = Vector2(-552, -710)
 
 [node name="Door" parent="DungeonRoom5/Doors" parent_id_path=PackedInt32Array(1253026333, 1990335327) index="0" unique_id=619502746 instance=ExtResource("5_71j4m")]
-position = Vector2(-552, -848)
+position = Vector2(-561, -843)
 
 [node name="Lever3" parent="." unique_id=1583880369 node_paths=PackedStringArray("target_spikes") instance=ExtResource("38_l8ah6")]
 position = Vector2(-424, -1193)
@@ -2048,8 +2242,29 @@ position = Vector2(-456, -729)
 [node name="GateSpikes12" parent="." unique_id=1173616871 instance=ExtResource("39_e75v4")]
 position = Vector2(-456, -713)
 
+[node name="DungeonRoom6" parent="." unique_id=2138329488 instance=ExtResource("12_jhx03")]
+
+[node name="CollisionShape2D" parent="DungeonRoom6/Detector" parent_id_path=PackedInt32Array(2138329488, 131393299) index="0" unique_id=1644665846]
+position = Vector2(-407.5, -1654)
+shape = SubResource("RectangleShape2D_eo1xk")
+
+[node name="DemoneG" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="0" unique_id=1808277452 groups=["enemies"] instance=ExtResource("23_f17e3")]
+z_index = 1
+position = Vector2(-286, -1792)
+
+[node name="DemoneG2" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="1" unique_id=1313072376 groups=["enemies"] instance=ExtResource("23_f17e3")]
+z_index = 1
+position = Vector2(-522, -1794)
+
+[node name="Door" parent="DungeonRoom6/Doors" parent_id_path=PackedInt32Array(2138329488, 1990335327) index="0" unique_id=50402653 instance=ExtResource("5_71j4m")]
+position = Vector2(-416, -1457)
+
+[node name="Door2" parent="DungeonRoom6/Doors" parent_id_path=PackedInt32Array(2138329488, 1990335327) index="1" unique_id=1157946784 instance=ExtResource("5_71j4m")]
+position = Vector2(-416, -1856)
+
 [editable path="DungeonRoom"]
 [editable path="DungeonRoom2"]
 [editable path="DungeonRoom3"]
 [editable path="DungeonRoom4"]
 [editable path="DungeonRoom5"]
+[editable path="DungeonRoom6"]
