@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://d2vxgeenqb0p7"]
+
+[ext_resource type="Script" uid="uid://86n3xixhk3oq" path="res://scripts/slime-a.gd" id="1_d4uas"]
+[ext_resource type="Texture2D" uid="uid://dyd6kkmt36rmn" path="res://assets/sprites/frames pg e utility/mob/muddy_anim_f0.png" id="2_7juw5"]
+[ext_resource type="Texture2D" uid="uid://cn4xj0t5x4o00" path="res://assets/sprites/frames pg e utility/mob/muddy_anim_f1.png" id="3_2hrxa"]
+[ext_resource type="Texture2D" uid="uid://dw3vuwwxpbgqp" path="res://assets/sprites/frames pg e utility/mob/muddy_anim_f2.png" id="4_20pi6"]
+[ext_resource type="Texture2D" uid="uid://brberucgqxwes" path="res://assets/sprites/frames pg e utility/mob/muddy_anim_f3.png" id="5_ijg64"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybl7e"]
+atlas = ExtResource("2_7juw5")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jygtj"]
+atlas = ExtResource("3_2hrxa")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vt2ch"]
+atlas = ExtResource("4_20pi6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ioq0m"]
+atlas = ExtResource("5_ijg64")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s5esm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ybl7e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jygtj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vt2ch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ioq0m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mfm1b"]
+size = Vector2(14, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tlrsk"]
+size = Vector2(18, 18)
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1189645528]
+script = ExtResource("1_d4uas")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1792914942]
+sprite_frames = SubResource("SpriteFrames_s5esm")
+frame = 2
+frame_progress = 0.12670754
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1110452902]
+shape = SubResource("RectangleShape2D_mfm1b")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=211425042]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=250052427]
+shape = SubResource("RectangleShape2D_tlrsk")
