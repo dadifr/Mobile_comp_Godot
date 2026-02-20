@@ -44,8 +44,6 @@ func _ready():
 	await get_tree().process_frame
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
-		player.boost_updated.connect(_on_boost_updated)
-		player.speed_updated.connect(_on_speed_updated)
 		player.slow_updated.connect(_on_slow_updated) 
 	else:
 		print("ERRORE: Player non trovato dall'HUD!")

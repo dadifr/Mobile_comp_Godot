@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://dgh0frijbx6q2" path="res://assets/sprites/frames pg e utility/character/lizard_m_run_anim_f3.png" id="11_h3ti1"]
 [ext_resource type="PackedScene" uid="uid://dcahukeipe13m" path="res://scenes/armi/artiglio.tscn" id="12_oip1y"]
 [ext_resource type="AudioStream" uid="uid://cmla1o2pj5hw4" path="res://music/sounds/hurt.wav" id="13_oip1y"]
+[ext_resource type="PackedScene" uid="uid://8peho83qdj7x" path="res://scenes/bolle.tscn" id="14_hy8q3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4uh4w"]
 atlas = ExtResource("3_h21u0")
@@ -124,29 +125,6 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_mdl7e"]
 radius = 6.0
 
-[sub_resource type="Gradient" id="Gradient_oip1y"]
-offsets = PackedFloat32Array(0.21311475, 0.22131148)
-colors = PackedColorArray(0.07717517, 0, 1.0553334, 0.76862746, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_hy8q3"]
-gradient = SubResource("Gradient_oip1y")
-width = 16
-height = 16
-fill = 2
-fill_from = Vector2(0.50537634, 0.47311828)
-fill_to = Vector2(0.96236557, 0.9086022)
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_83s6m"]
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(0, 10, 0)
-emission_shape = 1
-emission_sphere_radius = 7.0
-angle_min = -720.0
-angle_max = 720.0
-direction = Vector3(0, -1, 0)
-initial_velocity_max = 5.0
-gravity = Vector3(0, -1, 0)
-
 [node name="lizard" type="CharacterBody2D" unique_id=1222116370 groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_81uaw")
@@ -179,10 +157,4 @@ visible = false
 stream = ExtResource("13_oip1y")
 volume_db = -15.0
 
-[node name="bolle" type="GPUParticles2D" parent="." unique_id=668912606]
-emitting = false
-amount = 7
-texture = SubResource("GradientTexture2D_hy8q3")
-lifetime = 5.0
-speed_scale = 4.01
-process_material = SubResource("ParticleProcessMaterial_83s6m")
+[node name="Bolle" parent="." unique_id=2025457367 instance=ExtResource("14_hy8q3")]

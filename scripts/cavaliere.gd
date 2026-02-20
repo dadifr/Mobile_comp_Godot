@@ -37,7 +37,7 @@ var armor = 0
 
 #effetti rallentamento
 var rallentato=0
-@onready var bolle = $bolle
+@onready var bolle = $Bolle/bolle
 var slow_effect_timer : Timer
 
 # --- SEGNALI ---
