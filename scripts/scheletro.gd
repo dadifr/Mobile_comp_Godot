@@ -7,12 +7,12 @@ extends CharacterBody2D
 @export var max_health = 3
 @export var damage = 1
 @export var knockback_force = 250.0
-@export var attack_cooldown_time = 1.5 # Tempo in cui sta fermo dopo l'attacco
+@export var attack_cooldown_time = 1.5 
 @export var coin_scene: PackedScene
-@export var potionH_scene: PackedScene # <--- La nuova pozione
-@export var projectile_scene: PackedScene # Trascina qui la scena del proiettile
-@export var attack_range = 100.0          # Distanza a cui inizia a sparare
-# Probabilità (0.15 = 15%, 0.5 = 50%)
+@export var potionH_scene: PackedScene 
+@export var projectile_scene: PackedScene 
+@export var attack_range = 100.0          
+# Probabilità
 @export var potion_chance: float = 0.10 
 @export var coin_chance: float = 0.60
 
@@ -21,10 +21,9 @@ var current_health = 3
 var is_hurt = false
 var player = null
 
-# --- FIX: VARIABILE DI STATO ATTACCO ---
-var is_attacking = false # Se è vero, il mob è "congelato" post-attacco
+var is_attacking = false 
 
-# Variabili Pattuglia e Investigazione
+# Variabili Pattuglia
 var move_direction = Vector2.ZERO
 var roam_timer = 0.0
 var time_to_next_move = 0.0
@@ -41,7 +40,9 @@ func _ready():
 	pick_new_state()
 
 func _draw():
+	# Disegna i due cerchi per debug visivo (Rosso = Vista, Giallo = Sparo)
 	draw_circle(Vector2.ZERO, detection_range, Color(1, 0, 0, 0.1))
+	draw_circle(Vector2.ZERO, attack_range, Color(1, 1, 0, 0.1))
 
 func _physics_process(delta):
 	# 1. GESTIONE KNOCKBACK (Priorità Massima)
@@ -50,133 +51,141 @@ func _physics_process(delta):
 		move_and_slide()
 		return 
 
-	# --- 2. FIX: GESTIONE ATTACCO CON RINCULO ---
+	# 2. SE STA ATTACCANDO (SPARANDO O COLPENDO), RESTA FERMO
 	if is_attacking:
-		# NON forziamo velocity a zero qui. 
-		# Lasciamo che sia la funzione attack_player a decidere se spingerci indietro o fermarci.
+		velocity = Vector2.ZERO
 		move_and_slide() 
-		return # Usciamo per non fare calcoli di inseguimento
+		return
 
 	# 3. CERCA IL GIOCATORE
-	if player == null:
-		player = get_tree().get_first_node_in_group("player")
+	# FIX: Cerchiamo dinamicamente il player a ogni frame per evitare crash
+	# se il player muore o cambia stanza.
+	var players = get_tree().get_nodes_in_group("player")
+	if players.size() > 0:
+		player = players[0]
+	else:
+		player = null
 
+	# 4. LOGICA DI MOVIMENTO E INSEGUIMENTO
 	if player != null:
 		var distance = global_position.distance_to(player.global_position)
 		
-		# --- CASO A: INSEGUIMENTO ---
-		if distance < detection_range:
-			var direction = (player.global_position - global_position).normalized()
+		# --- CASO A: GIOCATORE VICINO, SPARA ---
+		if distance <= attack_range:
+			velocity = Vector2.ZERO
 			was_chasing = true
 			is_investigating = false
-			if distance > attack_range:
-				velocity = direction * speed
-			else:
-				# Se è abbastanza vicino, si ferma e spara
-				velocity = Vector2.ZERO
-				if not is_attacking:
-					shoot_projectile()
-		
-		# --- CASO B: PATTUGLIA/INVESTIGAZIONE ---
-		else:
-			if was_chasing:
-				start_investigation()
-				was_chasing = false 
+			shoot_projectile()
 			
-			if is_investigating:
-				velocity = Vector2.ZERO
-				investigation_timer -= delta
-				look_timer -= delta
-				if look_timer <= 0:
-					anim.flip_h = !anim.flip_h
-					look_timer = 0.5 
-				
-				if investigation_timer <= 0:
-					is_investigating = false
-					pick_new_state()
-			else:
-				roam_timer += delta
-				if roam_timer >= time_to_next_move:
-					pick_new_state()
-				velocity = move_direction * patrol_speed
+		# --- CASO B: GIOCATORE VISTO, MA TROPPO LONTANO PER SPARARE (INSEGUE) ---
+		elif distance <= detection_range:
+			var direction = (player.global_position - global_position).normalized()
+			velocity = direction * speed
+			was_chasing = true
+			is_investigating = false
+			
+		# --- CASO C: GIOCATORE PERSO DI VISTA (PATTUGLIA) ---
+		else:
+			handle_patrol(delta)
+	else:
+		# Se non c'è il player in scena, pattuglia
+		handle_patrol(delta)
 
-	# 4. GESTIONE ANIMAZIONI
+	# 5. GESTIONE ANIMAZIONI
 	if velocity.length() > 0:
 		anim.play("run")
-		if not is_investigating:
-			if velocity.x < 0:
-				anim.flip_h = true
-			elif velocity.x > 0:
-				anim.flip_h = false
+		if velocity.x < 0:
+			anim.flip_h = true
+		elif velocity.x > 0:
+			anim.flip_h = false
 	else:
 		anim.play("idle")
 
-	# 5. MOVIMENTO E COLLISIONI
+	# 6. MOVIMENTO FISICO
 	move_and_slide()
 	
-	# Controllo collisioni per attaccare
+	# 7. GESTIONE COLLISIONI (Spinta Bombe e Melee d'Emergenza)
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		
-		# Se tocca il player E NON sta già attaccando
-		if collider.is_in_group("player") and not is_attacking:
-			if collider.has_method("take_damage"):
-				attack_player(collider)
-
-	# --- INIZIO CODICE SPINTA BOMBA ---
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
-		var collider = collision.get_collider()
-		
-		# Se il nemico sbatte contro un oggetto rigido (Bomba)
+		# Spinta Bombe
 		if collider is RigidBody2D:
-			# 1. Calcoliamo la direzione della spinta
-			# Usiamo "-normal" che è la direzione opposta all'urto
 			var push_dir = -collision.get_normal()
-			
-			# 2. Velocità di spinta
-			# Facciamo che il nemico spinge un po' più piano del giocatore
-			# (o uguale, dipende da quanto è forte lo scheletro)
 			var push_speed = 100.0 
-			
-			# 3. Sovrascriviamo la velocità della bomba
-			# Usiamo la stessa tecnica "Anti-Railgun" per evitare che voli via
 			collider.linear_velocity = push_dir * push_speed
-	# --- FINE CODICE SPINTA ---
+			
+		# Melee (se il player gli corre addosso mentre non sta sparando)
+		elif collider.is_in_group("player") and not is_attacking:
+			if collider.has_method("take_damage"):
+				attack_player_melee(collider)
 
-# --- FUNZIONE ATTACCO AGGIORNATA ---
-func attack_player(target):
-	# 1. Blocchiamo l'AI
+# --- NUOVA FUNZIONE SEPARATA PER LA PATTUGLIA (Più pulita) ---
+func handle_patrol(delta):
+	if was_chasing:
+		start_investigation()
+		was_chasing = false 
+	
+	if is_investigating:
+		velocity = Vector2.ZERO
+		investigation_timer -= delta
+		look_timer -= delta
+		if look_timer <= 0:
+			anim.flip_h = !anim.flip_h
+			look_timer = 0.5 
+		
+		if investigation_timer <= 0:
+			is_investigating = false
+			pick_new_state()
+	else:
+		roam_timer += delta
+		if roam_timer >= time_to_next_move:
+			pick_new_state()
+		velocity = move_direction * patrol_speed
+
+# --- FUNZIONE ATTACCO MELEE (Rinominata) ---
+func attack_player_melee(target):
 	is_attacking = true
-	
-	# 2. CALCOLO RINCULO (Molto più leggero)
 	var recoil_direction = (global_position - target.global_position).normalized()
-	
-	# PRIMA ERA: 150. ADESSO PROVIAMO: 60 (Un passetto piccolo)
 	velocity = recoil_direction * 60 
-	
-	# 3. Infliggi danno
 	target.take_damage(damage, global_position)
 	
-	# 4. FASE DI RINCULO (Molto più breve)
-	# PRIMA ERA: 0.2s. ADESSO PROVIAMO: 0.1s (Appena un istante per staccarsi)
 	await get_tree().create_timer(0.1).timeout
-	
-	# 5. FASE DI STOP
 	velocity = Vector2.ZERO
 	anim.play("idle")
 	
-	# Calcoliamo il tempo rimanente del cooldown
-	# Sottraiamo il 0.1 che abbiamo appena aspettato
 	var remaining_cooldown = attack_cooldown_time - 0.1
 	if remaining_cooldown > 0:
 		await get_tree().create_timer(remaining_cooldown).timeout
-	
-	# 6. Sblocca il mob
 	is_attacking = false
 
-# --- LE ALTRE FUNZIONI RIMANGONO UGUALI ---
+
+# --- FUNZIONE SPARO PROIETTILE ---
+func shoot_projectile():
+	is_attacking = true
+	anim.play("idle") 
+	
+	# Giriamo lo sprite verso il player prima di sparare!
+	var shoot_dir = (player.global_position - global_position).normalized()
+	if shoot_dir.x < 0:
+		anim.flip_h = true
+	else:
+		anim.flip_h = false
+	
+	if projectile_scene:
+		var proj = projectile_scene.instantiate()
+		proj.global_position = global_position 
+		proj.shooter = self
+		proj.direction = shoot_dir
+		proj.rotation = shoot_dir.angle()
+		# Aggiungiamo il proiettile al mondo, non al nemico
+		get_tree().current_scene.add_child(proj)
+		
+	# Attendi il cooldown
+	await get_tree().create_timer(attack_cooldown_time).timeout
+	is_attacking = false
+
+# --- RESTO DEL CODICE UGUALE ---
 func start_investigation():
 	is_investigating = true
 	investigation_timer = investigation_duration
@@ -208,26 +217,17 @@ func take_damage(amount, source_pos = Vector2.ZERO):
 		die()
 
 func die():
-	print("Goblin eliminato!")
+	print("Scheletro eliminato!")
+	# Rimuoviamolo dal gruppo enemies per far aprire le porte!
+	remove_from_group("enemies") 
 	set_physics_process(false)
 	$CollisionShape2D.set_deferred("disabled", true)
 	
-	# --- SISTEMA DI LOOT LOGICO ---
-	var random_roll = randf() # Genera un numero da 0.0 a 1.0
-	
-	# CONTROLLO 1: Pozione (È la più rara, controlliamo per prima)
-	# Esempio: Se random_roll è 0.10 (che è < 0.15), vinci la pozione.
+	var random_roll = randf()
 	if potionH_scene and random_roll < potion_chance:
 		spawn_loot(potionH_scene)
-		
-	# CONTROLLO 2: Moneta
-	# Usiamo "elif": quindi se hai già vinto la pozione, NON entri qui.
-	# Sommiamo le chance: da 0.15 a 0.65 (0.15 + 0.5) vince la moneta.
 	elif coin_scene and random_roll < (potion_chance + coin_chance):
 		spawn_loot(coin_scene)
-	
-	# Se il numero è molto alto (es. 0.8), non entra in nessuno dei due if
-	# e il mostro non droppa nulla (sfortuna!).
 	
 	queue_free()
 
@@ -236,22 +236,3 @@ func spawn_loot(scene_to_spawn):
 		var drop = scene_to_spawn.instantiate()
 		drop.global_position = global_position
 		get_parent().call_deferred("add_child", drop)
-
-func shoot_projectile():
-	is_attacking = true
-	anim.play("idle") # O un'animazione di "attacco" se ce l'hai
-	if projectile_scene:
-		var proj = projectile_scene.instantiate()
-		# 2. Posizionalo (puoi aggiungere un Marker2D nel mob per il punto esatto)
-		proj.global_position = global_position 
-		proj.shooter = self
-		# 3. Calcola la direzione verso il player
-		var shoot_dir = (player.global_position - global_position).normalized()
-		proj.direction = shoot_dir
-		# 4. Ruota il proiettile (opzionale, utile per frecce)
-		proj.rotation = shoot_dir.angle()
-		# 5. Aggiungilo alla scena (meglio al parent per non farlo muovere col mob)
-		get_parent().add_child(proj)
-	# 6. Attendi il cooldown prima di poter sparare di nuovo
-	await get_tree().create_timer(attack_cooldown_time).timeout
-	is_attacking = false
