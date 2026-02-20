@@ -165,3 +165,4 @@ action = "place_bomb"
 
 [node name="SfxBuff" type="AudioStreamPlayer" parent="." unique_id=17105109]
 stream = ExtResource("11_meimr")
+volume_db = -15.0
