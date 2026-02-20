@@ -11,6 +11,7 @@ extends CharacterBody2D
 @export var knockback_force: float = 250.0
 @export var invincibility_time: float = 1.0
 @export var push_force: float = 5000.0
+@export var speed_reduction: float = 0.7
 
 # --- CONFIGURAZIONE DASH ---
 @export_group("Dash Settings")
@@ -33,6 +34,10 @@ var game_over_screen = preload("res://scenes/GameOverScreen.tscn")
 
 # Variabile Armatura (Scudi)
 var armor = 0
+
+#effetti rallentamento
+var rallentato=0
+@onready var bolle = $bolle
 
 # --- SEGNALI ---
 signal coins_changed(new_amount)
@@ -67,6 +72,8 @@ var speed_tween: Tween # Variabile per il lampeggio verde
 var is_dashing = false
 var can_dash = true
 var dash_timer : Timer
+
+
 
 func _ready():
 	if not is_in_group("player"):
@@ -154,7 +161,9 @@ func _physics_process(delta):
 	# Timer Velocità (Verde)
 	if is_instance_valid(speed_timer) and not speed_timer.is_stopped():
 		speed_updated.emit(speed_timer.time_left)
-
+		
+	#Timer rallentamento (viola)
+	
 	# MOVIMENTO
 	move_and_slide()
 	
@@ -324,3 +333,15 @@ func place_bomb():
 			var distance = 40
 			bomb.global_position = global_position + (last_direction * distance)
 			get_parent().add_child(bomb)
+func slow_down():
+	if rallentato:
+		return
+	else :
+		rallentato=1
+		var originalspeed=speed
+		speed*=speed_reduction
+		bolle.emitting=true
+		await get_tree().create_timer(5).timeout
+		speed=originalspeed
+		bolle.emitting=false
+		rallentato=0

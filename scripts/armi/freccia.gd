@@ -24,13 +24,18 @@ func _on_body_entered(body):
 	# Ignora chi ha sparato
 	if body == shooter:
 		return
-
+		
+	if body.is_in_group("player"):
+		body.slow_down()
+		
 	# controllo possa prendere danno
 	if body.has_method("take_damage"):
 		body.take_damage(damage, global_position)
 		
+		
 		# Distruggi la freccia dopo l'impatto
 		queue_free()
+	
 		
 	# muro
 	elif body is TileMap or body is StaticBody2D or body is TileMapLayer:

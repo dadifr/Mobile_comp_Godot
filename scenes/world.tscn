@@ -2204,7 +2204,7 @@ potionH_scene = ExtResource("9_w7kh3")
 
 [node name="scheletro" parent="DungeonRoom4/Enemies" parent_id_path=PackedInt32Array(1772701840, 1611563842) index="2" unique_id=2030337148 groups=["enemies"] instance=ExtResource("14_2lf6f")]
 z_index = 1
-position = Vector2(0.05999756, -391.63098)
+position = Vector2(-424.94, 314.36902)
 
 [node name="DungeonRoom5" parent="." unique_id=1253026333 instance=ExtResource("12_jhx03")]
 
