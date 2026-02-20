@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://brvclfc40v8hx"]
+
+[ext_resource type="AudioStream" uid="uid://cv47ik53fcff0" path="res://music/Echoes_of_the_Obsidian_Labyrinth.mp3" id="1_xjuxn"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" unique_id=1720871809]
+stream = ExtResource("1_xjuxn")
+volume_db = -15.0
+autoplay = true

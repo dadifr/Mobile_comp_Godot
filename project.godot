@@ -23,6 +23,7 @@ config/icon="res://icon.svg"
 
 GameManager="*res://scripts/GameManager.gd"
 GameUtils="*res://scripts/GameUtils.gd"
+OST="*uid://brvclfc40v8hx"
 
 [display]
 

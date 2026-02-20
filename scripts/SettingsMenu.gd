@@ -7,14 +7,10 @@ extends Control
 # Percorso del gioco vero e proprio
 var game_scene_path = "res://scenes/character_selection.tscn"
 
-# Indice del Bus Audio "Master" (il volume principale)
-var master_bus_index
-
 func _ready():
-	# 1. SETUP AUDIO
-	master_bus_index = AudioServer.get_bus_index("Master")
-	# Impostiamo lo slider al volume attuale
-	volume_slider.value = db_to_linear(AudioServer.get_bus_volume_db(master_bus_index))
+	# 1. SETUP AUDIO (Modificato per l'OST)
+	# Impostiamo lo slider al volume attuale della tua colonna sonora
+	volume_slider.value = db_to_linear(OST.volume_db)
 	
 	# 2. SETUP RISOLUZIONE
 	add_resolutions()
@@ -35,10 +31,12 @@ func add_resolutions():
 	res_option.select(2)
 
 func _on_volume_changed(value):
-	# Convertiamo il valore lineare (0 a 1) in Decibel per Godot
-	# Se lo slider è a 0, mettiamo "Mute"
-	AudioServer.set_bus_volume_db(master_bus_index, linear_to_db(value))
-	AudioServer.set_bus_mute(master_bus_index, value < 0.05)
+	# Convertiamo il valore lineare (0 a 1) in Decibel per il nodo OST
+	OST.volume_db = linear_to_db(value)
+	
+	# Se lo slider è a 0 (o vicinissimo allo 0), mutiamo completamente la musica
+	if value < 0.05:
+		OST.volume_db = -80.0
 
 func _on_resolution_selected(index):
 	match index:

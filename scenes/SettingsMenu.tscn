@@ -1,11 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://byxgdifc1jnr"]
+[gd_scene format=3 uid="uid://byxgdifc1jnr"]
 
 [ext_resource type="Script" uid="uid://bopcypak2ir8s" path="res://scripts/SettingsMenu.gd" id="1_yelko"]
 [ext_resource type="FontFile" uid="uid://cd2yngqm441q4" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="2_1yw23"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dd8lr"]
 
-[node name="SettingsMenu" type="Control"]
+[node name="SettingsMenu" type="Control" unique_id=1160514748]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,49 +14,49 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_yelko")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=492288488]
 layout_mode = 0
 offset_right = 640.0
 offset_bottom = 360.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=626134664]
 layout_mode = 0
 offset_right = 640.0
 offset_bottom = 360.0
 theme_override_constants/separation = 24
 
-[node name="Settings" type="Label" parent="VBoxContainer"]
+[node name="Settings" type="Label" parent="VBoxContainer" unique_id=1293672766]
 layout_mode = 2
 text = "IMPOSTAZIONI"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=1004229250]
 layout_mode = 2
 
-[node name="volume" type="Label" parent="VBoxContainer"]
+[node name="volume" type="Label" parent="VBoxContainer" unique_id=1951169313]
 layout_mode = 2
 text = "Volume Generale"
 horizontal_alignment = 1
 
-[node name="VolumeSlider" type="HSlider" parent="VBoxContainer"]
+[node name="VolumeSlider" type="HSlider" parent="VBoxContainer" unique_id=136219120]
 layout_mode = 2
 max_value = 1.0
 step = 0.05
-value = 1.0
+value = 0.5
 
-[node name="risolution" type="Label" parent="VBoxContainer"]
+[node name="risolution" type="Label" parent="VBoxContainer" unique_id=849347689]
 layout_mode = 2
 text = "Risoluzione"
 label_settings = SubResource("LabelSettings_dd8lr")
 horizontal_alignment = 1
 
-[node name="ResOptionButton" type="OptionButton" parent="VBoxContainer"]
+[node name="ResOptionButton" type="OptionButton" parent="VBoxContainer" unique_id=294288825]
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer" unique_id=2104770167]
 layout_mode = 2
 
-[node name="PlayButton" type="Button" parent="VBoxContainer"]
+[node name="PlayButton" type="Button" parent="VBoxContainer" unique_id=72408302]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_1yw23")
 text = "GIOCA"
