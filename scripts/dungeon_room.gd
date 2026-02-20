@@ -19,21 +19,13 @@ func _on_player_entered(body):
 		start_battle()
 
 func start_battle():
-	# Contiamo SOLO i nodi che sono nel gruppo "enemies"
 	var enemy_count = count_enemies()
 	
 	if enemy_count > 0:
 		print("Battaglia Iniziata! Nemici: ", enemy_count)
 		room_started = true
 		close_all_doors()
-		
-		# --- NOVITÀ: SVEGLIA GLI SPAWNER ---
-		# Cerchiamo dentro il nodo Enemies se c'è qualcuno che deve essere attivato
-		for child in $Enemies.get_children():
-			if child.has_method("activate_spawner"):
-				child.activate_spawner()
-		# -----------------------------------
-		
+		# Niente più ciclo for per gli spawner qui!
 	else:
 		room_cleared = true
 

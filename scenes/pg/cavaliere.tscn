@@ -154,6 +154,6 @@ metadata/_edit_group_ = true
 [node name="DamageBoostTimer" type="Timer" parent="." unique_id=884575353]
 one_shot = true
 
-[node name="SfxHurt" type="AudioStreamPlayer" parent="." unique_id=1032826256]
+[node name="SfxHurt" type="AudioStreamPlayer" parent="." unique_id=1032826256 groups=["player"]]
 stream = ExtResource("13_mdomp")
 volume_db = -15.0

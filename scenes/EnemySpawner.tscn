@@ -31,8 +31,11 @@ script = ExtResource("2_n6vr5")
 enemy_scene = ExtResource("5_j64qd")
 metadata/_custom_type_script = "uid://d0f8cdwkf66lr"
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_3vhok"]
+radius = 132.01515
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_n6vr5"]
-radius = 8.0
+radius = 9.055386
 
 [node name="EnemySpawner" type="StaticBody2D" unique_id=922384224 groups=["enemies"]]
 script = ExtResource("1_ks4g3")
@@ -40,6 +43,11 @@ spawn_list = Array[ExtResource("2_n6vr5")]([SubResource("Resource_3vhok"), SubRe
 max_health = 20
 spawn_rate = 5.0
 spawn_radius = 10.0
+
+[node name="ActivationArea" type="Area2D" parent="." unique_id=174913875]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationArea" unique_id=125739758]
+shape = SubResource("CircleShape2D_3vhok")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=406653147]
 texture = ExtResource("7_3vhok")
@@ -49,6 +57,5 @@ shape = SubResource("CircleShape2D_n6vr5")
 
 [node name="SpawnTimer" type="Timer" parent="." unique_id=967364278]
 wait_time = 3.0
-autostart = true
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=1358697546]

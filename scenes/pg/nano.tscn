@@ -153,6 +153,6 @@ metadata/_edit_group_ = true
 
 [node name="Spada" parent="Hand" unique_id=929786093 instance=ExtResource("12_al5kh")]
 
-[node name="SfxHurt" type="AudioStreamPlayer" parent="." unique_id=482823782]
+[node name="SfxHurt" type="AudioStreamPlayer" parent="." unique_id=482823782 groups=["player"]]
 stream = ExtResource("13_choku")
 volume_db = -15.0

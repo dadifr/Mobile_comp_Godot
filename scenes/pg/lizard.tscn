@@ -152,6 +152,6 @@ metadata/_edit_group_ = true
 [node name="artiglio" parent="Hand" unique_id=1633956590 instance=ExtResource("12_oip1y")]
 visible = false
 
-[node name="SfxHurt" type="AudioStreamPlayer" parent="." unique_id=837159771]
+[node name="SfxHurt" type="AudioStreamPlayer" parent="." unique_id=837159771 groups=["player"]]
 stream = ExtResource("13_oip1y")
 volume_db = -15.0

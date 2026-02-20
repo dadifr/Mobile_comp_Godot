@@ -2014,14 +2014,14 @@ position = Vector2(0.05999756, -391.63098)
 position = Vector2(-552.5, -719)
 shape = SubResource("RectangleShape2D_hi6a0")
 
-[node name="Creeper" parent="DungeonRoom5/Enemies" parent_id_path=PackedInt32Array(1253026333, 1611563842) index="0" unique_id=1342783513 groups=["enemies"] instance=ExtResource("15_7iits")]
+[node name="EnemySpawner" parent="DungeonRoom5/Enemies" parent_id_path=PackedInt32Array(1253026333, 1611563842) index="0" unique_id=1015821233 instance=ExtResource("22_4kbfs")]
+position = Vector2(-552, -710)
+
+[node name="Creeper" parent="DungeonRoom5/Enemies" parent_id_path=PackedInt32Array(1253026333, 1611563842) index="1" unique_id=1342783513 groups=["enemies"] instance=ExtResource("15_7iits")]
 position = Vector2(-489, -651)
 
-[node name="Creeper2" parent="DungeonRoom5/Enemies" parent_id_path=PackedInt32Array(1253026333, 1611563842) index="1" unique_id=1202856410 groups=["enemies"] instance=ExtResource("15_7iits")]
+[node name="Creeper2" parent="DungeonRoom5/Enemies" parent_id_path=PackedInt32Array(1253026333, 1611563842) index="2" unique_id=1202856410 groups=["enemies"] instance=ExtResource("15_7iits")]
 position = Vector2(-615, -747)
-
-[node name="EnemySpawner" parent="DungeonRoom5/Enemies" parent_id_path=PackedInt32Array(1253026333, 1611563842) index="2" unique_id=922384224 instance=ExtResource("22_4kbfs")]
-position = Vector2(-552, -710)
 
 [node name="Door" parent="DungeonRoom5/Doors" parent_id_path=PackedInt32Array(1253026333, 1990335327) index="0" unique_id=619502746 instance=ExtResource("5_71j4m")]
 position = Vector2(-552, -848)
