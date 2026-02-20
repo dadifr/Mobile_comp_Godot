@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://g8r8rh5pn1h6"]
+
+[ext_resource type="Script" uid="uid://crhk67hh6wg1p" path="res://scripts/laser.gd" id="1_wee4f"]
+
+[node name="Area2D" type="Area2D" unique_id=798947769]
+script = ExtResource("1_wee4f")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=2145862605]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 6.0
+default_color = Color(0.047058824, 0.53333336, 0.3882353, 1)
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=929069571]

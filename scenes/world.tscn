@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bphak388rseq7" path="res://assets/sprites/frames pg e utility/utility/flask_big_red.png" id="17_7t5mc"]
 [ext_resource type="PackedScene" uid="uid://b2f6kkkahowj8" path="res://scenes/BombPickup.tscn" id="18_pm21f"]
 [ext_resource type="Texture2D" uid="uid://bdyydwnu4jn5u" path="res://assets/sprites/frames pg e utility/utility/bomb_f0.png" id="19_2lf6f"]
+[ext_resource type="PackedScene" uid="uid://by6rgfiei6l1n" path="res://scenes/png/big-zombie.tscn" id="19_8u370"]
 [ext_resource type="PackedScene" uid="uid://bh3ge7u2lnfub" path="res://scenes/EnemySpawner.tscn" id="22_4kbfs"]
 [ext_resource type="PackedScene" uid="uid://jmf43nm046k8" path="res://scenes/potion/potion_g.tscn" id="22_xgqkh"]
 [ext_resource type="PackedScene" uid="uid://himxfj0h22tb" path="res://scenes/png/demone_g.tscn" id="23_f17e3"]
@@ -1394,27 +1395,27 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_l8ah6")
 sources/1 = SubResource("TileSetAtlasSource_e75v4")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e75v4"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8u370"]
 resource_local_to_scene = true
 size = Vector2(292, 161)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8u370"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rga7q"]
 resource_local_to_scene = true
 size = Vector2(311, 100)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rga7q"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6oujy"]
 resource_local_to_scene = true
 size = Vector2(182, 292)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6oujy"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hi6a0"]
 resource_local_to_scene = true
 size = Vector2(261.00003, 252)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hi6a0"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eo1xk"]
 resource_local_to_scene = true
 size = Vector2(183, 224)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eo1xk"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_18clu"]
 resource_local_to_scene = true
 size = Vector2(403, 390)
 
@@ -1544,12 +1545,15 @@ max_coins = 10
 
 [node name="CollisionShape2D" parent="DungeonRoom/Detector" parent_id_path=PackedInt32Array(1165969380, 131393299) index="0" unique_id=1644665846]
 position = Vector2(304, 194.5)
-shape = SubResource("RectangleShape2D_e75v4")
+shape = SubResource("RectangleShape2D_8u370")
 
 [node name="zombie" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="0" unique_id=1823389608 instance=ExtResource("9_7r4gi")]
 z_index = 1
-position = Vector2(322, 182)
+position = Vector2(519, 140)
 motion_mode = 1
+
+[node name="CharacterBody2D" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="1" unique_id=1451606197 instance=ExtResource("19_8u370")]
+position = Vector2(262, 145)
 
 [node name="Door" parent="DungeonRoom/Doors" parent_id_path=PackedInt32Array(1165969380, 1990335327) index="0" unique_id=121056640 instance=ExtResource("5_71j4m")]
 position = Vector2(304, 288)
@@ -2146,7 +2150,7 @@ position = Vector2(568, -569)
 
 [node name="CollisionShape2D" parent="DungeonRoom2/Detector" parent_id_path=PackedInt32Array(1477039953, 131393299) index="0" unique_id=1644665846]
 position = Vector2(519.5, -124)
-shape = SubResource("RectangleShape2D_8u370")
+shape = SubResource("RectangleShape2D_rga7q")
 
 [node name="Creeper" parent="DungeonRoom2/Enemies" parent_id_path=PackedInt32Array(1477039953, 1611563842) index="0" unique_id=78381794 groups=["enemies"] instance=ExtResource("15_7iits")]
 z_index = 1
@@ -2168,7 +2172,7 @@ position = Vector2(432, -64)
 
 [node name="CollisionShape2D" parent="DungeonRoom3/Detector" parent_id_path=PackedInt32Array(959355561, 131393299) index="0" unique_id=1644665846]
 position = Vector2(1079, -188)
-shape = SubResource("RectangleShape2D_rga7q")
+shape = SubResource("RectangleShape2D_6oujy")
 
 [node name="ogre" parent="DungeonRoom3/Enemies" parent_id_path=PackedInt32Array(959355561, 1611563842) index="0" unique_id=272101007 groups=["enemies"] instance=ExtResource("24_x2olw")]
 z_index = 1
@@ -2183,7 +2187,7 @@ position = Vector2(791.94, -11.369019)
 
 [node name="CollisionShape2D" parent="DungeonRoom4/Detector" parent_id_path=PackedInt32Array(1772701840, 131393299) index="0" unique_id=1644665846]
 position = Vector2(-87.44, -486.13098)
-shape = SubResource("RectangleShape2D_6oujy")
+shape = SubResource("RectangleShape2D_hi6a0")
 
 [node name="goblin2" parent="DungeonRoom4/Enemies" parent_id_path=PackedInt32Array(1772701840, 1611563842) index="0" unique_id=1038703519 instance=ExtResource("6_qfnet")]
 z_index = 1
@@ -2206,7 +2210,7 @@ position = Vector2(0.05999756, -391.63098)
 
 [node name="CollisionShape2D" parent="DungeonRoom5/Detector" parent_id_path=PackedInt32Array(1253026333, 131393299) index="0" unique_id=1644665846]
 position = Vector2(-552.5, -719)
-shape = SubResource("RectangleShape2D_hi6a0")
+shape = SubResource("RectangleShape2D_eo1xk")
 
 [node name="Creeper" parent="DungeonRoom5/Enemies" parent_id_path=PackedInt32Array(1253026333, 1611563842) index="0" unique_id=1342783513 groups=["enemies"] instance=ExtResource("15_7iits")]
 position = Vector2(-489, -651)
@@ -2246,7 +2250,7 @@ position = Vector2(-456, -713)
 
 [node name="CollisionShape2D" parent="DungeonRoom6/Detector" parent_id_path=PackedInt32Array(2138329488, 131393299) index="0" unique_id=1644665846]
 position = Vector2(-407.5, -1654)
-shape = SubResource("RectangleShape2D_eo1xk")
+shape = SubResource("RectangleShape2D_18clu")
 
 [node name="DemoneG" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="0" unique_id=1808277452 groups=["enemies"] instance=ExtResource("23_f17e3")]
 z_index = 1

@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://by6rgfiei6l1n"]
+
+[ext_resource type="Script" uid="uid://dwtkkyo68wd44" path="res://scripts/big_zombie.gd" id="1_m7kra"]
+[ext_resource type="Texture2D" uid="uid://bbfm4qw3hal8h" path="res://assets/sprites/frames pg e utility/mob/big_zombie_idle_anim_f0.png" id="1_tpw4n"]
+[ext_resource type="PackedScene" uid="uid://g8r8rh5pn1h6" path="res://scenes/armi/LaserIstante.tscn" id="2_88j4l"]
+[ext_resource type="Texture2D" uid="uid://dfslyj3yl2kr6" path="res://assets/sprites/frames pg e utility/mob/big_zombie_idle_anim_f1.png" id="2_m7kra"]
+[ext_resource type="Texture2D" uid="uid://6kw5244b4h2y" path="res://assets/sprites/frames pg e utility/mob/big_zombie_idle_anim_f2.png" id="3_88j4l"]
+[ext_resource type="Texture2D" uid="uid://kywkkgqgbdfn" path="res://assets/sprites/frames pg e utility/mob/big_zombie_idle_anim_f3.png" id="4_76uqm"]
+[ext_resource type="Texture2D" uid="uid://ex7qtop7b6oh" path="res://assets/sprites/frames pg e utility/mob/big_zombie_run_anim_f0.png" id="5_3v8gr"]
+[ext_resource type="Texture2D" uid="uid://bgdcjr46k2enm" path="res://assets/sprites/frames pg e utility/mob/big_zombie_run_anim_f1.png" id="6_x0h4c"]
+[ext_resource type="Texture2D" uid="uid://ct0qudbm1eyt7" path="res://assets/sprites/frames pg e utility/mob/big_zombie_run_anim_f2.png" id="7_aprwq"]
+[ext_resource type="Texture2D" uid="uid://51y34ul02wpy" path="res://assets/sprites/frames pg e utility/mob/big_zombie_run_anim_f3.png" id="8_vy4al"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krndh"]
+atlas = ExtResource("1_tpw4n")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1w6eu"]
+atlas = ExtResource("2_m7kra")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_woe4g"]
+atlas = ExtResource("3_88j4l")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v3ydw"]
+atlas = ExtResource("4_76uqm")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oojse"]
+atlas = ExtResource("5_3v8gr")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15ou3"]
+atlas = ExtResource("6_x0h4c")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8jfqu"]
+atlas = ExtResource("7_aprwq")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tt8to"]
+atlas = ExtResource("8_vy4al")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fejge"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_krndh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1w6eu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_woe4g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v3ydw")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oojse")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15ou3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8jfqu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tt8to")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oy4y6"]
+size = Vector2(16, 23)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tpw5o"]
+radius = 11.0
+height = 34.0
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1451606197 groups=["enemies"]]
+script = ExtResource("1_m7kra")
+laser_scene = ExtResource("2_88j4l")
+shoot_cooldown = 6.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=567933249]
+sprite_frames = SubResource("SpriteFrames_fejge")
+animation = &"run"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=236682323]
+position = Vector2(0, 5.5)
+shape = SubResource("RectangleShape2D_oy4y6")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1041943797]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=677128066]
+position = Vector2(0, 5)
+shape = SubResource("CapsuleShape2D_tpw5o")
+
+[node name="LaserRay" type="RayCast2D" parent="." unique_id=1796694012]
+target_position = Vector2(0, 182)
