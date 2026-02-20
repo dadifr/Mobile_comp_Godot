@@ -23,6 +23,9 @@ region = Rect2(16, 0, 16, 16)
 [sub_resource type="LabelSettings" id="LabelSettings_8cuoo"]
 font = ExtResource("8_twldb")
 
+[sub_resource type="LabelSettings" id="LabelSettings_meimr"]
+font_color = Color(0.05312676, 0.18278617, 1, 1)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_meimr"]
 atlas = ExtResource("10_cf6ij")
 region = Rect2(239, 533, 397, 334)
@@ -131,6 +134,10 @@ label_settings = SubResource("LabelSettings_8cuoo")
 [node name="SpeedLabel" type="Label" parent="MarginContainer/StatsContainer" unique_id=447726093]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_8cuoo")
+
+[node name="SlowLabel" type="Label" parent="MarginContainer/StatsContainer" unique_id=505636513]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_meimr")
 
 [node name="Virtual Joystick" parent="." unique_id=313316691 instance=ExtResource("9_8cuoo")]
 offset_left = 11.0

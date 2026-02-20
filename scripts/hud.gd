@@ -18,6 +18,7 @@ extends CanvasLayer
 # Riferimenti alle Label Timer
 @onready var boost_label = $MarginContainer/StatsContainer/BoostLabel 
 @onready var speed_label = $MarginContainer/StatsContainer/SpeedLabel 
+@onready var slow_label = $MarginContainer/StatsContainer/SlowLabel
 
 # --- NUOVO: RIFERIMENTO AL NODO AUDIO DEL BUFF ---
 @onready var sfx_buff = $SfxBuff
@@ -36,15 +37,21 @@ func _ready():
 	# 1. SETUP LABELS (Nascondiamo all'avvio)
 	if boost_label: boost_label.visible = false
 	if speed_label: speed_label.visible = false
-	
+	if slow_label: slow_label.visible = false
 	# 2. SETUP DISTANZA SCUDI
 	shield_bar.add_theme_constant_override("separation", -5)
 	
-	# ATTENZIONE BUG RISOLTO: 
-	# Nel tuo vecchio script nascondevi TUTTO l'HUD su PC!
-	# Ora nascondiamo SOLO il joystick (se ce l'hai qui dentro), altrimenti togli questo blocco.
+	await get_tree().process_frame
+	var player = get_tree().get_first_node_in_group("player")
+	if player:
+		player.boost_updated.connect(_on_boost_updated)
+		player.speed_updated.connect(_on_speed_updated)
+		player.slow_updated.connect(_on_slow_updated) 
+	else:
+		print("ERRORE: Player non trovato dall'HUD!")
+	
 	if not DisplayServer.is_touchscreen_available():
-		var joystick = get_node_or_null("VirtualJoystick") # Controlla se hai il joystick
+		var joystick = get_node_or_null("VirtualJoystick") 
 		if joystick: joystick.visible = false
 
 
@@ -158,3 +165,18 @@ func update_coins(amount):
 
 func update_bombs(amount):
 	bomb_label.text = "x " + str(amount)
+func _on_slow_updated(time_left):
+	if slow_label == null: return
+	
+	if time_left > 0:
+		slow_label.visible = true
+		# Arrotondiamo a 1 decimale
+		slow_label.text = "SLOWED: " + str("%.1f" % time_left) + "s"
+		
+		# Logica Colore: diventa rosso se sta per finire
+		if time_left < 2.0:
+			slow_label.modulate = Color(1, 0.3, 0.3) # Rosso
+		else:
+			slow_label.modulate = Color(0.8, 0.5, 1.0) # Viola/Bluastro
+	else:
+		slow_label.visible = false

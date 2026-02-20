@@ -38,6 +38,7 @@ var armor = 0
 #effetti rallentamento
 var rallentato=0
 @onready var bolle = $bolle
+var slow_effect_timer : Timer
 
 # --- SEGNALI ---
 signal coins_changed(new_amount)
@@ -48,7 +49,7 @@ signal armor_changed(new_armor)
 # SEGNALI SEPARATI PER I TIMER
 signal boost_updated(time_left) # Per la Forza (Label Blu)
 signal speed_updated(time_left) # Per la Velocità (Label Verde) - NUOVO!
-
+signal slow_updated(time_left)
 # Variabili di stato
 var health = 6
 var is_hurt = false
@@ -101,7 +102,12 @@ func _ready():
 	speed_timer.one_shot = true
 	speed_timer.timeout.connect(_on_speed_boost_ended)
 	add_child(speed_timer)
-
+	
+	slow_effect_timer = Timer.new()
+	slow_effect_timer.one_shot = true
+	slow_effect_timer.timeout.connect(_on_slow_ended)
+	add_child(slow_effect_timer)
+	
 func _physics_process(delta):
 	if is_dashing:
 		_process_dash(delta)
@@ -163,7 +169,8 @@ func _physics_process(delta):
 		speed_updated.emit(speed_timer.time_left)
 		
 	#Timer rallentamento (viola)
-	
+	if is_instance_valid(slow_effect_timer) and not slow_effect_timer.is_stopped():
+		slow_updated.emit(slow_effect_timer.time_left)
 	# MOVIMENTO
 	move_and_slide()
 	
@@ -334,14 +341,15 @@ func place_bomb():
 			bomb.global_position = global_position + (last_direction * distance)
 			get_parent().add_child(bomb)
 func slow_down():
-	if rallentato:
-		return
-	else :
-		rallentato=1
-		var originalspeed=speed
-		speed*=speed_reduction
-		bolle.emitting=true
-		await get_tree().create_timer(5).timeout
-		speed=originalspeed
-		bolle.emitting=false
-		rallentato=0
+	if not rallentato:
+		rallentato = 1
+		speed *= speed_reduction
+		bolle.emitting = true
+
+	slow_effect_timer.start(5.0)
+	
+func _on_slow_ended():
+	rallentato = 0
+	speed = default_speed
+	bolle.emitting = false
+	slow_updated.emit(0)

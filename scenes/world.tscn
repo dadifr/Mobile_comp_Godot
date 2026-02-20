@@ -2966,7 +2966,7 @@ tile_map_data = PackedByteArray("AAA3AKX/AAAJAAEAAAA3AKb/AAAJAAIAAAA3AKf/AAAJAAM
 tile_set = SubResource("TileSet_1dgkn")
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=1627991438]
-position = Vector2(457, -1344)
+position = Vector2(297, 347)
 
 [node name="HUD" parent="." unique_id=1538550412 instance=ExtResource("8_7r4gi")]
 
