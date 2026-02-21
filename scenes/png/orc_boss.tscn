@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d1eqa0fxv1udj" path="res://assets/sprites/frames pg e utility/mob/orcooooooooooo.png" id="2_aik4d"]
 [ext_resource type="PackedScene" uid="uid://ouqhn0btklqn" path="res://scenes/armi/esplosionenemica2.tscn" id="2_oit6d"]
 [ext_resource type="Texture2D" uid="uid://daq122em715r5" path="res://assets/sprites/frames pg e utility/mob/orco.bossidle.png" id="3_oit6d"]
+[ext_resource type="AudioStream" uid="uid://e6kxkjipy1dn" path="res://music/sounds/explosion.wav" id="3_slpqe"]
 [ext_resource type="Texture2D" uid="uid://dyrivdv1u433h" path="res://assets/sprites/frames pg e utility/mob/orco.run.png" id="4_slpqe"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jfhp7"]
@@ -117,11 +118,13 @@ size = Vector2(43, 54)
 [node name="orc_boss" type="CharacterBody2D" unique_id=2105925727 groups=["boss"]]
 motion_mode = 1
 script = ExtResource("1_ilqvd")
+max_health = 40
 speed = 30.0
 chase_duration = 2.0
 post_contact_delay = 3.0
 explosion_scene = ExtResource("2_oit6d")
 attack_cooldown = 1.0
+explosion_sound = ExtResource("3_slpqe")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=436628053]
 scale = Vector2(2, 2)

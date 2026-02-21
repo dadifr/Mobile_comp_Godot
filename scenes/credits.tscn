@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://dbb8bjiihnuf4"]
+
+[ext_resource type="Script" uid="uid://crqrw7sj4p4bd" path="res://scripts/credits.gd" id="1_2ckv8"]
+[ext_resource type="FontFile" uid="uid://cd2yngqm441q4" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="2_0ctdu"]
+
+[node name="Credits" type="Control" unique_id=348013354]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2ckv8")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1245047821]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0, 0, 0, 1)
+
+[node name="BackButton" type="Button" parent="." unique_id=1640402084]
+layout_mode = 0
+offset_left = 218.0
+offset_top = 330.0
+offset_right = 414.0
+offset_bottom = 354.0
+theme_override_fonts/font = ExtResource("2_0ctdu")
+text = "torna al menu"
+
+[node name="TestoCrediti" type="Label" parent="." unique_id=1719840111]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("2_0ctdu")
+theme_override_font_sizes/font_size = 8
+text = "[ KNIGHTGEON ]
+
+
+
+Un progetto realizzato con passione da:
+
+[ Calise Davide ]
+Programmazione & Sviluppo
+
+[ Kapatsyna Vladislav ]
+Level Design & Game Design
+
+[ Di Girolamo Yurii ]
+Art Direction & Animazioni
+
+[ Cesaroni Alessio ]
+Animazioni & Combact Design
+
+
+
+
+- - - - - - - - - - - - - - - - - -
+
+
+
+RISORSE E FONTI UTILIZZATE
+
+Un ringraziamento speciale ai creatori 
+degli asset che hanno reso possibile questo gioco:
+
+
+🎵 Musiche (OST):
+\"echoes of the precursors\" di [Psychronic]
+Link: [https://pixabay.com/it/music/mistero-echoes-of-the-precursors-425655/]
+
+\"Video Game Boss Fight Music\" di [IHateTuesdays]
+Link: [https://pixabay.com/it/music/batte-video-game-boss-fight-music-287355/]
+
+
+🔊 Effetti Sonori (SFX):
+\"laser shot ingame\" di [RibhavAgrawal]
+Link: [https://pixabay.com/sound-effects/film-special-effects-laser-shot-ingame-230500/]
+
+\"Medium Explosion\" di [JuveriSetila]
+Link: [https://pixabay.com/sound-effects/film-special-effects-medium-explosion-40472/]
+
+\"Interfaccia UI Sounds\" di [Nome Autore / Sito]
+Link: [https://link-agli-effetti.com]
+
+
+🎨 Template e Grafica:
+\"Dungeon Tileset & Boss Sprite II\" di [0x72]
+Link: [https://0x72.itch.io/dungeontileset-ii]
+Link: [https://sparksandpixels.itch.io/indoor-library-assetpack]
+Link: [https://dhassa.itch.io/spooky-mansion]
+Link: [https://1323062052qqcom.itch.io/room-furniture-pack]
+Link: [https://arex-v.itch.io/damp-dungeons]
+
+
+
+
+
+- - - - - - - - - - - - - - - - - -
+
+
+
+
+
+
+Sviluppato con Godot Engine 4
+
+
+
+GRAZIE PER AVER GIOCATO!"

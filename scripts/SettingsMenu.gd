@@ -4,8 +4,9 @@ extends Control
 @onready var volume_slider = $VBoxContainer/VolumeSlider
 @onready var res_option = $VBoxContainer/ResOptionButton
 
-# Percorso del gioco vero e proprio
+# Percorsi delle scene
 var game_scene_path = "res://scenes/character_selection.tscn"
+var credits_scene_path = "res://scenes/credits.tscn" 
 
 func _ready():
 	# 1. SETUP AUDIO
@@ -18,6 +19,12 @@ func _ready():
 	volume_slider.value_changed.connect(_on_volume_changed)
 	res_option.item_selected.connect(_on_resolution_selected)
 	$VBoxContainer/PlayButton.pressed.connect(_on_play_pressed)
+	
+	# --- NUOVO: Colleghiamo il pulsante dei Titoli di Coda ---
+	# Usiamo get_node_or_null così non crasha se dimentichi di creare il pulsante
+	var credits_btn = $VBoxContainer.get_node_or_null("CreditsButton")
+	if credits_btn:
+		credits_btn.pressed.connect(_on_credits_pressed)
 
 func add_resolutions():
 	# --- FIX: Svuotiamo il menu per evitare doppioni dall'editor! ---
@@ -62,3 +69,7 @@ func center_window():
 
 func _on_play_pressed():
 	get_tree().change_scene_to_file(game_scene_path)
+
+# --- NUOVA FUNZIONE: Apre la scena dei crediti ---
+func _on_credits_pressed():
+	get_tree().change_scene_to_file(credits_scene_path)

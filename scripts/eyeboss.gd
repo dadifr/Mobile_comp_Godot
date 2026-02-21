@@ -13,6 +13,7 @@ extends CharacterBody2D
 
 @export_group("Combattimento")
 @export var contact_damage = 1
+@export var contact_cooldown = 1.0 
 @export var max_health = 60
 @export var laser_scene: PackedScene
 @export var shoot_cooldown = 2.5
@@ -25,8 +26,13 @@ extends CharacterBody2D
 @export var teleport_cooldown = 5.0
 @export var teleport_threshold = 130.0 
 
+# --- AUDIO ---
+@export_group("Audio")
+@export var laser_shoot_sound: AudioStream 
+@export var nova_sound: AudioStream        
+
 # --- STATI INTERNI ---
-var is_active = false # <--- Il boss parte DORMIENTE
+var is_active = false
 var current_health = 60
 var player = null
 var can_shoot = true
@@ -34,14 +40,14 @@ var can_nova = true
 var can_teleport = true
 var is_attacking = false
 var current_laser = null 
+var can_contact_damage = true 
 
 @onready var anim = $AnimatedSprite2D
 @onready var sight_check = $LaserRay 
 
 func _ready():
-	# --- ASSEGNAZIONE GRUPPI ---
-	add_to_group("enemies") # Serve alla stanza per chiudere le porte
-	add_to_group("boss")    # Serve per identificare che è un Boss
+	add_to_group("enemies") 
+	add_to_group("boss")    
 	
 	current_health = max_health
 	if sight_check:
@@ -49,8 +55,7 @@ func _ready():
 		sight_check.add_exception(self)
 
 func _physics_process(delta):
-	# --- CONTROLLO SONNO ---
-	if not is_active: return # Se dorme, ignora tutto e sta fermo!
+	if not is_active: return 
 	
 	if is_attacking:
 		velocity = Vector2.ZERO
@@ -70,6 +75,7 @@ func _physics_process(delta):
 		if dist < detection_range:
 			var dir = (player.global_position - global_position).normalized()
 			velocity = dir * speed
+			
 			if can_nova:
 				attack_nova()
 			elif can_shoot and has_line_of_sight():
@@ -109,11 +115,10 @@ func attack_targeted():
 	current_laser.global_position = global_position
 	if "is_charging" in current_laser: current_laser.is_charging = true
 	
-	# --- FIX: Comunichiamo al laser chi lo ha creato PRIMA di aggiungerlo alla scena! ---
 	if "creator" in current_laser:
 		current_laser.creator = self
 		
-	get_parent().add_child(current_laser)
+	get_tree().current_scene.add_child(current_laser)
 	
 	var lock_time = charge_time * lock_ratio
 	var timer = 0.0
@@ -134,6 +139,14 @@ func attack_targeted():
 		await get_tree().process_frame
 		timer += get_process_delta_time()
 	
+	if laser_shoot_sound:
+		var sfx = AudioStreamPlayer2D.new()
+		sfx.stream = laser_shoot_sound
+		sfx.global_position = global_position
+		sfx.autoplay = true
+		sfx.finished.connect(sfx.queue_free)
+		get_tree().current_scene.add_child(sfx)
+		
 	if is_instance_valid(current_laser) and current_laser.has_method("fire_laser"):
 		current_laser.fire_laser()
 	
@@ -151,7 +164,16 @@ func attack_nova():
 	can_nova = false
 	anim.play("attack")
 	modulate = Color(0.5, 0.5, 3) 
+	
 	await get_tree().create_timer(1.2).timeout 
+	
+	if nova_sound:
+		var sfx = AudioStreamPlayer2D.new()
+		sfx.stream = nova_sound
+		sfx.global_position = global_position
+		sfx.autoplay = true
+		sfx.finished.connect(sfx.queue_free)
+		get_tree().current_scene.add_child(sfx)
 	
 	for i in range(nova_laser_count):
 		var angle = i * (PI * 2 / nova_laser_count)
@@ -159,11 +181,10 @@ func attack_nova():
 		var laser = laser_scene.instantiate()
 		laser.global_position = global_position
 		
-		# --- FIX: Anche per la Nova, comunichiamo il creatore ---
 		if "creator" in laser:
 			laser.creator = self
 			
-		get_parent().add_child(laser)
+		get_tree().current_scene.add_child(laser)
 		var ray = laser.get_node_or_null("RayCast2D")
 		if ray: ray.target_position = direction * 800
 		if laser.has_method("fire_laser"): laser.fire_laser()
@@ -186,12 +207,23 @@ func has_line_of_sight() -> bool:
 	sight_check.force_raycast_update()
 	return sight_check.is_colliding() and sight_check.get_collider().is_in_group("player")
 
+# --- DANNO DA CONTATTO CON COOLDOWN ---
 func check_contact_damage():
+	if not can_contact_damage: 
+		return
+
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
+		
 		if collider.is_in_group("player") and collider.has_method("take_damage"):
 			collider.take_damage(contact_damage, global_position)
+			
+			can_contact_damage = false
+			await get_tree().create_timer(contact_cooldown).timeout
+			can_contact_damage = true
+			
+			break 
 
 func take_damage(amount, _source_pos = Vector2.ZERO):
 	current_health -= amount
@@ -201,12 +233,40 @@ func take_damage(amount, _source_pos = Vector2.ZERO):
 	if current_health <= 0:
 		die() 
 
-# --- MORTE ---
+
 func die():
-	print("Boss sconfitto!")
-	remove_from_group("enemies") # Fa aprire le porte istantaneamente!
+	print("Boss sconfitto! GG!")
+	remove_from_group("enemies") 
 	remove_from_group("boss")
-	OST.play_normal_theme()
+	
+	visible = false
+	set_collision_layer_value(1, false)
+	set_collision_mask_value(1, false)
+	
+	var gg_layer = CanvasLayer.new()
+	gg_layer.layer = 100 
+	var gg_label = Label.new()
+	gg_label.text = "GG\nHAI VINTO!"
+	gg_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	gg_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	gg_label.set_anchors_preset(Control.PRESET_FULL_RECT)
+	
+	gg_label.add_theme_font_size_override("font_size", 120)
+	gg_label.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0)) 
+	gg_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0)) 
+	gg_label.add_theme_constant_override("shadow_outline_size", 15)
+	
+	gg_layer.add_child(gg_label)
+	get_tree().current_scene.call_deferred("add_child", gg_layer)
+	
+	gg_label.modulate.a = 0.0
+	var tween = get_tree().create_tween()
+	tween.tween_property(gg_label, "modulate:a", 1.0, 2.0)
+	
+	await get_tree().create_timer(5.0).timeout
+	
+	get_tree().change_scene_to_file("res://scenes/credits.tscn")
+	
 	queue_free()
 
 func update_animations():
@@ -217,7 +277,6 @@ func update_animations():
 	else:
 		anim.play("idle")
 
-# --- NUOVA FUNZIONE: SVEGLIATO DALLA STANZA ---
 func activate_boss():
 	print("Il Boss si è svegliato!")
 	is_active = true

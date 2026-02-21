@@ -47,8 +47,8 @@ signal health_changed(new_health)
 signal armor_changed(new_armor)
 
 # SEGNALI SEPARATI PER I TIMER
-signal boost_updated(time_left) # Per la Forza (Label Blu)
-signal speed_updated(time_left) # Per la Velocità (Label Verde) - NUOVO!
+signal boost_updated(time_left) 
+signal speed_updated(time_left) 
 signal slow_updated(time_left)
 signal dash_cooldown_updated(percentuale: float)
 # Variabili di stato
@@ -68,7 +68,7 @@ var boost_tween: Tween
 # Variabili Velocità
 var default_speed = 100.0  
 var speed_timer : Timer    
-var speed_tween: Tween # Variabile per il lampeggio verde
+var speed_tween: Tween 
 
 # --- VARIABILI DASH ---
 var is_dashing = false
@@ -159,26 +159,20 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("place_bomb") and not is_hurt: place_bomb()
 
 	# --- 9. AGGIORNAMENTO HUD TIMER (CORRETTO) ---
-	# Ora gestiamo i due timer separatamente!
 	
-	# Timer Danno (Blu)
 	if is_instance_valid(boost_timer) and not boost_timer.is_stopped():
 		boost_updated.emit(boost_timer.time_left)
 	
-	# Timer Velocità (Verde)
 	if is_instance_valid(speed_timer) and not speed_timer.is_stopped():
 		speed_updated.emit(speed_timer.time_left)
 		
-	#Timer rallentamento (viola)
 	if is_instance_valid(slow_effect_timer) and not slow_effect_timer.is_stopped():
 		slow_updated.emit(slow_effect_timer.time_left)
-	# Timer Dash
 	if is_instance_valid(dash_timer) and not dash_timer.is_stopped():
 		var p = (1.0 - (dash_timer.time_left / dash_timer.wait_time)) * 100
 		dash_cooldown_updated.emit(p)
 	else:
 		dash_cooldown_updated.emit(100.0)
-	# MOVIMENTO
 	move_and_slide()
 	
 	for i in get_slide_collision_count():
@@ -227,7 +221,7 @@ func activate_damage_boost(amount, duration):
 
 func _on_boost_ended():
 	current_damage_bonus = 0
-	boost_updated.emit(0) # Spegne la label BLU
+	boost_updated.emit(0) 
 	print("Fine Boost Danno")
 	if boost_tween: boost_tween.kill()
 	var reset_tween = create_tween()
@@ -242,7 +236,6 @@ func activate_speed_boost(multiplier, duration):
 		speed_timer.start()
 	print("SPEED UP!")
 	
-	# Effetto Lampeggio Verde
 	if speed_tween: speed_tween.kill()
 	speed_tween = create_tween().set_loops()
 	speed_tween.tween_property(anim, "modulate", Color(0.5, 1.0, 0.5), 0.3)
@@ -250,7 +243,7 @@ func activate_speed_boost(multiplier, duration):
 
 func _on_speed_boost_ended():
 	speed = default_speed
-	speed_updated.emit(0) # Spegne la label VERDE (Nuovo segnale)
+	speed_updated.emit(0) 
 	print("Fine Speed Boost")
 	
 	if speed_tween: speed_tween.kill()
@@ -283,7 +276,6 @@ func take_damage(amount, enemy_pos = Vector2.ZERO):
 			die()
 			return
 
-	# --- FAI PARTIRE IL SUONO DEL DANNO QUI ---
 	if sfx_hurt:
 		sfx_hurt.play()
 	
