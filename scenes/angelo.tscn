@@ -20,19 +20,19 @@ region = Rect2(400, 304, 16, 16)
 atlas = ExtResource("2_uf3p0")
 region = Rect2(416, 304, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oaa6n"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_uf3p0"]
 atlas = ExtResource("2_uf3p0")
 region = Rect2(432, 304, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kasa4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_oaa6n"]
 atlas = ExtResource("2_uf3p0")
 region = Rect2(448, 304, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bvo27"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kasa4"]
 atlas = ExtResource("2_uf3p0")
 region = Rect2(464, 304, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r6rsm"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvo27"]
 atlas = ExtResource("2_uf3p0")
 region = Rect2(480, 304, 16, 16)
 
@@ -50,6 +50,14 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_airpp")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uf3p0")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_oaa6n")
@@ -59,12 +67,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bvo27")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r6rsm")
 }],
 "loop": true,
-"name": &"default",
+"name": &"run",
 "speed": 7.0
 }]
 
@@ -76,10 +81,10 @@ motion_mode = 1
 script = ExtResource("1_670lh")
 potion_scene = ExtResource("2_4gl8u")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=127216684]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=127216684 groups=["enemies"]]
 sprite_frames = SubResource("SpriteFrames_r2q7u")
-frame = 6
-frame_progress = 0.6167653
+animation = &"idle"
+frame_progress = 0.794118
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1636084436]
 shape = SubResource("CircleShape2D_j74hv")

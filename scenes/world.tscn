@@ -4921,6 +4921,10 @@ size = Vector2(439, 381)
 resource_local_to_scene = true
 size = Vector2(604, 255)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pq8jk"]
+resource_local_to_scene = true
+size = Vector2(505, 351)
+
 [node name="world" type="Node2D" unique_id=1641687482]
 script = ExtResource("1_4mrxx")
 
@@ -4950,7 +4954,7 @@ tile_map_data = PackedByteArray("AAA3AKX/AAAJAAEAAAA3AKb/AAAJAAIAAAA3AKf/AAAJAAM
 tile_set = SubResource("TileSet_1dgkn")
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=1627991438]
-position = Vector2(1000, -2787)
+position = Vector2(1006, -2749)
 
 [node name="HUD" parent="." unique_id=1538550412 instance=ExtResource("8_7r4gi")]
 
@@ -5701,7 +5705,7 @@ motion_mode = 1
 potionH_scene = ExtResource("9_w7kh3")
 
 [node name="Door" parent="DungeonRoom2/Doors" parent_id_path=PackedInt32Array(1477039953, 1990335327) index="0" unique_id=1236130432 instance=ExtResource("5_71j4m")]
-position = Vector2(432, -64)
+position = Vector2(440, -64)
 
 [node name="DungeonRoom3" parent="." unique_id=959355561 instance=ExtResource("12_jhx03")]
 
@@ -5717,7 +5721,7 @@ coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("24_ts3gi")
 
 [node name="Door" parent="DungeonRoom3/Doors" parent_id_path=PackedInt32Array(959355561, 1990335327) index="0" unique_id=714958643 instance=ExtResource("5_71j4m")]
-position = Vector2(1040, -352)
+position = Vector2(1048, -352)
 
 [node name="DungeonRoom4" parent="." unique_id=1772701840 instance=ExtResource("12_jhx03")]
 position = Vector2(791.94, -11.369019)
@@ -5764,7 +5768,7 @@ potionH_scene = ExtResource("9_o8fc1")
 position = Vector2(-552, -710)
 
 [node name="Door" parent="DungeonRoom5/Doors" parent_id_path=PackedInt32Array(1253026333, 1990335327) index="0" unique_id=619502746 instance=ExtResource("5_71j4m")]
-position = Vector2(-561, -843)
+position = Vector2(-552, -848)
 
 [node name="Lever3" parent="." unique_id=1583880369 node_paths=PackedStringArray("target_spikes") instance=ExtResource("38_l8ah6")]
 position = Vector2(-424, -1193)
@@ -5794,28 +5798,37 @@ position = Vector2(-456, -713)
 position = Vector2(-409, -1654)
 shape = SubResource("RectangleShape2D_mvg0v")
 
-[node name="occhio" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="0" unique_id=394822036 instance=ExtResource("23_5hglh")]
-position = Vector2(-415, -1710)
-min_x = -700.0
-max_x = -125.0
-min_y = -1875.0
-max_y = -1550.0
-
-[node name="angelo" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="1" unique_id=168138766 instance=ExtResource("46_5hglh")]
+[node name="angelo" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="0" unique_id=168138766 groups=["enemies"] instance=ExtResource("46_5hglh")]
 position = Vector2(-218, -1672)
 flee_speed = 60.0
 detection_range = 50.0
 
-[node name="angelo2" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="2" unique_id=935312970 instance=ExtResource("46_5hglh")]
+[node name="angelo2" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="1" unique_id=935312970 groups=["enemies"] instance=ExtResource("46_5hglh")]
 position = Vector2(-568, -1673)
 flee_speed = 60.0
 detection_range = 50.0
 
+[node name="angelo3" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="2" unique_id=1716277882 groups=["enemies"] instance=ExtResource("46_5hglh")]
+position = Vector2(-409, -1801)
+flee_speed = 60.0
+detection_range = 50.0
+
+[node name="orc_boss" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="3" unique_id=1819856755 groups=["enemies"] instance=ExtResource("23_qg546")]
+position = Vector2(-405, -1750)
+max_health = 40
+
+[node name="occhio" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="4" unique_id=394822036 instance=ExtResource("23_5hglh")]
+position = Vector2(-412, -1593)
+min_x = -700.0
+max_x = -150.0
+min_y = -1850.0
+max_y = -1550.0
+
 [node name="Door" parent="DungeonRoom6/Doors" parent_id_path=PackedInt32Array(2138329488, 1990335327) index="0" unique_id=50402653 instance=ExtResource("5_71j4m")]
-position = Vector2(-416, -1457)
+position = Vector2(-408, -1457)
 
 [node name="Door2" parent="DungeonRoom6/Doors" parent_id_path=PackedInt32Array(2138329488, 1990335327) index="1" unique_id=1157946784 instance=ExtResource("5_71j4m")]
-position = Vector2(-416, -1856)
+position = Vector2(-408, -1856)
 
 [node name="DungeonRoom7" parent="." unique_id=1048760130 instance=ExtResource("12_jhx03")]
 position = Vector2(128, -1548)
@@ -6151,6 +6164,7 @@ position = Vector2(1512, -1610)
 [node name="ShopItem14" parent="." unique_id=80343591 instance=ExtResource("15_xo05s")]
 position = Vector2(712, -2777)
 item_to_sell = ExtResource("9_o8fc1")
+price = 15
 item_texture = ExtResource("17_7t5mc")
 bomb_scene = ExtResource("18_pm21f")
 bomb_texture = ExtResource("19_2lf6f")
@@ -6230,6 +6244,56 @@ big_speed_potion_texture = ExtResource("33_x2olw")
 big_speed_potion_price_range = Vector2i(20, 23)
 big_speed_potion_chance = 0.09
 
+[node name="Lever5" parent="." unique_id=746288336 node_paths=PackedStringArray("target_spikes") instance=ExtResource("38_l8ah6")]
+position = Vector2(936, -2777)
+target_spikes = [NodePath("../GateSpikes22"), NodePath("../GateSpikes23"), NodePath("../GateSpikes24")]
+
+[node name="GateSpikes22" parent="." unique_id=72170199 instance=ExtResource("39_e75v4")]
+position = Vector2(984, -2809)
+
+[node name="GateSpikes23" parent="." unique_id=528012920 instance=ExtResource("39_e75v4")]
+position = Vector2(1000, -2809)
+
+[node name="GateSpikes24" parent="." unique_id=1089904063 instance=ExtResource("39_e75v4")]
+position = Vector2(1016, -2809)
+
+[node name="DungeonRoomBoss" parent="." unique_id=760678224 instance=ExtResource("12_jhx03")]
+position = Vector2(672, -3649)
+
+[node name="CollisionShape2D" parent="DungeonRoomBoss/Detector" parent_id_path=PackedInt32Array(760678224, 131393299) index="0" unique_id=1644665846]
+position = Vector2(327.5, 160.5)
+shape = SubResource("RectangleShape2D_pq8jk")
+
+[node name="occhio" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="0" unique_id=541045664 instance=ExtResource("23_5hglh")]
+position = Vector2(330, 37)
+min_x = 750.0
+max_x = 1250.0
+min_y = -3650.0
+max_y = -3350.0
+
+[node name="angelo" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="1" unique_id=1899860446 groups=["enemies"] instance=ExtResource("46_5hglh")]
+position = Vector2(119, 57)
+flee_speed = 60.0
+detection_range = 50.0
+
+[node name="angelo2" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="2" unique_id=1392786632 groups=["enemies"] instance=ExtResource("46_5hglh")]
+position = Vector2(535, 56)
+flee_speed = 60.0
+detection_range = 50.0
+
+[node name="angelo3" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="3" unique_id=1784070620 groups=["enemies"] instance=ExtResource("46_5hglh")]
+position = Vector2(536, 281)
+flee_speed = 60.0
+detection_range = 50.0
+
+[node name="angelo4" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="4" unique_id=1033700289 groups=["enemies"] instance=ExtResource("46_5hglh")]
+position = Vector2(119, 280)
+flee_speed = 60.0
+detection_range = 50.0
+
+[node name="Door" parent="DungeonRoomBoss/Doors" parent_id_path=PackedInt32Array(760678224, 1990335327) index="0" unique_id=307714173 instance=ExtResource("5_71j4m")]
+position = Vector2(328, 353)
+
 [editable path="DungeonRoom"]
 [editable path="DungeonRoom2"]
 [editable path="DungeonRoom3"]
@@ -6239,3 +6303,4 @@ big_speed_potion_chance = 0.09
 [editable path="DungeonRoom7"]
 [editable path="DungeonRoom8"]
 [editable path="DungeonRoom9"]
+[editable path="DungeonRoomBoss"]
