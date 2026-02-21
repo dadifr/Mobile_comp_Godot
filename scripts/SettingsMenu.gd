@@ -8,8 +8,7 @@ extends Control
 var game_scene_path = "res://scenes/character_selection.tscn"
 
 func _ready():
-	# 1. SETUP AUDIO (Modificato per l'OST)
-	# Impostiamo lo slider al volume attuale della tua colonna sonora
+	# 1. SETUP AUDIO
 	volume_slider.value = db_to_linear(OST.volume_db)
 	
 	# 2. SETUP RISOLUZIONE
@@ -21,20 +20,18 @@ func _ready():
 	$VBoxContainer/PlayButton.pressed.connect(_on_play_pressed)
 
 func add_resolutions():
-	# Aggiungiamo le opzioni al menu a tendina
+	# --- FIX: Svuotiamo il menu per evitare doppioni dall'editor! ---
+	res_option.clear()
+	
 	res_option.add_item("1920 x 1080 (Full HD)") # ID 0
 	res_option.add_item("1280 x 720 (HD)")       # ID 1
 	res_option.add_item("1152 x 648 (Default)")  # ID 2
 	res_option.add_item("FullScreen (Schermo Intero)") # ID 3
 	
-	# Selezioniamo di default la 1152x648 (o quella che preferisci)
 	res_option.select(2)
 
 func _on_volume_changed(value):
-	# Convertiamo il valore lineare (0 a 1) in Decibel per il nodo OST
 	OST.volume_db = linear_to_db(value)
-	
-	# Se lo slider è a 0 (o vicinissimo allo 0), mutiamo completamente la musica
 	if value < 0.05:
 		OST.volume_db = -80.0
 
@@ -56,11 +53,12 @@ func _on_resolution_selected(index):
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 
 func center_window():
-	# Centra la finestra nello schermo del monitor
+	# --- FIX: Aspettiamo un millisecondo che il sistema operativo ridimensioni la finestra ---
+	await get_tree().process_frame 
+	
 	var screen_center = DisplayServer.screen_get_position() + DisplayServer.screen_get_size() / 2
 	var window_size = DisplayServer.window_get_size()
 	DisplayServer.window_set_position(screen_center - window_size / 2)
 
 func _on_play_pressed():
-	# Avvia il gioco!
 	get_tree().change_scene_to_file(game_scene_path)
