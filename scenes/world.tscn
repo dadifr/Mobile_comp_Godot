@@ -54,6 +54,7 @@
 [ext_resource type="PackedScene" uid="uid://dx8hpup13e2fu" path="res://scenes/png/mini.zombie.tscn" id="51_5hglh"]
 [ext_resource type="PackedScene" uid="uid://g8r8rh5pn1h6" path="res://scenes/armi/LaserIstante.tscn" id="51_pf35h"]
 [ext_resource type="PackedScene" uid="uid://c7653bj42ovu5" path="res://scenes/png/magodemone.tscn" id="52_5hglh"]
+[ext_resource type="PackedScene" uid="uid://himxfj0h22tb" path="res://scenes/png/demone_g.tscn" id="53_iexy4"]
 [ext_resource type="PackedScene" uid="uid://cdiioe1uobjj5" path="res://scenes/png/imp.tscn" id="53_qg546"]
 [ext_resource type="PackedScene" uid="uid://lmvc8cw28y8g" path="res://scenes/png/orco.tscn" id="54_pf35h"]
 
@@ -6337,6 +6338,9 @@ laser_scene = ExtResource("51_pf35h")
 position = Vector2(187, 265)
 coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("9_w7kh3")
+
+[node name="DemoneG" parent="DungeonRoom8/Enemies" parent_id_path=PackedInt32Array(38245489, 1611563842) index="5" unique_id=1313072376 groups=["enemies"] instance=ExtResource("53_iexy4")]
+position = Vector2(508, 11)
 
 [node name="Door" parent="DungeonRoom8/Doors" parent_id_path=PackedInt32Array(38245489, 1990335327) index="0" unique_id=2039286201 instance=ExtResource("5_71j4m")]
 position = Vector2(285, 353)
