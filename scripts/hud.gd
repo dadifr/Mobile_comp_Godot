@@ -4,6 +4,7 @@ extends CanvasLayer
 @export_group("Shield Textures")
 @export var shield_full: Texture2D
 @export var shield_half: Texture2D
+@onready var dash_bar = $DashBar
 
 @export_group("Heart Textures")
 @export var full_heart_texture: Texture2D
@@ -19,6 +20,7 @@ extends CanvasLayer
 @onready var boost_label = $MarginContainer/StatsContainer/BoostLabel 
 @onready var speed_label = $MarginContainer/StatsContainer/SpeedLabel 
 @onready var slow_label = $MarginContainer/StatsContainer/SlowLabel
+
 
 # --- NUOVO: RIFERIMENTO AL NODO AUDIO DEL BUFF ---
 @onready var sfx_buff = $SfxBuff
@@ -45,6 +47,7 @@ func _ready():
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
 		player.slow_updated.connect(_on_slow_updated) 
+		player.dash_cooldown_updated.connect(_on_dash_cooldown_updated)
 	else:
 		print("ERRORE: Player non trovato dall'HUD!")
 	
@@ -178,3 +181,11 @@ func _on_slow_updated(time_left):
 			slow_label.modulate = Color(0.8, 0.5, 1.0) # Viola/Bluastro
 	else:
 		slow_label.visible = false
+		
+func _on_dash_cooldown_updated(percentuale):
+	if dash_bar:
+		dash_bar.value = percentuale
+		if percentuale >= 100:
+			dash_bar.modulate = Color(1, 1, 1) # Pronta!
+		else:
+			dash_bar.modulate = Color(0.5, 0.5, 0.5) # In ricarica...
