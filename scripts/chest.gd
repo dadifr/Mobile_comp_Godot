@@ -1,30 +1,30 @@
 extends StaticBody2D
 
-# --- 1. CONFIGURAZIONE SCENE (Trascina i .tscn qui) ---
+# --- 1. CONFIGURAZIONE SCENE ---
 
 @export_group("Health Items (Cuori)")
-@export var potion_h_scene: PackedScene        # Cuore Piccolo
-@export var big_potion_h_scene: PackedScene    # Cuore Grande
+@export var potion_h_scene: PackedScene        
+@export var big_potion_h_scene: PackedScene   
 
 @export_group("Shield Items (Scudi - Giallo)")
-@export var shield_small_scene: PackedScene    # Mezzo Scudo
-@export var shield_big_scene: PackedScene      # Scudo Intero
+@export var shield_small_scene: PackedScene    
+@export var shield_big_scene: PackedScene     
 
 @export_group("Damage Boost (Forza - Blu)")
-@export var damage_potion_scene: PackedScene     # Boost Piccolo
-@export var big_damage_potion_scene: PackedScene # Boost Grande
+@export var damage_potion_scene: PackedScene     
+@export var big_damage_potion_scene: PackedScene 
 
 @export_group("Speed Boost (Velocità - Verde)")
-@export var speed_potion_scene: PackedScene      # Velocità Piccola
-@export var big_speed_potion_scene: PackedScene  # Velocità Grande
+@export var speed_potion_scene: PackedScene      
+@export var big_speed_potion_scene: PackedScene 
 
 @export_group("Monete & Trappole")
 @export var coin_scene: PackedScene
 @export var bomb_scene: PackedScene 
 
-# --- 2. PROBABILITÀ DROP (0.1 = 10%, 1.0 = 100%) ---
+# --- 2. PROBABILITÀ DROP  ---
 @export_group("Drop Chances")
-@export var mimic_chance: float = 0.1            # 10% Trappola
+@export var mimic_chance: float = 0.1            
 
 # Probabilità Vita
 @export var potion_h_chance: float = 0.3         
@@ -49,7 +49,7 @@ extends StaticBody2D
 
 var is_open = false
 
-# --- NUOVO: RIFERIMENTO AUDIO ---
+# --- RIFERIMENTO AUDIO ---
 @onready var sfx_open = $SfxOpenChest
 
 func _ready():
@@ -64,7 +64,6 @@ func _on_body_entered(body):
 func open_chest():
 	is_open = true
 	
-	# Riproduciamo il suono di apertura!
 	if sfx_open:
 		sfx_open.play()
 		
@@ -100,7 +99,7 @@ func calculate_loot():
 	if damage_potion_scene and randf() <= damage_potion_chance:
 		spawn_item(damage_potion_scene); has_loot = true
 
-	# --- CATEGORIA 4: VELOCITÀ (Verde - NUOVO) ---
+	# --- CATEGORIA 4: VELOCITÀ (Verde) ---
 	if big_speed_potion_scene and randf() <= big_speed_potion_chance:
 		spawn_item(big_speed_potion_scene); has_loot = true
 		print("Loot: Super Velocità!")
@@ -137,11 +136,9 @@ func spawn_item(scene_to_spawn):
 
 	var item = scene_to_spawn.instantiate()
 	
-	# Sparpagliamento casuale
 	var random_offset = Vector2(randf_range(-30, 30), randf_range(20, 50))
 	item.global_position = global_position + random_offset
 	
-	# Spinta fisica
 	if item is RigidBody2D:
 		item.linear_damp = 5
 		var random_force = Vector2(randf_range(-0.5, 0.5), 1).normalized() * 30

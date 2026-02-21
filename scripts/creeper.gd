@@ -3,16 +3,16 @@ extends CharacterBody2D
 # --- VARIABILI CONFIGURABILI ---
 @export var explosion_damage = 3
 @export var explosion_radius = 80.0
-@export var fuse_time = 0.5 # Tempo tra il contatto e il botto
+@export var fuse_time = 0.5 
 @export var speed = 50.0            
 @export var patrol_speed = 30.0     
 @export var detection_range = 150.0 
 @export var max_health = 3
 @export var damage = 1
 @export var knockback_force = 250.0
-@export var attack_cooldown_time = 1.5 # Tempo in cui sta fermo dopo l'attacco
+@export var attack_cooldown_time = 1.5 
 @export var coin_scene: PackedScene
-@export var potionH_scene: PackedScene # <--- La nuova pozione
+@export var potionH_scene: PackedScene 
 
 # Probabilità
 @export var potion_chance: float = 0.10 
@@ -24,7 +24,7 @@ var is_hurt = false
 var player = null
 
 # --- FIX: VARIABILE DI STATO ATTACCO ---
-var is_attacking = false # Se è vero, il mob è "congelato" post-attacco
+var is_attacking = false 
 
 # Variabili Pattuglia e Investigazione
 var move_direction = Vector2.ZERO
@@ -46,7 +46,7 @@ func _draw():
 	draw_circle(Vector2.ZERO, detection_range, Color(1, 0, 0, 0.1))
 
 func _physics_process(delta):
-	# 1. GESTIONE KNOCKBACK (Priorità Massima)
+	# 1. GESTIONE KNOCKBACK 
 	if is_hurt:
 		velocity = velocity.move_toward(Vector2.ZERO, 800 * delta)
 		move_and_slide()
@@ -54,10 +54,8 @@ func _physics_process(delta):
 
 	# --- 2. FIX: GESTIONE ATTACCO CON RINCULO ---
 	if is_attacking:
-		# NON forziamo velocity a zero qui. 
-		# Lasciamo che sia la funzione attack_player a decidere se spingerci indietro o fermarci.
 		move_and_slide() 
-		return # Usciamo per non fare calcoli di inseguimento
+		return 
 
 	# 3. CERCA IL GIOCATORE
 	if player == null:
@@ -115,7 +113,6 @@ func _physics_process(delta):
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		
-		# Se tocca il player E NON sta già attaccando
 		if collider.is_in_group("player") and not is_attacking:
 			if collider.has_method("take_damage"):
 				attack_player(collider)
@@ -125,12 +122,9 @@ func _physics_process(delta):
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		
-		# Se il nemico sbatte contro un oggetto rigido
 		if collider is RigidBody2D:
 			var push_dir = -collision.get_normal()
-			# nemico spinge un po' più piano del giocatore
 			var push_speed = 100.0 
-			# evitare che voli via
 			collider.linear_velocity = push_dir * push_speed
 	
 func attack_player(target):
@@ -144,7 +138,6 @@ func attack_player(target):
 	
 	await get_tree().create_timer(fuse_time).timeout
 	
-	# 2. Esecuzione dell'esplosione
 	explode()
 	
 
@@ -152,7 +145,6 @@ func explode():
 	print("BOOM!")
 	anim.play("esplosione")
 
-	# Attiviamo l'area per un istante
 	$ExplosionArea/CollisionShape2D.set_deferred("disabled", false)
 	
 	await get_tree().physics_frame
@@ -168,7 +160,6 @@ func explode():
 	die_instantly()
 
 func die_instantly():
-	# Una morte rapida senza loot o con loot specifico
 	queue_free()
 func start_investigation():
 	is_investigating = true
@@ -204,18 +195,14 @@ func die():
 	print("Goblin eliminato!")
 	set_physics_process(false)
 	$CollisionShape2D.set_deferred("disabled", true)
-	# lot
 	var random_roll = randf()
 	
-	# Pozione (È la più rara, controlliamo per prima)
 	if potionH_scene and random_roll < potion_chance:
 		spawn_loot(potionH_scene)
 		
-	# Moneta
 	elif coin_scene and random_roll < (potion_chance + coin_chance):
 		spawn_loot(coin_scene)
 	
-	# Se il numero è molto alto (es. 0.8), non entra in nessuno dei due if
 	
 	queue_free()
 

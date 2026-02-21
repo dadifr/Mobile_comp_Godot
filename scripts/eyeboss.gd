@@ -13,7 +13,7 @@ extends CharacterBody2D
 
 @export_group("Combattimento")
 @export var contact_damage = 1
-@export var contact_cooldown = 1.0 # <--- NUOVO: Tempo di ricarica tra un danno fisico e l'altro
+@export var contact_cooldown = 1.0 
 @export var max_health = 60
 @export var laser_scene: PackedScene
 @export var shoot_cooldown = 2.5
@@ -40,7 +40,7 @@ var can_nova = true
 var can_teleport = true
 var is_attacking = false
 var current_laser = null 
-var can_contact_damage = true # <--- NUOVO: Lucchetto per i danni fisici
+var can_contact_damage = true 
 
 @onready var anim = $AnimatedSprite2D
 @onready var sight_check = $LaserRay 
@@ -209,7 +209,6 @@ func has_line_of_sight() -> bool:
 
 # --- DANNO DA CONTATTO CON COOLDOWN ---
 func check_contact_damage():
-	# Se il cooldown è attivo, non fare nulla!
 	if not can_contact_damage: 
 		return
 
@@ -220,12 +219,10 @@ func check_contact_damage():
 		if collider.is_in_group("player") and collider.has_method("take_damage"):
 			collider.take_damage(contact_damage, global_position)
 			
-			# Appena facciamo danno, chiudiamo il lucchetto e facciamo partire il timer!
 			can_contact_damage = false
 			await get_tree().create_timer(contact_cooldown).timeout
 			can_contact_damage = true
 			
-			# Interrompiamo il ciclo per non fargli prendere danno doppio nello stesso impatto
 			break 
 
 func take_damage(amount, _source_pos = Vector2.ZERO):
@@ -237,19 +234,15 @@ func take_damage(amount, _source_pos = Vector2.ZERO):
 		die() 
 
 
-# --- MORTE ---
-# --- MORTE E FINE GIOCO ---
 func die():
 	print("Boss sconfitto! GG!")
 	remove_from_group("enemies") 
 	remove_from_group("boss")
 	
-	# Rendiamo il boss invisibile e intoccabile mentre festeggiamo
 	visible = false
 	set_collision_layer_value(1, false)
 	set_collision_mask_value(1, false)
 	
-	# --- SCHERMATA GG ---
 	var gg_layer = CanvasLayer.new()
 	gg_layer.layer = 100 
 	var gg_label = Label.new()
@@ -270,10 +263,8 @@ func die():
 	var tween = get_tree().create_tween()
 	tween.tween_property(gg_label, "modulate:a", 1.0, 2.0)
 	
-	# Aspettiamo 5 secondi per far leggere il GG al giocatore...
 	await get_tree().create_timer(5.0).timeout
 	
-	# ...E poi carichiamo i titoli di coda! (Assicurati che il percorso sia giusto)
 	get_tree().change_scene_to_file("res://scenes/credits.tscn")
 	
 	queue_free()
@@ -286,7 +277,6 @@ func update_animations():
 	else:
 		anim.play("idle")
 
-# --- SVEGLIATO DALLA STANZA ---
 func activate_boss():
 	print("Il Boss si è svegliato!")
 	is_active = true

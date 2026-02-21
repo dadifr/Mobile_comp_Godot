@@ -21,7 +21,6 @@ func _ready():
 	timer.wait_time = spawn_rate
 	timer.timeout.connect(_on_spawn_timer_timeout)
 	
-	# CONTROLLO 1: Esiste il nodo?
 	if has_node("ActivationArea"):
 		print("✅ Nodo ActivationArea TROVATO e collegato!")
 		$ActivationArea.body_entered.connect(_on_activation_area_entered)
@@ -29,12 +28,11 @@ func _ready():
 		print("❌ ERRORE: Nodo ActivationArea NON TROVATO! Controlla il nome.")
 
 func _on_activation_area_entered(body):
-	# CONTROLLO 2: Qualcosa è entrato?
 	print("👀 Qualcosa ha toccato l'area: ", body.name)
 	
 	if body.is_in_group("player") and timer.is_stopped():
 		print("🎯 Giocatore riconosciuto! Spawner in azione!")
-		spawn_enemy() # Fa nascere il primo nemico subito
+		spawn_enemy() 
 		timer.start()
 
 func _on_spawn_timer_timeout():
@@ -87,6 +85,5 @@ func take_damage(amount, _pos = Vector2.ZERO):
 
 func die():
 	print("SPAWNER DISTRUTTO!")
-	# Togliamolo dal gruppo nemici così le porte possono aprirsi!
 	remove_from_group("enemies") 
 	queue_free()
