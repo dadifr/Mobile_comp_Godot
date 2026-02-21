@@ -47,6 +47,7 @@ radius = 8.0
 height = 26.0
 
 [node name="magonero" type="CharacterBody2D" unique_id=1421899595]
+motion_mode = 1
 script = ExtResource("1_f8g6h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=333596707]

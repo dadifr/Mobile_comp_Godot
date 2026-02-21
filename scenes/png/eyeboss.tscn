@@ -90,6 +90,7 @@ radius = 21.023796
 radius = 29.068884
 
 [node name="occhio" type="CharacterBody2D" unique_id=394822036 groups=["enemies"]]
+motion_mode = 1
 script = ExtResource("1_h8nid")
 laser_scene = ExtResource("2_3cec6")
 nova_laser_count = 16

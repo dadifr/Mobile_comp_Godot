@@ -49,6 +49,7 @@ radius = 8.0
 height = 24.0
 
 [node name="magodemone" type="CharacterBody2D" unique_id=383817443 groups=["enemies"]]
+motion_mode = 1
 script = ExtResource("1_r643f")
 fireball_scene = ExtResource("2_m17jg")
 

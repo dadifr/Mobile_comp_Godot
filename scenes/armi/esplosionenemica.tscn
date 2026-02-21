@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://otcyctkitu0h"]
+
+[ext_resource type="Script" uid="uid://d12j2n53lrmvu" path="res://scripts/esplosionenemica.gd" id="1_sm8qt"]
+[ext_resource type="Texture2D" uid="uid://b65f10jgfk0y8" path="res://assets/sprites/frames pg e utility/utility/explosion.png" id="2_vxhbi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ql4tx"]
+atlas = ExtResource("2_vxhbi")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3btjw"]
+atlas = ExtResource("2_vxhbi")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsd00"]
+atlas = ExtResource("2_vxhbi")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aex6v"]
+atlas = ExtResource("2_vxhbi")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8dsq5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ql4tx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3btjw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsd00")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aex6v")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gfmps"]
+radius = 20.024984
+
+[node name="esplosionenemica" type="Area2D" unique_id=1122100170]
+script = ExtResource("1_sm8qt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=925356141]
+position = Vector2(0, 2)
+scale = Vector2(3.6, 3.6)
+sprite_frames = SubResource("SpriteFrames_8dsq5")
+frame = 1
+frame_progress = 0.4992818
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=661623195]
+shape = SubResource("CircleShape2D_gfmps")
