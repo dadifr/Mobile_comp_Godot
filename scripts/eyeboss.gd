@@ -13,6 +13,7 @@ extends CharacterBody2D
 
 @export_group("Combattimento")
 @export var contact_damage = 1
+@export var contact_cooldown = 1.0 # <--- NUOVO: Tempo di ricarica tra un danno fisico e l'altro
 @export var max_health = 60
 @export var laser_scene: PackedScene
 @export var shoot_cooldown = 2.5
@@ -25,6 +26,11 @@ extends CharacterBody2D
 @export var teleport_cooldown = 5.0
 @export var teleport_threshold = 130.0 
 
+# --- AUDIO ---
+@export_group("Audio")
+@export var laser_shoot_sound: AudioStream 
+@export var nova_sound: AudioStream        
+
 # --- STATI INTERNI ---
 var is_active = false
 var current_health = 60
@@ -34,6 +40,7 @@ var can_nova = true
 var can_teleport = true
 var is_attacking = false
 var current_laser = null 
+var can_contact_damage = true # <--- NUOVO: Lucchetto per i danni fisici
 
 @onready var anim = $AnimatedSprite2D
 @onready var sight_check = $LaserRay 
@@ -111,7 +118,6 @@ func attack_targeted():
 	if "creator" in current_laser:
 		current_laser.creator = self
 		
-	# IL FIX MAGICO: Lo mettiamo direttamente nella scena principale
 	get_tree().current_scene.add_child(current_laser)
 	
 	var lock_time = charge_time * lock_ratio
@@ -133,6 +139,14 @@ func attack_targeted():
 		await get_tree().process_frame
 		timer += get_process_delta_time()
 	
+	if laser_shoot_sound:
+		var sfx = AudioStreamPlayer2D.new()
+		sfx.stream = laser_shoot_sound
+		sfx.global_position = global_position
+		sfx.autoplay = true
+		sfx.finished.connect(sfx.queue_free)
+		get_tree().current_scene.add_child(sfx)
+		
 	if is_instance_valid(current_laser) and current_laser.has_method("fire_laser"):
 		current_laser.fire_laser()
 	
@@ -150,7 +164,16 @@ func attack_nova():
 	can_nova = false
 	anim.play("attack")
 	modulate = Color(0.5, 0.5, 3) 
+	
 	await get_tree().create_timer(1.2).timeout 
+	
+	if nova_sound:
+		var sfx = AudioStreamPlayer2D.new()
+		sfx.stream = nova_sound
+		sfx.global_position = global_position
+		sfx.autoplay = true
+		sfx.finished.connect(sfx.queue_free)
+		get_tree().current_scene.add_child(sfx)
 	
 	for i in range(nova_laser_count):
 		var angle = i * (PI * 2 / nova_laser_count)
@@ -161,7 +184,6 @@ func attack_nova():
 		if "creator" in laser:
 			laser.creator = self
 			
-		# IL FIX MAGICO 
 		get_tree().current_scene.add_child(laser)
 		var ray = laser.get_node_or_null("RayCast2D")
 		if ray: ray.target_position = direction * 800
@@ -185,12 +207,26 @@ func has_line_of_sight() -> bool:
 	sight_check.force_raycast_update()
 	return sight_check.is_colliding() and sight_check.get_collider().is_in_group("player")
 
+# --- DANNO DA CONTATTO CON COOLDOWN ---
 func check_contact_damage():
+	# Se il cooldown è attivo, non fare nulla!
+	if not can_contact_damage: 
+		return
+
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
+		
 		if collider.is_in_group("player") and collider.has_method("take_damage"):
 			collider.take_damage(contact_damage, global_position)
+			
+			# Appena facciamo danno, chiudiamo il lucchetto e facciamo partire il timer!
+			can_contact_damage = false
+			await get_tree().create_timer(contact_cooldown).timeout
+			can_contact_damage = true
+			
+			# Interrompiamo il ciclo per non fargli prendere danno doppio nello stesso impatto
+			break 
 
 func take_damage(amount, _source_pos = Vector2.ZERO):
 	current_health -= amount
@@ -200,12 +236,43 @@ func take_damage(amount, _source_pos = Vector2.ZERO):
 	if current_health <= 0:
 		die() 
 
+
 # --- MORTE ---
 func die():
-	print("Boss sconfitto!")
+	print("Boss sconfitto! GG!")
 	remove_from_group("enemies") 
 	remove_from_group("boss")
-	OST.play_normal_theme()
+	
+	# --- SCHERMATA DI FINE GIOCO (GG) ---
+	# 1. Creiamo un "livello tela" per far apparire la scritta sopra a tutto il gioco
+	var gg_layer = CanvasLayer.new()
+	gg_layer.layer = 100 # Livello altissimo così copre sia la mappa che i player
+	
+	# 2. Creiamo l'etichetta di testo
+	var gg_label = Label.new()
+	gg_label.text = "GG\nHAI VINTO!"
+	
+	# 3. La centriamo perfettamente su tutto lo schermo
+	gg_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	gg_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	gg_label.set_anchors_preset(Control.PRESET_FULL_RECT)
+	
+	# 4. Le diamo uno stile epico (Enorme, Dorata, con ombra nera)
+	gg_label.add_theme_font_size_override("font_size", 120)
+	gg_label.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0)) # Oro
+	gg_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0)) # Ombra nera
+	gg_label.add_theme_constant_override("shadow_outline_size", 15)
+	
+	# 5. Aggiungiamo il testo al livello, e il livello alla scena principale
+	gg_layer.add_child(gg_label)
+	get_tree().current_scene.call_deferred("add_child", gg_layer)
+	
+	# 6. Animazione epica: la facciamo apparire dal nulla (dissolvenza incrociata di 2 secondi)
+	gg_label.modulate.a = 0.0
+	var tween = get_tree().create_tween()
+	tween.tween_property(gg_label, "modulate:a", 1.0, 2.0)
+	
+	# 7. Addio Boss
 	queue_free()
 
 func update_animations():

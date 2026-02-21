@@ -13,7 +13,7 @@ var current_health = 0
 @export var speed = 60.0 
 @export var chase_duration = 3.0 
 @export var post_contact_delay = 1.5 
-@export var knockback_force = 600.0 # <--- AUMENTATA per allontanarlo di più
+@export var knockback_force = 600.0
 
 # --- COMBATTIMENTO ---
 @export_group("Esplosioni")
@@ -22,6 +22,10 @@ var current_health = 0
 @export var attack_cooldown = 2.0 
 @export var target_explosion_radius = 30.0
 @export var aoe_explosion_radius = 90.0
+
+# --- AUDIO ---
+@export_group("Audio")
+@export var explosion_sound: AudioStream # <--- NUOVO: Trascina qui il tuo file audio (.wav o .ogg)
 
 var player = null
 var current_state = "IDLE" 
@@ -39,7 +43,6 @@ func _physics_process(delta):
 	
 	# GESTIONE KNOCKBACK (Attrito)
 	if is_stunned:
-		# Riduce gradualmente la velocità del contraccolpo (effetto scivolamento)
 		velocity = velocity.lerp(Vector2.ZERO, 0.1)
 		move_and_slide()
 		return
@@ -109,11 +112,6 @@ func perform_aoe_explosion():
 	await spawn_explosion_logic(global_position, aoe_explosion_radius, true)
 	current_state = "IDLE"
 
-func perform_chase():
-	current_state = "CHASING"
-	await get_tree().create_timer(chase_duration).timeout
-	current_state = "IDLE"
-
 # --- LOGICA CORE: SPAWN E DANNO ---
 func spawn_explosion_logic(target_pos: Vector2, radius: float, is_aoe: bool):
 	if explosion_scene == null: return
@@ -138,16 +136,33 @@ func spawn_explosion_logic(target_pos: Vector2, radius: float, is_aoe: bool):
 	modulate = Color(1, 1, 1)
 
 	if is_inside_tree() and current_health > 0:
+		# SPAWN EFFETTO VISIVO
 		var exp_instance = explosion_scene.instantiate()
 		exp_instance.global_position = target_pos
 		if is_aoe: exp_instance.scale = Vector2(4, 4)
 		get_parent().add_child(exp_instance)
 		
+		# --- NUOVO: RIPRODUZIONE AUDIO ---
+		if explosion_sound:
+			var sfx = AudioStreamPlayer2D.new()
+			sfx.stream = explosion_sound
+			sfx.global_position = target_pos # Il suono viene dalla posizione dell'esplosione
+			sfx.autoplay = true
+			# Autodistruzione del nodo audio quando il suono finisce
+			sfx.finished.connect(sfx.queue_free) 
+			get_parent().add_child(sfx)
+		
+		# CALCOLO DANNO
 		if is_instance_valid(player):
 			var dist = target_pos.distance_to(player.global_position)
 			if dist <= radius + 10:
 				if player.has_method("take_damage"):
 					player.take_damage(explosion_damage, target_pos)
+
+func perform_chase():
+	current_state = "CHASING"
+	await get_tree().create_timer(chase_duration).timeout
+	current_state = "IDLE"
 
 # --- SISTEMA DI COLLISIONE E KNOCKBACK ---
 func check_contact_damage():
@@ -159,20 +174,17 @@ func check_contact_damage():
 		if obj.is_in_group("player") and obj.has_method("take_damage"):
 			obj.take_damage(contact_damage, global_position)
 			
-			# KNOCKBACK DIREZIONALE
 			var knock_dir = (global_position - obj.global_position).normalized()
 			apply_hit_effects(knock_dir)
 			break
 
 func apply_hit_effects(direction: Vector2):
 	is_stunned = true
-	# Il boss riceve un forte impulso iniziale all'indietro
 	velocity = direction * knockback_force
 	
 	if anim: anim.play("idle")
-	modulate = Color(0.5, 0.5, 0.5, 0.7) # Feedback visivo: diventa grigio/scuro
+	modulate = Color(0.5, 0.5, 0.5, 0.7)
 	
-	# Timer di stordimento
 	await get_tree().create_timer(post_contact_delay).timeout
 	
 	is_stunned = false

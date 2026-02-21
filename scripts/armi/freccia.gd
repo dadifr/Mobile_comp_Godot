@@ -1,7 +1,7 @@
 extends Area2D
 
 @export var speed = 200.0
-@export var damage = 1
+@export var damage = 2
 @export var life_time: float = 5.0 
 
 var direction = Vector2.ZERO

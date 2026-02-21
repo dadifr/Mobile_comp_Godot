@@ -81,17 +81,16 @@ func take_damage(amount, source_pos = Vector2.ZERO):
 	die()
 
 func die():
-	print("Angelo colpito! Lascia un dono e svanisce.")
-	
-	# Lo rimuoviamo dal gruppo per far aprire le porte della stanza
+	print("Angelo sconfitto!")
 	remove_from_group("enemies")
 	
-	# --- DROPPING DELLA POZIONE ---
-	if potion_scene != null:
+	if potion_scene == null:
+		print("❌ ERRORE GRAVE: L'Angelo non ha la scena della pozione nell'Inspector!")
+	else:
 		var potion = potion_scene.instantiate()
 		potion.global_position = global_position
-		# Usiamo call_deferred per sicurezza quando generiamo oggetti durante un colpo
-		get_parent().call_deferred("add_child", potion)
+		
+		# IL FIX MAGICO: Facciamo nascere la pozione libera nel mondo, non legata all'angelo!
+		get_tree().current_scene.call_deferred("add_child", potion)
 	
-	# L'angelo sparisce
 	queue_free()

@@ -52,6 +52,7 @@
 [ext_resource type="PackedScene" uid="uid://d2vxgeenqb0p7" path="res://scenes/png/slime-a.tscn" id="49_1dgkn"]
 [ext_resource type="PackedScene" uid="uid://dyv4leq06b5yb" path="res://scenes/png/slime-b.tscn" id="50_e68xj"]
 [ext_resource type="PackedScene" uid="uid://dx8hpup13e2fu" path="res://scenes/png/mini.zombie.tscn" id="51_5hglh"]
+[ext_resource type="PackedScene" uid="uid://g8r8rh5pn1h6" path="res://scenes/armi/LaserIstante.tscn" id="51_pf35h"]
 [ext_resource type="PackedScene" uid="uid://c7653bj42ovu5" path="res://scenes/png/magodemone.tscn" id="52_5hglh"]
 [ext_resource type="PackedScene" uid="uid://cdiioe1uobjj5" path="res://scenes/png/imp.tscn" id="53_qg546"]
 [ext_resource type="PackedScene" uid="uid://lmvc8cw28y8g" path="res://scenes/png/orco.tscn" id="54_pf35h"]
@@ -5277,7 +5278,7 @@ size = Vector2(183, 224)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mvg0v"]
 resource_local_to_scene = true
-size = Vector2(568, 390)
+size = Vector2(568, 370)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h3odw"]
 resource_local_to_scene = true
@@ -5328,7 +5329,7 @@ tile_map_data = PackedByteArray("AAA3AKX/AAAJAAEAAAA3AKb/AAAJAAIAAAA3AKf/AAAJAAM
 tile_set = SubResource("TileSet_1dgkn")
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=1627991438]
-position = Vector2(998, -3251)
+position = Vector2(728, -2700)
 
 [node name="HUD" parent="." unique_id=1538550412 instance=ExtResource("8_7r4gi")]
 
@@ -5443,8 +5444,10 @@ max_coins = 10
 position = Vector2(304, 193)
 shape = SubResource("RectangleShape2D_qg546")
 
-[node name="orc_boss" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="0" unique_id=2105925727 instance=ExtResource("23_qg546")]
-position = Vector2(249, 150)
+[node name="zombie" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="0" unique_id=1891807426 instance=ExtResource("9_7r4gi")]
+position = Vector2(246, 135)
+coin_scene = ExtResource("8_w7kh3")
+potionH_scene = ExtResource("9_w7kh3")
 
 [node name="Door" parent="DungeonRoom/Doors" parent_id_path=PackedInt32Array(1165969380, 1990335327) index="0" unique_id=121056640 instance=ExtResource("5_71j4m")]
 position = Vector2(304, 288)
@@ -6169,7 +6172,7 @@ position = Vector2(-456, -713)
 [node name="DungeonRoom6" parent="." unique_id=2138329488 instance=ExtResource("12_jhx03")]
 
 [node name="CollisionShape2D" parent="DungeonRoom6/Detector" parent_id_path=PackedInt32Array(2138329488, 131393299) index="0" unique_id=1644665846]
-position = Vector2(-409, -1654)
+position = Vector2(-409, -1664)
 shape = SubResource("RectangleShape2D_mvg0v")
 
 [node name="angelo" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="0" unique_id=168138766 groups=["enemies"] instance=ExtResource("46_5hglh")]
@@ -6189,7 +6192,6 @@ detection_range = 50.0
 
 [node name="orc_boss" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="3" unique_id=1819856755 groups=["enemies"] instance=ExtResource("23_qg546")]
 position = Vector2(-405, -1750)
-max_health = 40
 
 [node name="Door" parent="DungeonRoom6/Doors" parent_id_path=PackedInt32Array(2138329488, 1990335327) index="0" unique_id=50402653 instance=ExtResource("5_71j4m")]
 position = Vector2(-408, -1457)
@@ -6308,9 +6310,13 @@ shape = SubResource("RectangleShape2D_5hl1e")
 
 [node name="CharacterBody2D" parent="DungeonRoom8/Enemies" parent_id_path=PackedInt32Array(38245489, 1611563842) index="0" unique_id=1189645528 groups=["enemies"] instance=ExtResource("49_1dgkn")]
 position = Vector2(333, 109)
+max_health = 8
+damage = 2
 
 [node name="CharacterBody2D2" parent="DungeonRoom8/Enemies" parent_id_path=PackedInt32Array(38245489, 1611563842) index="1" unique_id=1160504690 groups=["enemies"] instance=ExtResource("50_e68xj")]
 position = Vector2(508, 169)
+max_health = 5
+damage = 2
 coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("30_rup4s")
 
@@ -6319,6 +6325,11 @@ position = Vector2(269, 150)
 
 [node name="magonero" parent="DungeonRoom8/Enemies" parent_id_path=PackedInt32Array(38245489, 1611563842) index="3" unique_id=856807354 groups=["enemies"] instance=ExtResource("24_18clu")]
 position = Vector2(509, 86)
+min_x = 950.0
+max_x = 1050.0
+min_y = -1350.0
+max_y = -1250.0
+laser_scene = ExtResource("51_pf35h")
 
 [node name="CharacterBody2D4" parent="DungeonRoom8/Enemies" parent_id_path=PackedInt32Array(38245489, 1611563842) index="4" unique_id=92964158 groups=["enemies"] instance=ExtResource("51_5hglh")]
 position = Vector2(187, 265)
@@ -6358,19 +6369,28 @@ position = Vector2(1304, -2329)
 
 [node name="magodemone" parent="." unique_id=383817443 instance=ExtResource("52_5hglh")]
 position = Vector2(1465, -1660)
+min_x = 1375.0
+max_x = 1525.0
+min_y = -1750.0
+max_y = -1650.0
 
 [node name="CharacterBody2D5" parent="." unique_id=1473846297 groups=["enemies"] instance=ExtResource("53_qg546")]
 position = Vector2(1365, -1902)
+max_health = 4
+damage = 2
 coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("22_xgqkh")
 
 [node name="CharacterBody2D6" parent="." unique_id=932168806 groups=["enemies"] instance=ExtResource("53_qg546")]
 position = Vector2(1528, -1876)
+max_health = 4
+damage = 2
 coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("22_xgqkh")
 
 [node name="CharacterBody2D7" parent="." unique_id=198718950 groups=["enemies"] instance=ExtResource("54_pf35h")]
 position = Vector2(1464, -2009)
+max_health = 7
 coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("26_ts3gi")
 
@@ -6404,9 +6424,13 @@ shape = SubResource("RectangleShape2D_66tox")
 
 [node name="zombie" parent="DungeonRoom9/Enemies" parent_id_path=PackedInt32Array(1717257670, 1611563842) index="0" unique_id=1109071176 instance=ExtResource("9_7r4gi")]
 position = Vector2(343, 262)
+coin_scene = ExtResource("8_w7kh3")
+potionH_scene = ExtResource("9_w7kh3")
 
 [node name="Creeper" parent="DungeonRoom9/Enemies" parent_id_path=PackedInt32Array(1717257670, 1611563842) index="1" unique_id=897895381 groups=["enemies"] instance=ExtResource("15_7iits")]
 position = Vector2(460, 80)
+coin_scene = ExtResource("8_w7kh3")
+potionH_scene = ExtResource("9_o8fc1")
 
 [node name="CharacterBody2D" parent="DungeonRoom9/Enemies" parent_id_path=PackedInt32Array(1717257670, 1611563842) index="2" unique_id=1348506180 groups=["enemies"] instance=ExtResource("14_2lf6f")]
 position = Vector2(222, 92)
@@ -6419,9 +6443,13 @@ position = Vector2(217, 175)
 
 [node name="demone" parent="DungeonRoom9/Enemies" parent_id_path=PackedInt32Array(1717257670, 1611563842) index="5" unique_id=1770732320 groups=["enemies"] instance=ExtResource("48_1jxku")]
 position = Vector2(400, 186)
+coin_scene = ExtResource("8_w7kh3")
+potionH_scene = ExtResource("22_xgqkh")
 
 [node name="demone2" parent="DungeonRoom9/Enemies" parent_id_path=PackedInt32Array(1717257670, 1611563842) index="6" unique_id=131364342 groups=["enemies"] instance=ExtResource("48_1jxku")]
 position = Vector2(100, 162)
+coin_scene = ExtResource("8_w7kh3")
+potionH_scene = ExtResource("22_xgqkh")
 
 [node name="Door" parent="DungeonRoom9/Doors" parent_id_path=PackedInt32Array(1717257670, 1990335327) index="0" unique_id=1661419267 instance=ExtResource("5_71j4m")]
 position = Vector2(-71, 130)
@@ -6657,6 +6685,7 @@ min_x = 750.0
 max_x = 1200.0
 min_y = -3650.0
 max_y = -3350.0
+contact_cooldown = 3.0
 
 [node name="Door" parent="DungeonRoomBoss/Doors" parent_id_path=PackedInt32Array(760678224, 1990335327) index="0" unique_id=307714173 instance=ExtResource("5_71j4m")]
 position = Vector2(328, 353)

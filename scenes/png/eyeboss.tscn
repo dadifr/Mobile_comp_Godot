@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://g8r8rh5pn1h6" path="res://scenes/armi/LaserIstante.tscn" id="2_3cec6"]
 [ext_resource type="Texture2D" uid="uid://64p3q4vn77qv" path="res://assets/sprites/frames pg e utility/mob/eye-bossattack.png" id="2_cqxdg"]
 [ext_resource type="Texture2D" uid="uid://bytl0fkrptiqn" path="res://assets/sprites/frames pg e utility/mob/eye-boss.png" id="3_3cec6"]
+[ext_resource type="AudioStream" uid="uid://dxxytosj7adcl" path="res://music/sounds/ribhavagrawal-laser-shot-ingame-230500.mp3" id="3_5c5nt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5c5nt"]
 atlas = ExtResource("2_cqxdg")
@@ -120,6 +121,8 @@ motion_mode = 1
 script = ExtResource("1_h8nid")
 laser_scene = ExtResource("2_3cec6")
 nova_laser_count = 16
+laser_shoot_sound = ExtResource("3_5c5nt")
+nova_sound = ExtResource("3_5c5nt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1643017640]
 scale = Vector2(2, 2)

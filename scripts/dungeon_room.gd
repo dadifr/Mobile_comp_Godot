@@ -72,10 +72,14 @@ func count_enemies():
 	return count
 
 func win_battle():
-	print("Stanza pulita!")
+	print("Stanza pulita! Cambio musica.")
 	room_cleared = true
 	room_started = false 
 	open_all_doors()
+	
+	# La stanza comanda la musica alla fine della battaglia!
+	if OST.has_method("play_normal_theme"):
+		OST.play_normal_theme()
 
 func close_all_doors():
 	for door in $Doors.get_children():
