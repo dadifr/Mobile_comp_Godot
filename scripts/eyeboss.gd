@@ -26,7 +26,7 @@ extends CharacterBody2D
 @export var teleport_threshold = 130.0 
 
 # --- STATI INTERNI ---
-var is_active = false # <--- NUOVO: Il boss parte DORMIENTE
+var is_active = false # <--- Il boss parte DORMIENTE
 var current_health = 60
 var player = null
 var can_shoot = true
@@ -49,7 +49,7 @@ func _ready():
 		sight_check.add_exception(self)
 
 func _physics_process(delta):
-	# --- NUOVO: CONTROLLO SONNO ---
+	# --- CONTROLLO SONNO ---
 	if not is_active: return # Se dorme, ignora tutto e sta fermo!
 	
 	if is_attacking:
@@ -108,6 +108,11 @@ func attack_targeted():
 	current_laser = laser_scene.instantiate() 
 	current_laser.global_position = global_position
 	if "is_charging" in current_laser: current_laser.is_charging = true
+	
+	# --- FIX: Comunichiamo al laser chi lo ha creato PRIMA di aggiungerlo alla scena! ---
+	if "creator" in current_laser:
+		current_laser.creator = self
+		
 	get_parent().add_child(current_laser)
 	
 	var lock_time = charge_time * lock_ratio
@@ -153,6 +158,11 @@ func attack_nova():
 		var direction = Vector2.RIGHT.rotated(angle)
 		var laser = laser_scene.instantiate()
 		laser.global_position = global_position
+		
+		# --- FIX: Anche per la Nova, comunichiamo il creatore ---
+		if "creator" in laser:
+			laser.creator = self
+			
 		get_parent().add_child(laser)
 		var ray = laser.get_node_or_null("RayCast2D")
 		if ray: ray.target_position = direction * 800

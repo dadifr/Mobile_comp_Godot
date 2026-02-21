@@ -4,12 +4,13 @@ extends Node2D
 @onready var ray = $RayCast2D
 
 var is_charging = true
-var creator = null # Variabile per memorizzare chi ha sparato il laser
+var creator = null # <--- Verrà assegnato dal Boss direttamente!
 
 func _ready():
-	# Memorizziamo chi ha creato il laser (il Mago o il Boss)
-	creator = get_parent() 
-	
+	# Se il boss ci ha detto che è lui il creatore, diciamo al raggio di NON colpirlo!
+	if is_instance_valid(creator) and creator is CollisionObject2D:
+		ray.add_exception(creator)
+		
 	line.width = 2.0
 	line.default_color = Color(1, 0, 0, 0.3)
 	line.clear_points()
@@ -18,7 +19,6 @@ func _ready():
 
 func _process(_delta):
 	if is_charging:
-		# --- CONTROLLO ANTI-RESTO FISSO ---
 		# Se il creatore non è più valido (ucciso), distruggi il laser
 		if not is_instance_valid(creator):
 			queue_free()
@@ -33,7 +33,6 @@ func _process(_delta):
 
 func fire_laser():
 	is_charging = false
-	# ... (il resto della funzione fire_laser rimane uguale) ...
 	ray.force_raycast_update()
 	
 	var final_beam_end = ray.target_position

@@ -4954,7 +4954,7 @@ tile_map_data = PackedByteArray("AAA3AKX/AAAJAAEAAAA3AKb/AAAJAAIAAAA3AKf/AAAJAAM
 tile_set = SubResource("TileSet_1dgkn")
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=1627991438]
-position = Vector2(1006, -2749)
+position = Vector2(999, -2744)
 
 [node name="HUD" parent="." unique_id=1538550412 instance=ExtResource("8_7r4gi")]
 
@@ -5817,13 +5817,6 @@ detection_range = 50.0
 position = Vector2(-405, -1750)
 max_health = 40
 
-[node name="occhio" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="4" unique_id=394822036 instance=ExtResource("23_5hglh")]
-position = Vector2(-412, -1593)
-min_x = -700.0
-max_x = -150.0
-min_y = -1850.0
-max_y = -1550.0
-
 [node name="Door" parent="DungeonRoom6/Doors" parent_id_path=PackedInt32Array(2138329488, 1990335327) index="0" unique_id=50402653 instance=ExtResource("5_71j4m")]
 position = Vector2(-408, -1457)
 
@@ -6264,32 +6257,32 @@ position = Vector2(672, -3649)
 position = Vector2(327.5, 160.5)
 shape = SubResource("RectangleShape2D_pq8jk")
 
-[node name="occhio" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="0" unique_id=541045664 instance=ExtResource("23_5hglh")]
-position = Vector2(330, 37)
-min_x = 750.0
-max_x = 1250.0
-min_y = -3650.0
-max_y = -3350.0
-
-[node name="angelo" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="1" unique_id=1899860446 groups=["enemies"] instance=ExtResource("46_5hglh")]
+[node name="angelo" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="0" unique_id=1899860446 groups=["enemies"] instance=ExtResource("46_5hglh")]
 position = Vector2(119, 57)
 flee_speed = 60.0
 detection_range = 50.0
 
-[node name="angelo2" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="2" unique_id=1392786632 groups=["enemies"] instance=ExtResource("46_5hglh")]
+[node name="angelo2" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="1" unique_id=1392786632 groups=["enemies"] instance=ExtResource("46_5hglh")]
 position = Vector2(535, 56)
 flee_speed = 60.0
 detection_range = 50.0
 
-[node name="angelo3" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="3" unique_id=1784070620 groups=["enemies"] instance=ExtResource("46_5hglh")]
+[node name="angelo3" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="2" unique_id=1784070620 groups=["enemies"] instance=ExtResource("46_5hglh")]
 position = Vector2(536, 281)
 flee_speed = 60.0
 detection_range = 50.0
 
-[node name="angelo4" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="4" unique_id=1033700289 groups=["enemies"] instance=ExtResource("46_5hglh")]
+[node name="angelo4" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="3" unique_id=1033700289 groups=["enemies"] instance=ExtResource("46_5hglh")]
 position = Vector2(119, 280)
 flee_speed = 60.0
 detection_range = 50.0
+
+[node name="occhio" parent="DungeonRoomBoss/Enemies" parent_id_path=PackedInt32Array(760678224, 1611563842) index="4" unique_id=394822036 instance=ExtResource("23_5hglh")]
+position = Vector2(324, 63)
+min_x = 750.0
+max_x = 1200.0
+min_y = -3650.0
+max_y = -3350.0
 
 [node name="Door" parent="DungeonRoomBoss/Doors" parent_id_path=PackedInt32Array(760678224, 1990335327) index="0" unique_id=307714173 instance=ExtResource("5_71j4m")]
 position = Vector2(328, 353)
