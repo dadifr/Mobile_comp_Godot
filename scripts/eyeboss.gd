@@ -238,41 +238,44 @@ func take_damage(amount, _source_pos = Vector2.ZERO):
 
 
 # --- MORTE ---
+# --- MORTE E FINE GIOCO ---
 func die():
 	print("Boss sconfitto! GG!")
 	remove_from_group("enemies") 
 	remove_from_group("boss")
 	
-	# --- SCHERMATA DI FINE GIOCO (GG) ---
-	# 1. Creiamo un "livello tela" per far apparire la scritta sopra a tutto il gioco
-	var gg_layer = CanvasLayer.new()
-	gg_layer.layer = 100 # Livello altissimo così copre sia la mappa che i player
+	# Rendiamo il boss invisibile e intoccabile mentre festeggiamo
+	visible = false
+	set_collision_layer_value(1, false)
+	set_collision_mask_value(1, false)
 	
-	# 2. Creiamo l'etichetta di testo
+	# --- SCHERMATA GG ---
+	var gg_layer = CanvasLayer.new()
+	gg_layer.layer = 100 
 	var gg_label = Label.new()
 	gg_label.text = "GG\nHAI VINTO!"
-	
-	# 3. La centriamo perfettamente su tutto lo schermo
 	gg_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	gg_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	gg_label.set_anchors_preset(Control.PRESET_FULL_RECT)
 	
-	# 4. Le diamo uno stile epico (Enorme, Dorata, con ombra nera)
 	gg_label.add_theme_font_size_override("font_size", 120)
-	gg_label.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0)) # Oro
-	gg_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0)) # Ombra nera
+	gg_label.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0)) 
+	gg_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0)) 
 	gg_label.add_theme_constant_override("shadow_outline_size", 15)
 	
-	# 5. Aggiungiamo il testo al livello, e il livello alla scena principale
 	gg_layer.add_child(gg_label)
 	get_tree().current_scene.call_deferred("add_child", gg_layer)
 	
-	# 6. Animazione epica: la facciamo apparire dal nulla (dissolvenza incrociata di 2 secondi)
 	gg_label.modulate.a = 0.0
 	var tween = get_tree().create_tween()
 	tween.tween_property(gg_label, "modulate:a", 1.0, 2.0)
 	
-	# 7. Addio Boss
+	# Aspettiamo 5 secondi per far leggere il GG al giocatore...
+	await get_tree().create_timer(5.0).timeout
+	
+	# ...E poi carichiamo i titoli di coda! (Assicurati che il percorso sia giusto)
+	get_tree().change_scene_to_file("res://scenes/credits.tscn")
+	
 	queue_free()
 
 func update_animations():
