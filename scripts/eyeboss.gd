@@ -26,6 +26,7 @@ extends CharacterBody2D
 @export var teleport_threshold = 130.0 
 
 # --- STATI INTERNI ---
+var is_active = false # <--- NUOVO: Il boss parte DORMIENTE
 var current_health = 60
 var player = null
 var can_shoot = true
@@ -38,7 +39,7 @@ var current_laser = null
 @onready var sight_check = $LaserRay 
 
 func _ready():
-	# --- NUOVO: ASSEGNAZIONE GRUPPI ---
+	# --- ASSEGNAZIONE GRUPPI ---
 	add_to_group("enemies") # Serve alla stanza per chiudere le porte
 	add_to_group("boss")    # Serve per identificare che è un Boss
 	
@@ -46,12 +47,11 @@ func _ready():
 	if sight_check:
 		sight_check.enabled = true
 		sight_check.add_exception(self)
-		
-	# --- Fai partire la OST del Boss! ---
-	# (Cancellala se la fai già partire dallo script della DungeonRoom)
-	OST.play_boss_theme()
 
 func _physics_process(delta):
+	# --- NUOVO: CONTROLLO SONNO ---
+	if not is_active: return # Se dorme, ignora tutto e sta fermo!
+	
 	if is_attacking:
 		velocity = Vector2.ZERO
 		move_and_slide()
@@ -191,18 +191,12 @@ func take_damage(amount, _source_pos = Vector2.ZERO):
 	if current_health <= 0:
 		die() 
 
-# --- NUOVA FUNZIONE MORTE ---
+# --- MORTE ---
 func die():
 	print("Boss sconfitto!")
-	
-	# --- NUOVO: RIMOZIONE GRUPPI ---
 	remove_from_group("enemies") # Fa aprire le porte istantaneamente!
 	remove_from_group("boss")
-	
-	# Rimettiamo la musica del dungeon con dissolvenza
 	OST.play_normal_theme()
-	
-	# Rimuoviamo il boss dalla scena
 	queue_free()
 
 func update_animations():
@@ -212,3 +206,8 @@ func update_animations():
 		anim.flip_h = velocity.x < 0
 	else:
 		anim.play("idle")
+
+# --- NUOVA FUNZIONE: SVEGLIATO DALLA STANZA ---
+func activate_boss():
+	print("Il Boss si è svegliato!")
+	is_active = true
