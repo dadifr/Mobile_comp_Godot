@@ -81,6 +81,32 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g1da7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y0tbk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk4ue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6tb6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y0tbk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk4ue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g1da7")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wn2a7"]
@@ -98,7 +124,7 @@ nova_laser_count = 16
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1643017640]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_dlcfk")
-animation = &"idle"
+animation = &"run"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1583707264]
