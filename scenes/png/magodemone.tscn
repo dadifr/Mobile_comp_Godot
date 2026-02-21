@@ -38,6 +38,23 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tu1kq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5bk4a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_io5r8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwol8")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2eha7"]
@@ -55,7 +72,7 @@ fireball_scene = ExtResource("2_m17jg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1786145935]
 sprite_frames = SubResource("SpriteFrames_m5jve")
-animation = &"idle"
+animation = &"run"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2077884254]

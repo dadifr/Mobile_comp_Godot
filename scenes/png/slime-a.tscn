@@ -2,9 +2,12 @@
 
 [ext_resource type="Script" uid="uid://86n3xixhk3oq" path="res://scripts/slime-a.gd" id="1_d4uas"]
 [ext_resource type="Texture2D" uid="uid://dyd6kkmt36rmn" path="res://assets/sprites/frames pg e utility/mob/muddy_anim_f0.png" id="2_7juw5"]
+[ext_resource type="PackedScene" uid="uid://dub3x4144frvp" path="res://scenes/coin.tscn" id="2_20pi6"]
 [ext_resource type="Texture2D" uid="uid://cn4xj0t5x4o00" path="res://assets/sprites/frames pg e utility/mob/muddy_anim_f1.png" id="3_2hrxa"]
+[ext_resource type="PackedScene" uid="uid://r6lksf7a5u0v" path="res://scenes/potion/potion_h.tscn" id="3_ijg64"]
 [ext_resource type="Texture2D" uid="uid://dw3vuwwxpbgqp" path="res://assets/sprites/frames pg e utility/mob/muddy_anim_f2.png" id="4_20pi6"]
 [ext_resource type="Texture2D" uid="uid://brberucgqxwes" path="res://assets/sprites/frames pg e utility/mob/muddy_anim_f3.png" id="5_ijg64"]
+[ext_resource type="Texture2D" uid="uid://cpt3htody6xvw" path="res://assets/sprites/0x72_DungeonTilesetII_v1.7.png" id="6_7juw5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ybl7e"]
 atlas = ExtResource("2_7juw5")
@@ -21,6 +24,38 @@ region = Rect2(0, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ioq0m"]
 atlas = ExtResource("5_ijg64")
 region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2hrxa"]
+atlas = ExtResource("6_7juw5")
+region = Rect2(368, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20pi6"]
+atlas = ExtResource("6_7juw5")
+region = Rect2(384, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijg64"]
+atlas = ExtResource("6_7juw5")
+region = Rect2(400, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5esm"]
+atlas = ExtResource("6_7juw5")
+region = Rect2(416, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfm1b"]
+atlas = ExtResource("6_7juw5")
+region = Rect2(368, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tlrsk"]
+atlas = ExtResource("6_7juw5")
+region = Rect2(384, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p45ok"]
+atlas = ExtResource("6_7juw5")
+region = Rect2(400, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxf2r"]
+atlas = ExtResource("6_7juw5")
+region = Rect2(416, 112, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_s5esm"]
 animations = [{
@@ -40,6 +75,40 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2hrxa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20pi6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijg64")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5esm")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mfm1b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlrsk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p45ok")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxf2r")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mfm1b"]
@@ -51,11 +120,13 @@ height = 24.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1189645528]
 script = ExtResource("1_d4uas")
+coin_scene = ExtResource("2_20pi6")
+potionH_scene = ExtResource("3_ijg64")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1792914942]
 sprite_frames = SubResource("SpriteFrames_s5esm")
-frame = 2
-frame_progress = 0.12670754
+animation = &"idle"
+autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1110452902]
 shape = SubResource("RectangleShape2D_mfm1b")

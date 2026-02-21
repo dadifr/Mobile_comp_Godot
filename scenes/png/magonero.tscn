@@ -37,6 +37,23 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8g6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kn6ov")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kvqn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_esu8a")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j5bns"]
@@ -52,10 +69,8 @@ script = ExtResource("1_f8g6h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=333596707]
 sprite_frames = SubResource("SpriteFrames_8tin1")
-animation = &"idle"
+animation = &"run"
 autoplay = "idle"
-frame = 2
-frame_progress = 0.6440949
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=985946381]
 position = Vector2(0, 3)
