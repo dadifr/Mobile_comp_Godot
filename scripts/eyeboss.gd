@@ -32,7 +32,7 @@ var can_shoot = true
 var can_nova = true
 var can_teleport = true
 var is_attacking = false
-var current_laser = null # <--- VARIABILE AGGIUNTA PER PULIZIA
+var current_laser = null 
 
 @onready var anim = $AnimatedSprite2D
 @onready var sight_check = $LaserRay 
@@ -42,6 +42,9 @@ func _ready():
 	if sight_check:
 		sight_check.enabled = true
 		sight_check.add_exception(self)
+		
+	# --- NUOVO: Fai partire la OST del Boss! ---
+	OST.play_boss_theme()
 
 func _physics_process(delta):
 	if is_attacking:
@@ -89,7 +92,7 @@ func teleport_to_random_pos():
 	await get_tree().create_timer(teleport_cooldown).timeout
 	can_teleport = true
 
-# --- ATTACCO MIRATO (PULITO) ---
+# --- ATTACCO MIRATO ---
 func attack_targeted():
 	if laser_scene == null: return
 	is_attacking = true
@@ -97,7 +100,7 @@ func attack_targeted():
 	anim.play("attack") 
 	modulate = Color(2, 0.5, 0.5) 
 	
-	current_laser = laser_scene.instantiate() # Salviamo il riferimento
+	current_laser = laser_scene.instantiate() 
 	current_laser.global_position = global_position
 	if "is_charging" in current_laser: current_laser.is_charging = true
 	get_parent().add_child(current_laser)
@@ -106,7 +109,7 @@ func attack_targeted():
 	var timer = 0.0
 	
 	while timer < charge_time:
-		if not is_inside_tree(): return # Esce se il boss viene cancellato
+		if not is_inside_tree(): return 
 		
 		if is_instance_valid(current_laser) and is_instance_valid(player):
 			var ray = current_laser.get_node_or_null("RayCast2D")
@@ -159,7 +162,6 @@ func attack_nova():
 
 # --- SISTEMA DI SICUREZZA ---
 func _exit_tree():
-	# Se il boss muore, cancella il laser di puntamento attivo
 	if is_instance_valid(current_laser):
 		current_laser.queue_free()
 
@@ -182,7 +184,14 @@ func take_damage(amount, _source_pos = Vector2.ZERO):
 	t.tween_property(self, "modulate", Color(10,10,10), 0.05)
 	t.tween_property(self, "modulate", Color(1,1,1,1), 0.05)
 	if current_health <= 0:
-		queue_free()
+		die() # Invece di queue_free() diretto, chiamiamo la nuova funzione
+
+# --- NUOVA FUNZIONE MORTE ---
+func die():
+	print("Boss sconfitto!")
+	# Rimettiamo la musica del dungeon con dissolvenza
+	OST.play_normal_theme()
+	queue_free()
 
 func update_animations():
 	if is_attacking: return

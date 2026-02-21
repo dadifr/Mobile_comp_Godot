@@ -1,9 +1,14 @@
 [gd_scene format=3 uid="uid://brvclfc40v8hx"]
 
 [ext_resource type="AudioStream" uid="uid://dab728fek0ta2" path="res://music/psychronic-echoes-of-the-precursors-425655.mp3" id="1_xjuxn"]
+[ext_resource type="Script" uid="uid://bexa8ekmhu755" path="res://scripts/ost.gd" id="2_abov3"]
+[ext_resource type="AudioStream" uid="uid://b6nm2w0wrfu35" path="res://music/ihatetuesdays-video-game-boss-fight-music-287355.mp3" id="3_lt7kl"]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" unique_id=1720871809]
 stream = ExtResource("1_xjuxn")
 volume_db = -15.0
 autoplay = true
 parameters/looping = true
+script = ExtResource("2_abov3")
+normal_music = ExtResource("1_xjuxn")
+boss_music = ExtResource("3_lt7kl")
