@@ -2934,35 +2934,35 @@ texture = ExtResource("8_18clu")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_1jxku")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wdv8"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1jxku"]
 resource_local_to_scene = true
 size = Vector2(292, 161)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d46x8"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1dgkn"]
 resource_local_to_scene = true
 size = Vector2(311, 100)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3l05q"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e68xj"]
 resource_local_to_scene = true
 size = Vector2(296, 292)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x28ej"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5hglh"]
 resource_local_to_scene = true
 size = Vector2(261.00003, 252)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1jxku"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qg546"]
 resource_local_to_scene = true
 size = Vector2(183, 224)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1dgkn"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pf35h"]
 resource_local_to_scene = true
 size = Vector2(568, 390)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qg546"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iexy4"]
 resource_local_to_scene = true
 size = Vector2(330, 323)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pf35h"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_npbic"]
 resource_local_to_scene = true
 size = Vector2(439, 381)
 
@@ -3104,7 +3104,7 @@ max_coins = 10
 
 [node name="CollisionShape2D" parent="DungeonRoom/Detector" parent_id_path=PackedInt32Array(1165969380, 131393299) index="0" unique_id=1644665846]
 position = Vector2(307, 193)
-shape = SubResource("RectangleShape2D_4wdv8")
+shape = SubResource("RectangleShape2D_1jxku")
 
 [node name="zombie" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="0" unique_id=1823389608 instance=ExtResource("9_7r4gi")]
 z_index = 1
@@ -3721,7 +3721,7 @@ position = Vector2(568, -569)
 
 [node name="CollisionShape2D" parent="DungeonRoom2/Detector" parent_id_path=PackedInt32Array(1477039953, 131393299) index="0" unique_id=1644665846]
 position = Vector2(519.5, -124)
-shape = SubResource("RectangleShape2D_d46x8")
+shape = SubResource("RectangleShape2D_1dgkn")
 
 [node name="Creeper" parent="DungeonRoom2/Enemies" parent_id_path=PackedInt32Array(1477039953, 1611563842) index="0" unique_id=78381794 groups=["enemies"] instance=ExtResource("15_7iits")]
 z_index = 1
@@ -3744,7 +3744,7 @@ position = Vector2(432, -64)
 
 [node name="CollisionShape2D" parent="DungeonRoom3/Detector" parent_id_path=PackedInt32Array(959355561, 131393299) index="0" unique_id=1644665846]
 position = Vector2(1136, -188)
-shape = SubResource("RectangleShape2D_3l05q")
+shape = SubResource("RectangleShape2D_e68xj")
 
 [node name="ogre" parent="DungeonRoom3/Enemies" parent_id_path=PackedInt32Array(959355561, 1611563842) index="0" unique_id=272101007 groups=["enemies"] instance=ExtResource("24_x2olw")]
 z_index = 1
@@ -3761,7 +3761,7 @@ position = Vector2(791.94, -11.369019)
 
 [node name="CollisionShape2D" parent="DungeonRoom4/Detector" parent_id_path=PackedInt32Array(1772701840, 131393299) index="0" unique_id=1644665846]
 position = Vector2(-87.44, -486.13098)
-shape = SubResource("RectangleShape2D_x28ej")
+shape = SubResource("RectangleShape2D_5hglh")
 
 [node name="goblin2" parent="DungeonRoom4/Enemies" parent_id_path=PackedInt32Array(1772701840, 1611563842) index="0" unique_id=1038703519 instance=ExtResource("6_qfnet")]
 z_index = 1
@@ -3785,7 +3785,7 @@ speed = 49.81
 
 [node name="CollisionShape2D" parent="DungeonRoom5/Detector" parent_id_path=PackedInt32Array(1253026333, 131393299) index="0" unique_id=1644665846]
 position = Vector2(-552.5, -719)
-shape = SubResource("RectangleShape2D_1jxku")
+shape = SubResource("RectangleShape2D_qg546")
 
 [node name="Creeper" parent="DungeonRoom5/Enemies" parent_id_path=PackedInt32Array(1253026333, 1611563842) index="0" unique_id=1342783513 groups=["enemies"] instance=ExtResource("15_7iits")]
 position = Vector2(-489, -651)
@@ -3829,7 +3829,7 @@ position = Vector2(-456, -713)
 
 [node name="CollisionShape2D" parent="DungeonRoom6/Detector" parent_id_path=PackedInt32Array(2138329488, 131393299) index="0" unique_id=1644665846]
 position = Vector2(-409, -1654)
-shape = SubResource("RectangleShape2D_1dgkn")
+shape = SubResource("RectangleShape2D_pf35h")
 
 [node name="DemoneG" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="0" unique_id=1808277452 groups=["enemies"] instance=ExtResource("23_f17e3")]
 z_index = 1
@@ -3854,7 +3854,7 @@ position = Vector2(128, -1548)
 
 [node name="CollisionShape2D" parent="DungeonRoom7/Detector" parent_id_path=PackedInt32Array(1048760130, 131393299) index="0" unique_id=1644665846]
 position = Vector2(320, 202.5)
-shape = SubResource("RectangleShape2D_qg546")
+shape = SubResource("RectangleShape2D_iexy4")
 
 [node name="demone" parent="DungeonRoom7/Enemies" parent_id_path=PackedInt32Array(1048760130, 1611563842) index="0" unique_id=658735875 instance=ExtResource("48_1jxku")]
 position = Vector2(448, 324)
@@ -3882,7 +3882,7 @@ coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("26_ts3gi")
 
 [node name="demone6" parent="DungeonRoom7/Enemies" parent_id_path=PackedInt32Array(1048760130, 1611563842) index="5" unique_id=134195155 instance=ExtResource("48_1jxku")]
-position = Vector2(185, 66)
+position = Vector2(185, 86)
 coin_scene = ExtResource("8_w7kh3")
 potionH_scene = ExtResource("26_ts3gi")
 
@@ -3926,7 +3926,7 @@ position = Vector2(376, -1481)
 position = Vector2(504, -986)
 
 [node name="Chest9" parent="." unique_id=2067516090 instance=ExtResource("11_e3hyu")]
-position = Vector2(695, -907)
+position = Vector2(697, -890)
 
 [node name="Chest10" parent="." unique_id=664831618 instance=ExtResource("11_e3hyu")]
 position = Vector2(760, -1034)
@@ -3956,7 +3956,7 @@ position = Vector2(652, -1505)
 
 [node name="CollisionShape2D" parent="DungeonRoom8/Detector" parent_id_path=PackedInt32Array(38245489, 131393299) index="0" unique_id=1644665846]
 position = Vector2(373.5, 155.5)
-shape = SubResource("RectangleShape2D_pf35h")
+shape = SubResource("RectangleShape2D_npbic")
 
 [node name="CharacterBody2D" parent="DungeonRoom8/Enemies" parent_id_path=PackedInt32Array(38245489, 1611563842) index="0" unique_id=1189645528 instance=ExtResource("49_1dgkn")]
 position = Vector2(333, 109)
