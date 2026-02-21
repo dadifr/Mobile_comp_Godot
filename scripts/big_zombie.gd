@@ -1,38 +1,40 @@
 extends CharacterBody2D
 
 # --- VARIABILI CONFIGURABILI ---
-@export_group("Movimento")
 @export var speed = 50.0            
 @export var patrol_speed = 30.0     
 @export var detection_range = 150.0 
-
-@export_group("Attacco Corpo a Corpo")
-@export var damage = 1
-@export var attack_cooldown_time = 1.5 
-@export var knockback_force = 250.0
-
-@export_group("Attacco Laser (Distanza)")
-@export var laser_scene: PackedScene 
-@export var shoot_range = 300.0      
-@export var shoot_cooldown = 2.0     
-@export var charge_time = 0.7        # Tempo di mira (pre-sparo)
-@export var post_shoot_pause = 0.5   # Tempo di recupero (post-sparo)
-
-@export_group("Salute e Loot")
 @export var max_health = 3
+@export var damage = 1
+@export var knockback_force = 250.0
+@export var attack_cooldown_time = 1.5 # Tempo in cui sta fermo dopo l'attacco
 @export var coin_scene: PackedScene
-@export var potionH_scene: PackedScene
+@export var potionH_scene: PackedScene # <--- La nuova pozione
+
+@export_group("Area Attack Settings")
+@export var aoe_damage = 1
+@export var aoe_cooldown = 3.0  # Ogni quanti secondi fa il danno
+@export var aoe_enabled = true
+
+var aoe_timer = 0.0
+@onready var aura_area = $AuraDanno # Assicurati che il nome coincida
+
+
+# Probabilità (0.15 = 15%, 0.5 = 50%)
 @export var potion_chance: float = 0.10 
 @export var coin_chance: float = 0.60
+
+
 
 # --- VARIABILI INTERNE ---
 var current_health = 3
 var is_hurt = false
 var player = null
-var is_attacking = false 
-var can_shoot = true
 
-# Variabili Pattuglia
+# --- FIX: VARIABILE DI STATO ATTACCO ---
+var is_attacking = false # Se è vero, il mob è "congelato" post-attacco
+
+# Variabili Pattuglia e Investigazione
 var move_direction = Vector2.ZERO
 var roam_timer = 0.0
 var time_to_next_move = 0.0
@@ -40,159 +42,170 @@ var is_investigating = false
 var investigation_timer = 0.0     
 var investigation_duration = 2.0  
 var was_chasing = false           
-var look_timer = 0.0  
+var look_timer = 0.0 
 
 @onready var anim = $AnimatedSprite2D 
-@onready var sight_check = $LaserRay 
 
 func _ready():
 	current_health = max_health
-	if sight_check:
-		sight_check.enabled = true
 	pick_new_state()
 
+func _draw():
+	draw_circle(Vector2.ZERO, detection_range, Color(1, 0, 0, 0.1))
+	# Disegna un cerchio rosso trasparente basato sul timer
+	var color = Color(1, 0, 0, (aoe_timer / aoe_cooldown) * 0.4)
+	# Sostituisci 50 con il raggio della tua CollisionShape
+	draw_circle(Vector2.ZERO, 50, color)
 func _physics_process(delta):
+	# 1. GESTIONE KNOCKBACK (Priorità Massima)
+	queue_redraw() # Forza il ridisegno ogni frame per vedere l'animazione
 	if is_hurt:
 		velocity = velocity.move_toward(Vector2.ZERO, 800 * delta)
 		move_and_slide()
 		return 
 
-	# --- BLOCCO MOVIMENTO SE ATTACCA O SPARO ---
+	# --- 2. FIX: GESTIONE ATTACCO CON RINCULO ---
 	if is_attacking:
-		velocity = Vector2.ZERO
-		move_and_slide()
-		return 
+		# NON forziamo velocity a zero qui. 
+		# Lasciamo che sia la funzione attack_player a decidere se spingerci indietro o fermarci.
+		move_and_slide() 
+		return # Usciamo per non fare calcoli di inseguimento
 
+	# 3. CERCA IL GIOCATORE
 	if player == null:
 		player = get_tree().get_first_node_in_group("player")
 
 	if player != null:
 		var distance = global_position.distance_to(player.global_position)
 		
-		# LOGICA DI SPARO
-		if distance <= shoot_range and can_shoot:
-			if has_line_of_sight():
-				shoot_at_player()
-
-		# LOGICA DI MOVIMENTO
+		# --- CASO A: INSEGUIMENTO ---
 		if distance < detection_range:
 			var direction = (player.global_position - global_position).normalized()
 			velocity = direction * speed
 			was_chasing = true
 			is_investigating = false 
-		else:
-			handle_patrol_logic(delta)
-
-	update_animations()
-	move_and_slide()
-	check_collisions()
-
-func has_line_of_sight() -> bool:
-	if player == null or sight_check == null: return false
-	sight_check.target_position = to_local(player.global_position)
-	sight_check.force_raycast_update()
-	if sight_check.is_colliding():
-		var collider = sight_check.get_collider()
-		return collider.is_in_group("player")
-	return false
-
-# --- FUNZIONE SPARO MODIFICATA ---
-func shoot_at_player():
-	can_shoot = false
-	is_attacking = true 
-	
-	# 1. FASE DI CARICAMENTO
-	anim.modulate = Color(2, 2, 0) # Segnale giallo
-	
-	var laser = laser_scene.instantiate()
-	laser.global_position = global_position
-	laser.is_charging = true
-	
-	var ray = laser.get_node("RayCast2D")
-	ray.target_position = (player.global_position - global_position)
-	get_parent().add_child(laser)
-	
-	await get_tree().create_timer(charge_time).timeout
-	
-	# 2. SPARO
-	if is_instance_valid(laser):
-		laser.fire_laser()
-	
-	# 3. FASE DI RECUPERO (IDLE POST-RAGGIO)
-	anim.modulate = Color(1, 1, 1)
-	anim.play("idle") # Forza l'animazione di riposo
-	
-	# Aspettiamo un po' prima di permettergli di muoversi di nuovo
-	await get_tree().create_timer(post_shoot_pause).timeout
-	
-	# 4. FINE ATTACCO
-	is_attacking = false
-	
-	# Cooldown per il prossimo sparo
-	await get_tree().create_timer(shoot_cooldown).timeout
-	can_shoot = true
-
-func update_animations():
-	# Se sta attaccando/sparando, l'animazione è gestita dalla funzione shoot_at_player
-	if is_attacking:
-		return
 		
+		# --- CASO B: PATTUGLIA/INVESTIGAZIONE ---
+		else:
+			if was_chasing:
+				start_investigation()
+				was_chasing = false 
+			
+			if is_investigating:
+				velocity = Vector2.ZERO
+				investigation_timer -= delta
+				look_timer -= delta
+				if look_timer <= 0:
+					anim.flip_h = !anim.flip_h
+					look_timer = 0.5 
+				
+				if investigation_timer <= 0:
+					is_investigating = false
+					pick_new_state()
+			else:
+				roam_timer += delta
+				if roam_timer >= time_to_next_move:
+					pick_new_state()
+				velocity = move_direction * patrol_speed
+
+	# 4. GESTIONE ANIMAZIONI
 	if velocity.length() > 0:
 		anim.play("run")
 		if not is_investigating:
-			anim.flip_h = velocity.x < 0
+			if velocity.x < 0:
+				anim.flip_h = true
+			elif velocity.x > 0:
+				anim.flip_h = false
 	else:
 		anim.play("idle")
-		if player:
-			anim.flip_h = player.global_position.x < global_position.x
 
-func handle_patrol_logic(delta):
-	if was_chasing:
-		start_investigation()
-		was_chasing = false 
+	# 5. MOVIMENTO E COLLISIONI
+	move_and_slide()
 	
-	if is_investigating:
-		velocity = Vector2.ZERO
-		investigation_timer -= delta
-		look_timer -= delta
-		if look_timer <= 0:
-			anim.flip_h = !anim.flip_h
-			look_timer = 0.5 
-		if investigation_timer <= 0:
-			is_investigating = false
-			pick_new_state()
-	else:
-		roam_timer += delta
-		if roam_timer >= time_to_next_move:
-			pick_new_state()
-		velocity = move_direction * patrol_speed
-
-func check_collisions():
+	# Controllo collisioni per attaccare
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		
+		# Se tocca il player E NON sta già attaccando
 		if collider.is_in_group("player") and not is_attacking:
 			if collider.has_method("take_damage"):
 				attack_player(collider)
-		
-		if collider is RigidBody2D:
-			var push_dir = -collision.get_normal()
-			collider.linear_velocity = push_dir * 100.0
+# 6. GESTIONE DANNO AD AREA PERIODICO
+	if aoe_enabled:
+		aoe_timer += delta
+		if aoe_timer >= aoe_cooldown:
+			perform_aoe_attack()
+			aoe_timer = 0.0 # Reset del timer
+			
 
+	# --- INIZIO CODICE SPINTA BOMBA ---
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		
+		# Se il nemico sbatte contro un oggetto rigido (Bomba)
+		if collider is RigidBody2D:
+			# 1. Calcoliamo la direzione della spinta
+			# Usiamo "-normal" che è la direzione opposta all'urto
+			var push_dir = -collision.get_normal()
+			
+			# 2. Velocità di spinta
+			# Facciamo che il nemico spinge un po' più piano del giocatore
+			# (o uguale, dipende da quanto è forte lo scheletro)
+			var push_speed = 100.0 
+			
+			# 3. Sovrascriviamo la velocità della bomba
+			# Usiamo la stessa tecnica "Anti-Railgun" per evitare che voli via
+			collider.linear_velocity = push_dir * push_speed
+	# --- FINE CODICE SPINTA ---
+func perform_aoe_attack():
+	# Feedback visivo: un piccolo flash o cambio colore per far capire l'attacco
+	var tween = create_tween()
+	tween.tween_property(aura_area, "modulate", Color(1, 0, 0, 0.5), 0.1)
+	tween.tween_property(aura_area, "modulate", Color(1, 1, 1, 0), 0.2)
+
+	# Prende tutti i corpi che stanno toccando l'Area2D in questo istante
+	var overlapping_bodies = aura_area.get_overlapping_bodies()
+	
+	for body in overlapping_bodies:
+		if body.is_in_group("player") and body.has_method("take_damage"):
+			body.take_damage(aoe_damage, global_position)
+			print("Il giocatore è stato colpito dall'aura!")
+# --- FUNZIONE ATTACCO AGGIORNATA ---
 func attack_player(target):
+	# 1. Blocchiamo l'AI
 	is_attacking = true
+	
+	# 2. CALCOLO RINCULO (Molto più leggero)
 	var recoil_direction = (global_position - target.global_position).normalized()
+	
+	# PRIMA ERA: 150. ADESSO PROVIAMO: 60 (Un passetto piccolo)
 	velocity = recoil_direction * 60 
+	
+	# 3. Infliggi danno
 	target.take_damage(damage, global_position)
 	
+	# 4. FASE DI RINCULO (Molto più breve)
+	# PRIMA ERA: 0.2s. ADESSO PROVIAMO: 0.1s (Appena un istante per staccarsi)
 	await get_tree().create_timer(0.1).timeout
+	
+	# 5. FASE DI STOP
 	velocity = Vector2.ZERO
 	anim.play("idle")
 	
-	await get_tree().create_timer(attack_cooldown_time - 0.1).timeout
+	# Calcoliamo il tempo rimanente del cooldown
+	# Sottraiamo il 0.1 che abbiamo appena aspettato
+	var remaining_cooldown = attack_cooldown_time - 0.1
+	if remaining_cooldown > 0:
+		await get_tree().create_timer(remaining_cooldown).timeout
+	
+	# 6. Sblocca il mob
 	is_attacking = false
 
+
+
+# --- LE ALTRE FUNZIONI RIMANGONO UGUALI ---
 func start_investigation():
 	is_investigating = true
 	investigation_timer = investigation_duration
@@ -218,21 +231,37 @@ func take_damage(amount, source_pos = Vector2.ZERO):
 	await get_tree().create_timer(0.2).timeout
 	modulate = Color(1, 1, 1)
 	is_hurt = false
+	was_chasing = true 
 	
 	if current_health <= 0:
 		die()
 
 func die():
+	print("Goblin eliminato!")
 	set_physics_process(false)
 	$CollisionShape2D.set_deferred("disabled", true)
-	var random_roll = randf()
+	
+	# --- SISTEMA DI LOOT LOGICO ---
+	var random_roll = randf() # Genera un numero da 0.0 a 1.0
+	
+	# CONTROLLO 1: Pozione (È la più rara, controlliamo per prima)
+	# Esempio: Se random_roll è 0.10 (che è < 0.15), vinci la pozione.
 	if potionH_scene and random_roll < potion_chance:
 		spawn_loot(potionH_scene)
+		
+	# CONTROLLO 2: Moneta
+	# Usiamo "elif": quindi se hai già vinto la pozione, NON entri qui.
+	# Sommiamo le chance: da 0.15 a 0.65 (0.15 + 0.5) vince la moneta.
 	elif coin_scene and random_roll < (potion_chance + coin_chance):
 		spawn_loot(coin_scene)
+	
+	# Se il numero è molto alto (es. 0.8), non entra in nessuno dei due if
+	# e il mostro non droppa nulla (sfortuna!).
+	
 	queue_free()
 
 func spawn_loot(scene_to_spawn):
-	var drop = scene_to_spawn.instantiate()
-	drop.global_position = global_position
-	get_parent().call_deferred("add_child", drop)
+	if scene_to_spawn != null:
+		var drop = scene_to_spawn.instantiate()
+		drop.global_position = global_position
+		get_parent().call_deferred("add_child", drop)
