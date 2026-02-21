@@ -5791,6 +5791,10 @@ shape = SubResource("RectangleShape2D_npbic")
 
 [node name="occhio" parent="DungeonRoom6/Enemies" parent_id_path=PackedInt32Array(2138329488, 1611563842) index="0" unique_id=394822036 instance=ExtResource("23_5hglh")]
 position = Vector2(-415, -1710)
+min_x = -700.0
+max_x = -125.0
+min_y = -1875.0
+max_y = -1550.0
 
 [node name="Door" parent="DungeonRoom6/Doors" parent_id_path=PackedInt32Array(2138329488, 1990335327) index="0" unique_id=50402653 instance=ExtResource("5_71j4m")]
 position = Vector2(-416, -1457)
