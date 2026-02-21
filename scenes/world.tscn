@@ -29,7 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://bdyydwnu4jn5u" path="res://assets/sprites/frames pg e utility/utility/bomb_f0.png" id="19_2lf6f"]
 [ext_resource type="PackedScene" uid="uid://bh3ge7u2lnfub" path="res://scenes/EnemySpawner.tscn" id="22_4kbfs"]
 [ext_resource type="PackedScene" uid="uid://jmf43nm046k8" path="res://scenes/potion/potion_g.tscn" id="22_xgqkh"]
-[ext_resource type="PackedScene" uid="uid://cp3d2610o0p0b" path="res://scenes/png/orco-scamano.tscn" id="23_1jxku"]
+[ext_resource type="PackedScene" uid="uid://drrsvx57jnim2" path="res://scenes/png/eyeboss.tscn" id="23_5hglh"]
 [ext_resource type="PackedScene" uid="uid://himxfj0h22tb" path="res://scenes/png/demone_g.tscn" id="23_f17e3"]
 [ext_resource type="Texture2D" uid="uid://d5tiwl8ay46a" path="res://assets/sprites/frames pg e utility/utility/flask_yellow.png" id="23_munwf"]
 [ext_resource type="PackedScene" uid="uid://cmy72sk05luaw" path="res://scenes/png/magonero.tscn" id="24_18clu"]
@@ -4949,7 +4949,7 @@ tile_map_data = PackedByteArray("AAA3AKX/AAAJAAEAAAA3AKb/AAAJAAIAAAA3AKf/AAAJAAM
 tile_set = SubResource("TileSet_1dgkn")
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=1627991438]
-position = Vector2(311, 28)
+position = Vector2(304, 350)
 
 [node name="HUD" parent="." unique_id=1538550412 instance=ExtResource("8_7r4gi")]
 
@@ -5064,8 +5064,8 @@ max_coins = 10
 position = Vector2(303, 192)
 shape = SubResource("RectangleShape2D_5hglh")
 
-[node name="scamano" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="0" unique_id=989503297 instance=ExtResource("23_1jxku")]
-position = Vector2(264, 169)
+[node name="occhio" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="0" unique_id=394822036 instance=ExtResource("23_5hglh")]
+position = Vector2(304, 180)
 
 [node name="Door" parent="DungeonRoom/Doors" parent_id_path=PackedInt32Array(1165969380, 1990335327) index="0" unique_id=121056640 instance=ExtResource("5_71j4m")]
 position = Vector2(304, 288)

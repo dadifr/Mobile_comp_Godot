@@ -38,12 +38,17 @@ var current_laser = null
 @onready var sight_check = $LaserRay 
 
 func _ready():
+	# --- NUOVO: ASSEGNAZIONE GRUPPI ---
+	add_to_group("enemies") # Serve alla stanza per chiudere le porte
+	add_to_group("boss")    # Serve per identificare che è un Boss
+	
 	current_health = max_health
 	if sight_check:
 		sight_check.enabled = true
 		sight_check.add_exception(self)
 		
-	# --- NUOVO: Fai partire la OST del Boss! ---
+	# --- Fai partire la OST del Boss! ---
+	# (Cancellala se la fai già partire dallo script della DungeonRoom)
 	OST.play_boss_theme()
 
 func _physics_process(delta):
@@ -184,13 +189,20 @@ func take_damage(amount, _source_pos = Vector2.ZERO):
 	t.tween_property(self, "modulate", Color(10,10,10), 0.05)
 	t.tween_property(self, "modulate", Color(1,1,1,1), 0.05)
 	if current_health <= 0:
-		die() # Invece di queue_free() diretto, chiamiamo la nuova funzione
+		die() 
 
 # --- NUOVA FUNZIONE MORTE ---
 func die():
 	print("Boss sconfitto!")
+	
+	# --- NUOVO: RIMOZIONE GRUPPI ---
+	remove_from_group("enemies") # Fa aprire le porte istantaneamente!
+	remove_from_group("boss")
+	
 	# Rimettiamo la musica del dungeon con dissolvenza
 	OST.play_normal_theme()
+	
+	# Rimuoviamo il boss dalla scena
 	queue_free()
 
 func update_animations():

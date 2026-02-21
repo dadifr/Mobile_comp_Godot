@@ -89,7 +89,7 @@ radius = 21.023796
 [sub_resource type="CircleShape2D" id="CircleShape2D_ata3t"]
 radius = 29.068884
 
-[node name="occhio" type="CharacterBody2D" unique_id=394822036 groups=["enemies"]]
+[node name="occhio" type="CharacterBody2D" unique_id=394822036 groups=["boss", "enemies"]]
 motion_mode = 1
 script = ExtResource("1_h8nid")
 laser_scene = ExtResource("2_3cec6")
