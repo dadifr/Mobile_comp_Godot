@@ -139,6 +139,7 @@ label_settings = SubResource("LabelSettings_8cuoo")
 
 [node name="SlowLabel" type="Label" parent="MarginContainer/StatsContainer" unique_id=505636513]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("8_twldb")
 label_settings = SubResource("LabelSettings_meimr")
 
 [node name="DashBar" type="ProgressBar" parent="." unique_id=1675543469]
