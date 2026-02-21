@@ -6628,7 +6628,6 @@ position = Vector2(1016, -2809)
 position = Vector2(672, -3649)
 
 [node name="CollisionShape2D" parent="DungeonRoomBoss/Detector" parent_id_path=PackedInt32Array(760678224, 131393299) index="0" unique_id=1644665846]
-visible = false
 position = Vector2(328, 143)
 shape = SubResource("RectangleShape2D_pq8jk")
 

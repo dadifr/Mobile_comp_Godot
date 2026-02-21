@@ -26,7 +26,7 @@ extends CharacterBody2D
 @export var teleport_threshold = 130.0 
 
 # --- STATI INTERNI ---
-var is_active = false # <--- Il boss parte DORMIENTE
+var is_active = false
 var current_health = 60
 var player = null
 var can_shoot = true
@@ -39,9 +39,8 @@ var current_laser = null
 @onready var sight_check = $LaserRay 
 
 func _ready():
-	# --- ASSEGNAZIONE GRUPPI ---
-	add_to_group("enemies") # Serve alla stanza per chiudere le porte
-	add_to_group("boss")    # Serve per identificare che è un Boss
+	add_to_group("enemies") 
+	add_to_group("boss")    
 	
 	current_health = max_health
 	if sight_check:
@@ -49,8 +48,7 @@ func _ready():
 		sight_check.add_exception(self)
 
 func _physics_process(delta):
-	# --- CONTROLLO SONNO ---
-	if not is_active: return # Se dorme, ignora tutto e sta fermo!
+	if not is_active: return 
 	
 	if is_attacking:
 		velocity = Vector2.ZERO
@@ -70,6 +68,7 @@ func _physics_process(delta):
 		if dist < detection_range:
 			var dir = (player.global_position - global_position).normalized()
 			velocity = dir * speed
+			
 			if can_nova:
 				attack_nova()
 			elif can_shoot and has_line_of_sight():
@@ -109,11 +108,11 @@ func attack_targeted():
 	current_laser.global_position = global_position
 	if "is_charging" in current_laser: current_laser.is_charging = true
 	
-	# --- FIX: Comunichiamo al laser chi lo ha creato PRIMA di aggiungerlo alla scena! ---
 	if "creator" in current_laser:
 		current_laser.creator = self
 		
-	get_parent().add_child(current_laser)
+	# IL FIX MAGICO: Lo mettiamo direttamente nella scena principale
+	get_tree().current_scene.add_child(current_laser)
 	
 	var lock_time = charge_time * lock_ratio
 	var timer = 0.0
@@ -159,11 +158,11 @@ func attack_nova():
 		var laser = laser_scene.instantiate()
 		laser.global_position = global_position
 		
-		# --- FIX: Anche per la Nova, comunichiamo il creatore ---
 		if "creator" in laser:
 			laser.creator = self
 			
-		get_parent().add_child(laser)
+		# IL FIX MAGICO 
+		get_tree().current_scene.add_child(laser)
 		var ray = laser.get_node_or_null("RayCast2D")
 		if ray: ray.target_position = direction * 800
 		if laser.has_method("fire_laser"): laser.fire_laser()
@@ -204,7 +203,7 @@ func take_damage(amount, _source_pos = Vector2.ZERO):
 # --- MORTE ---
 func die():
 	print("Boss sconfitto!")
-	remove_from_group("enemies") # Fa aprire le porte istantaneamente!
+	remove_from_group("enemies") 
 	remove_from_group("boss")
 	OST.play_normal_theme()
 	queue_free()
@@ -217,7 +216,7 @@ func update_animations():
 	else:
 		anim.play("idle")
 
-# --- NUOVA FUNZIONE: SVEGLIATO DALLA STANZA ---
+# --- SVEGLIATO DALLA STANZA ---
 func activate_boss():
 	print("Il Boss si è svegliato!")
 	is_active = true

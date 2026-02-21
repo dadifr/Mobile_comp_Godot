@@ -4,10 +4,10 @@ extends Node2D
 @onready var ray = $RayCast2D
 
 var is_charging = true
-var creator = null # <--- Verrà assegnato dal Boss direttamente!
+var creator = null 
 
 func _ready():
-	# Se il boss ci ha detto che è lui il creatore, diciamo al raggio di NON colpirlo!
+	# Ignora il corpo del boss per non auto-bloccarsi
 	if is_instance_valid(creator) and creator is CollisionObject2D:
 		ray.add_exception(creator)
 		
@@ -19,13 +19,14 @@ func _ready():
 
 func _process(_delta):
 	if is_charging:
-		# Se il creatore non è più valido (ucciso), distruggi il laser
 		if not is_instance_valid(creator):
 			queue_free()
 			return
 
 		ray.force_raycast_update()
 		var beam_end = ray.target_position
+		
+		# Il raggio si ferma sul primo ostacolo (muro o player)
 		if ray.is_colliding():
 			beam_end = to_local(ray.get_collision_point())
 		
@@ -39,9 +40,12 @@ func fire_laser():
 	if ray.is_colliding():
 		final_beam_end = to_local(ray.get_collision_point())
 		var target = ray.get_collider()
-		if target.is_in_group("player") and target.has_method("take_damage"):
+		
+		# Fa danno solo se becca il player
+		if target != null and target.is_in_group("player") and target.has_method("take_damage"):
 			target.take_damage(1, global_position)
 
+	# Animazione dello sparo
 	line.set_point_position(1, final_beam_end)
 	line.width = 18.0 
 	line.default_color = Color(1, 1, 1, 1) 
