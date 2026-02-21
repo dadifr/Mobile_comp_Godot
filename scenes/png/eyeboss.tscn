@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://drrsvx57jnim2"]
+
+[ext_resource type="Script" uid="uid://c2q8vg2ifr03y" path="res://scripts/eyeboss.gd" id="1_h8nid"]
+[ext_resource type="PackedScene" uid="uid://g8r8rh5pn1h6" path="res://scenes/armi/LaserIstante.tscn" id="2_3cec6"]
+[ext_resource type="Texture2D" uid="uid://64p3q4vn77qv" path="res://assets/sprites/frames pg e utility/mob/eye-bossattack.png" id="2_cqxdg"]
+[ext_resource type="Texture2D" uid="uid://bytl0fkrptiqn" path="res://assets/sprites/frames pg e utility/mob/eye-boss.png" id="3_3cec6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5c5nt"]
+atlas = ExtResource("2_cqxdg")
+region = Rect2(0, 0, 50, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tq8rg"]
+atlas = ExtResource("2_cqxdg")
+region = Rect2(50, 0, 50, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_26v7r"]
+atlas = ExtResource("2_cqxdg")
+region = Rect2(100, 0, 50, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tao6d"]
+atlas = ExtResource("2_cqxdg")
+region = Rect2(150, 0, 50, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g1da7"]
+atlas = ExtResource("3_3cec6")
+region = Rect2(0, 0, 50, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y0tbk"]
+atlas = ExtResource("3_3cec6")
+region = Rect2(50, 0, 50, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mk4ue"]
+atlas = ExtResource("3_3cec6")
+region = Rect2(100, 0, 50, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6tb6"]
+atlas = ExtResource("3_3cec6")
+region = Rect2(150, 0, 50, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dlcfk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5c5nt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tq8rg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_26v7r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tao6d")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g1da7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y0tbk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk4ue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6tb6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y0tbk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk4ue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g1da7")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wn2a7"]
+radius = 21.023796
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ata3t"]
+radius = 29.068884
+
+[node name="occhio" type="CharacterBody2D" unique_id=394822036 groups=["enemies"]]
+script = ExtResource("1_h8nid")
+laser_scene = ExtResource("2_3cec6")
+nova_laser_count = 16
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1643017640]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_dlcfk")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1583707264]
+shape = SubResource("CircleShape2D_wn2a7")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=652117160]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1473849141]
+shape = SubResource("CircleShape2D_ata3t")
+
+[node name="LaserRay" type="RayCast2D" parent="." unique_id=383784978]
