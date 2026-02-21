@@ -25,7 +25,7 @@ func _process(_delta):
 	if player:
 		var hand_node = player.get_node_or_null("Hand")
 		if hand_node:
-			global_position = hand_node.global_position
+			global_position = hand_node.global_position + player.last_direction * 8
 			
 		# --- ROTAZIONE A 360 GRADI ---
 		if "last_direction" in player:

@@ -31,6 +31,7 @@ turbulence_noise_speed_random = 0.04
 [node name="Bolle" type="Node2D" unique_id=2025457367]
 
 [node name="bolle" type="GPUParticles2D" parent="." unique_id=2027588425]
+emitting = false
 amount = 6
 amount_ratio = 0.8242
 texture = SubResource("GradientTexture2D_chjyo")
