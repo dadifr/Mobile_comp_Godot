@@ -5289,7 +5289,7 @@ size = Vector2(439, 381)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_66tox"]
 resource_local_to_scene = true
-size = Vector2(537, 255)
+size = Vector2(601, 255)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pq8jk"]
 resource_local_to_scene = true
@@ -6399,7 +6399,7 @@ position = Vector2(1264, -193)
 position = Vector2(799, -2531)
 
 [node name="CollisionShape2D" parent="DungeonRoom9/Detector" parent_id_path=PackedInt32Array(1717257670, 131393299) index="0" unique_id=1644665846]
-position = Vector2(233.5, 181)
+position = Vector2(201.5, 181)
 shape = SubResource("RectangleShape2D_66tox")
 
 [node name="zombie" parent="DungeonRoom9/Enemies" parent_id_path=PackedInt32Array(1717257670, 1611563842) index="0" unique_id=1109071176 instance=ExtResource("9_7r4gi")]
@@ -6421,7 +6421,7 @@ position = Vector2(217, 175)
 position = Vector2(400, 186)
 
 [node name="demone2" parent="DungeonRoom9/Enemies" parent_id_path=PackedInt32Array(1717257670, 1611563842) index="6" unique_id=131364342 groups=["enemies"] instance=ExtResource("48_1jxku")]
-position = Vector2(-70, 107)
+position = Vector2(100, 162)
 
 [node name="Door" parent="DungeonRoom9/Doors" parent_id_path=PackedInt32Array(1717257670, 1990335327) index="0" unique_id=1661419267 instance=ExtResource("5_71j4m")]
 position = Vector2(-71, 130)
