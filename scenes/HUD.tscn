@@ -51,8 +51,10 @@ half_heart_texture = ExtResource("3_f6qnu")
 empty_heart_texture = ExtResource("4_k4w17")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=635826452]
-offset_right = 217.0
-offset_bottom = 165.0
+offset_left = -1.0
+offset_top = 1.0
+offset_right = 641.0
+offset_bottom = 256.0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 
@@ -139,11 +141,18 @@ label_settings = SubResource("LabelSettings_8cuoo")
 layout_mode = 2
 label_settings = SubResource("LabelSettings_meimr")
 
+[node name="DashBar" type="ProgressBar" parent="." unique_id=1675543469]
+offset_left = 499.0
+offset_top = 7.0
+offset_right = 635.0
+offset_bottom = 34.0
+show_percentage = false
+
 [node name="Virtual Joystick" parent="." unique_id=313316691 instance=ExtResource("9_8cuoo")]
-offset_left = 11.0
-offset_top = -113.0
-offset_right = 253.0
-offset_bottom = 94.0
+offset_left = 10.0
+offset_top = -109.0
+offset_right = 252.0
+offset_bottom = 98.0
 scale = Vector2(0.4, 0.4)
 
 [node name="Btn_Attacco" type="TouchScreenButton" parent="." unique_id=770553218]

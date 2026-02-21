@@ -50,6 +50,7 @@ signal armor_changed(new_armor)
 signal boost_updated(time_left) # Per la Forza (Label Blu)
 signal speed_updated(time_left) # Per la Velocità (Label Verde) - NUOVO!
 signal slow_updated(time_left)
+signal dash_cooldown_updated(percentuale: float)
 # Variabili di stato
 var health = 6
 var is_hurt = false
@@ -171,6 +172,12 @@ func _physics_process(delta):
 	#Timer rallentamento (viola)
 	if is_instance_valid(slow_effect_timer) and not slow_effect_timer.is_stopped():
 		slow_updated.emit(slow_effect_timer.time_left)
+	# Timer Dash
+	if is_instance_valid(dash_timer) and not dash_timer.is_stopped():
+		var p = (1.0 - (dash_timer.time_left / dash_timer.wait_time)) * 100
+		dash_cooldown_updated.emit(p)
+	else:
+		dash_cooldown_updated.emit(100.0)
 	# MOVIMENTO
 	move_and_slide()
 	
