@@ -31,6 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://jmf43nm046k8" path="res://scenes/potion/potion_g.tscn" id="22_xgqkh"]
 [ext_resource type="PackedScene" uid="uid://drrsvx57jnim2" path="res://scenes/png/eyeboss.tscn" id="23_5hglh"]
 [ext_resource type="Texture2D" uid="uid://d5tiwl8ay46a" path="res://assets/sprites/frames pg e utility/utility/flask_yellow.png" id="23_munwf"]
+[ext_resource type="PackedScene" uid="uid://cnolsb01n03xl" path="res://scenes/png/orc_boss.tscn" id="23_qg546"]
 [ext_resource type="PackedScene" uid="uid://cmy72sk05luaw" path="res://scenes/png/magonero.tscn" id="24_18clu"]
 [ext_resource type="PackedScene" uid="uid://ckx5ef3aa2io3" path="res://scenes/potion/BigShieldPotion.tscn" id="24_ts3gi"]
 [ext_resource type="PackedScene" uid="uid://da821d2wac2xl" path="res://scenes/png/ogre.tscn" id="24_x2olw"]
@@ -46,7 +47,7 @@
 [ext_resource type="PackedScene" uid="uid://vaveg5gn5tj3" path="res://scenes/Spikes.tscn" id="36_x2olw"]
 [ext_resource type="PackedScene" uid="uid://d3ob7fnoptfnx" path="res://scenes/Lever.tscn" id="38_l8ah6"]
 [ext_resource type="PackedScene" uid="uid://dvt58f6pau8fq" path="res://scenes/GateSpikes.tscn" id="39_e75v4"]
-[ext_resource type="PackedScene" uid="uid://d367gjix15biq" path="res://scenes/angelo.tscn" id="46_5hglh"]
+[ext_resource type="PackedScene" path="res://scenes/angelo.tscn" id="46_5hglh"]
 [ext_resource type="PackedScene" uid="uid://fitfnms5lymi" path="res://scenes/png/demone.tscn" id="48_1jxku"]
 [ext_resource type="PackedScene" uid="uid://d2vxgeenqb0p7" path="res://scenes/png/slime-a.tscn" id="49_1dgkn"]
 [ext_resource type="PackedScene" uid="uid://dyv4leq06b5yb" path="res://scenes/png/slime-b.tscn" id="50_e68xj"]
@@ -4949,7 +4950,7 @@ tile_map_data = PackedByteArray("AAA3AKX/AAAJAAEAAAA3AKb/AAAJAAIAAAA3AKf/AAAJAAM
 tile_set = SubResource("TileSet_1dgkn")
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=1627991438]
-position = Vector2(-415, -1367)
+position = Vector2(301, 343)
 
 [node name="HUD" parent="." unique_id=1538550412 instance=ExtResource("8_7r4gi")]
 
@@ -5063,6 +5064,9 @@ max_coins = 10
 [node name="CollisionShape2D" parent="DungeonRoom/Detector" parent_id_path=PackedInt32Array(1165969380, 131393299) index="0" unique_id=1644665846]
 position = Vector2(303, 192)
 shape = SubResource("RectangleShape2D_qg546")
+
+[node name="orc_boss" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="0" unique_id=2105925727 instance=ExtResource("23_qg546")]
+position = Vector2(290.65363, 163.77287)
 
 [node name="Door" parent="DungeonRoom/Doors" parent_id_path=PackedInt32Array(1165969380, 1990335327) index="0" unique_id=121056640 instance=ExtResource("5_71j4m")]
 position = Vector2(304, 288)

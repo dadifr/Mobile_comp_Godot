@@ -1,0 +1,142 @@
+[gd_scene format=3 uid="uid://cnolsb01n03xl"]
+
+[ext_resource type="Script" uid="uid://cpdcckng0wgtc" path="res://scripts/orc.boss.gd" id="1_ilqvd"]
+[ext_resource type="Texture2D" uid="uid://d1eqa0fxv1udj" path="res://assets/sprites/frames pg e utility/mob/orcooooooooooo.png" id="2_aik4d"]
+[ext_resource type="PackedScene" uid="uid://ouqhn0btklqn" path="res://scenes/armi/esplosionenemica2.tscn" id="2_oit6d"]
+[ext_resource type="Texture2D" uid="uid://daq122em715r5" path="res://assets/sprites/frames pg e utility/mob/orco.bossidle.png" id="3_oit6d"]
+[ext_resource type="Texture2D" uid="uid://dyrivdv1u433h" path="res://assets/sprites/frames pg e utility/mob/orco.run.png" id="4_slpqe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfhp7"]
+atlas = ExtResource("2_aik4d")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_atc6r"]
+atlas = ExtResource("2_aik4d")
+region = Rect2(32, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8423q"]
+atlas = ExtResource("2_aik4d")
+region = Rect2(64, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e32eq"]
+atlas = ExtResource("2_aik4d")
+region = Rect2(96, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jcvxj"]
+atlas = ExtResource("3_oit6d")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l0mjt"]
+atlas = ExtResource("3_oit6d")
+region = Rect2(32, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ek1r"]
+atlas = ExtResource("3_oit6d")
+region = Rect2(64, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5k8i"]
+atlas = ExtResource("3_oit6d")
+region = Rect2(96, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lp21l"]
+atlas = ExtResource("4_slpqe")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_074bh"]
+atlas = ExtResource("4_slpqe")
+region = Rect2(32, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cil7c"]
+atlas = ExtResource("4_slpqe")
+region = Rect2(64, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_puof6"]
+atlas = ExtResource("4_slpqe")
+region = Rect2(96, 0, 32, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_et35x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jfhp7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_atc6r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8423q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e32eq")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jcvxj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l0mjt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ek1r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5k8i")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lp21l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_074bh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cil7c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puof6")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jww1q"]
+size = Vector2(38, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kc4uv"]
+size = Vector2(43, 54)
+
+[node name="orc_boss" type="CharacterBody2D" unique_id=2105925727 groups=["boss"]]
+motion_mode = 1
+script = ExtResource("1_ilqvd")
+speed = 30.0
+chase_duration = 2.0
+post_contact_delay = 3.0
+explosion_scene = ExtResource("2_oit6d")
+attack_cooldown = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=436628053]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_et35x")
+animation = &"attack"
+autoplay = "idle"
+frame = 1
+frame_progress = 0.5577565
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=147906280]
+position = Vector2(-2, 10)
+shape = SubResource("RectangleShape2D_jww1q")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1916053367]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=585761197]
+position = Vector2(-2.5, 10)
+shape = SubResource("RectangleShape2D_kc4uv")

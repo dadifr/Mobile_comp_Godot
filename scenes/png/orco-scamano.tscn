@@ -91,6 +91,7 @@ height = 24.0
 motion_mode = 1
 script = ExtResource("1_dxuip")
 explosion_scene = ExtResource("2_smsb8")
+attack_range = 80.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=40409733]
 sprite_frames = SubResource("SpriteFrames_pjtyw")
