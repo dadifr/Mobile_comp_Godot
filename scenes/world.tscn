@@ -37,7 +37,7 @@
 [ext_resource type="PackedScene" uid="uid://ckx5ef3aa2io3" path="res://scenes/potion/BigShieldPotion.tscn" id="24_ts3gi"]
 [ext_resource type="PackedScene" uid="uid://da821d2wac2xl" path="res://scenes/png/ogre.tscn" id="24_x2olw"]
 [ext_resource type="Texture2D" uid="uid://h6rymqa35saf" path="res://assets/sprites/frames pg e utility/utility/flask_big_yellow.png" id="25_0nbtd"]
-[ext_resource type="PackedScene" uid="uid://g8r8rh5pn1h6" path="res://scenes/armi/LaserIstante.tscn" id="25_4wdv8"]
+[ext_resource type="PackedScene" uid="uid://df7ctwcnw86p" path="res://scenes/png/orco_mascherato.tscn" id="26_e68xj"]
 [ext_resource type="PackedScene" uid="uid://civoxj0m4pffw" path="res://scenes/potion/SmallPotionB.tscn" id="26_ts3gi"]
 [ext_resource type="Texture2D" uid="uid://bsij0qajd10ki" path="res://assets/sprites/frames pg e utility/utility/flask_blue.png" id="27_0nbtd"]
 [ext_resource type="PackedScene" uid="uid://bouvog8stkskj" path="res://scenes/potion/BigDamagePotion.tscn" id="28_37qwj"]
@@ -5065,7 +5065,7 @@ position = Vector2(66, 85)
 motion_mode = 1
 
 [node name="CharacterBody2D" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="1" unique_id=1451606197 instance=ExtResource("19_8u370")]
-position = Vector2(303, 180)
+position = Vector2(-201, -251)
 
 [node name="CharacterBody2D2" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="2" unique_id=394822036 instance=ExtResource("23_eo1xk")]
 position = Vector2(-326, 69)
@@ -5075,9 +5075,10 @@ max_x = 163.0
 min_y = 113.0
 max_y = 275.0
 
-[node name="magonero" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="3" unique_id=1421899595 instance=ExtResource("24_18clu")]
-position = Vector2(-196, -99)
-laser_scene = ExtResource("25_4wdv8")
+[node name="orco-mascherato" parent="DungeonRoom/Enemies" parent_id_path=PackedInt32Array(1165969380, 1611563842) index="3" unique_id=1985900262 instance=ExtResource("26_e68xj")]
+position = Vector2(273, 166)
+speed = 60.0
+min_dist_from_player = 50.0
 
 [node name="Door" parent="DungeonRoom/Doors" parent_id_path=PackedInt32Array(1165969380, 1990335327) index="0" unique_id=121056640 instance=ExtResource("5_71j4m")]
 position = Vector2(304, 288)

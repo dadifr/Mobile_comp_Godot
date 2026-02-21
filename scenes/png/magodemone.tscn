@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://c7653bj42ovu5"]
+
+[ext_resource type="Script" uid="uid://cmshhqemrg5ud" path="res://scripts/magodemone.gd" id="1_r643f"]
+[ext_resource type="PackedScene" uid="uid://c8v55v8bn5oaj" path="res://scenes/armi/palladifuoconemica.tscn" id="2_m17jg"]
+[ext_resource type="Texture2D" uid="uid://dpif6aym3wae0" path="res://assets/sprites/frames pg e utility/mob/magodemone.png" id="3_vge8y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tu1kq"]
+atlas = ExtResource("3_vge8y")
+region = Rect2(0, 0, 16, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5bk4a"]
+atlas = ExtResource("3_vge8y")
+region = Rect2(16, 0, 16, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_io5r8"]
+atlas = ExtResource("3_vge8y")
+region = Rect2(32, 0, 16, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwol8"]
+atlas = ExtResource("3_vge8y")
+region = Rect2(48, 0, 16, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m5jve"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tu1kq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5bk4a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_io5r8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwol8")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2eha7"]
+radius = 5.0
+height = 14.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i8cmq"]
+radius = 8.0
+height = 24.0
+
+[node name="magodemone" type="CharacterBody2D" unique_id=383817443 groups=["enemies"]]
+script = ExtResource("1_r643f")
+fireball_scene = ExtResource("2_m17jg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1786145935]
+sprite_frames = SubResource("SpriteFrames_m5jve")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2077884254]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_2eha7")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1577224999]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1688829437]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_i8cmq")
